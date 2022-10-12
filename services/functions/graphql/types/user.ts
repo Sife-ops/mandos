@@ -1,20 +1,32 @@
-import { UserEntityType } from "@mandos/core/user";
 import bcrypt from "bcryptjs";
-import { mandosModel } from "@mandos/core/model";
+import { UserEntityType } from "@mandos/core/user";
 import { builder } from "../builder";
+import { mandosModel } from "@mandos/core/model";
+import { sign } from "jsonwebtoken";
 
-const UserType = builder.objectRef<UserEntityType>("User");
-UserType.implement({
+// const UserType = builder.objectRef<UserEntityType>("User");
+// UserType.implement({
+//   fields: (t) => ({
+//     id: t.exposeID("userId"),
+//     email: t.exposeString("email"),
+//     password: t.exposeString("password"),
+//     confirmed: t.exposeBoolean("confirmed"),
+//   }),
+// });
+
+const SignInResponseType = builder.objectRef<{
+  redirect: string;
+  accessToken: string;
+}>("SignInResponse");
+SignInResponseType.implement({
   fields: (t) => ({
-    id: t.exposeID("userId"),
-    email: t.exposeString("email"),
-    password: t.exposeString("password"),
-    confirmed: t.exposeBoolean("confirmed"),
+    redirect: t.exposeString("redirect"),
+    accessToken: t.exposeString("accessToken"),
   }),
 });
 
 const {
-  entities: { UserEntity },
+  entities: { UserEntity, ServiceEntity },
 } = mandosModel;
 
 builder.queryFields((t) => ({
@@ -36,34 +48,46 @@ builder.queryFields((t) => ({
   //     resolve: () => Article.list(),
   //   }),
 
-  //   user: t.field({
-  //     type: UserType,
-  //     resolve: () => {},
-  //   }),
-
-  login: t.string({
-    // type: UserType,
-    args: {
-      email: t.arg.string({ required: true }),
-      password: t.arg.string({ required: true }),
-    },
-    resolve: async (_, { email }) => {
-      const { data: found } = await UserEntity.query.email({ email }).go();
-      return "a";
-    },
+  hello: t.string({
+    resolve: () => "hello",
   }),
 }));
 
 builder.mutationFields((t) => ({
-  //   createArticle: t.field({
-  //     type: ArticleType,
-  //     args: {
-  //       title: t.arg.string({ required: true }),
-  //       url: t.arg.string({ required: true }),
-  //     },
-  //     resolve: (_, args) => Article.create(args.title, args.url),
-  //   }),
-  hello: t.string({
-    resolve: () => "hello",
+  signIn: t.field({
+    type: SignInResponseType,
+    args: {
+      url: t.arg.string({ required: true }),
+      email: t.arg.string({ required: true }),
+      password: t.arg.string({ required: true }),
+    },
+    resolve: async (_, { url, email, password }) => {
+      const { data: serviceQuery } = await ServiceEntity.query
+        .url({ url })
+        .go();
+      if (serviceQuery.length < 1) throw new Error("service not found");
+      const [{ redirect }] = serviceQuery;
+
+      const { data: userQuery } = await UserEntity.query.email({ email }).go();
+      if (userQuery.length < 1) throw new Error("user not found");
+      const [user] = userQuery;
+
+      const compared = bcrypt.compareSync(password, user.password);
+      if (!compared) throw new Error("incorrect password");
+      if (!user.confirmed) throw new Error("unconfirmed");
+
+      const accessToken = sign(
+        { email, userId: user.userId },
+        "todo: access token secret",
+        {
+          expiresIn: "1m",
+        }
+      );
+
+      return {
+        redirect,
+        accessToken,
+      };
+    },
   }),
 }));
