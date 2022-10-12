@@ -54,6 +54,31 @@ builder.queryFields((t) => ({
 }));
 
 builder.mutationFields((t) => ({
+  signUp: t.boolean({
+    args: {
+      email: t.arg.string({ required: true }),
+      password: t.arg.string({ required: true }),
+    },
+    resolve: async (_, { email, password }) => {
+      const { data: userQuery } = await UserEntity.query.email({ email }).go();
+
+      if (userQuery.length > 0) {
+        const [user] = userQuery;
+        if (user.confirmed) throw new Error("email registered");
+        // throw new Error("An account with that e-mail address already exists.");
+        await UserEntity.delete(user).go();
+      }
+
+      const hashed = bcrypt.hashSync(password, 8);
+
+      await UserEntity.create({ email, password: hashed }).go();
+
+      // await sendEmailjsSqs(email, "sign-up");
+
+      return true;
+    },
+  }),
+
   signIn: t.field({
     type: SignInResponseType,
     args: {
@@ -76,6 +101,7 @@ builder.mutationFields((t) => ({
       if (!compared) throw new Error("incorrect password");
       if (!user.confirmed) throw new Error("unconfirmed");
 
+      // todo: send refresh token
       const accessToken = sign(
         { email, userId: user.userId },
         "todo: access token secret",
@@ -84,6 +110,7 @@ builder.mutationFields((t) => ({
         }
       );
 
+      // todo: just return string of full url
       return {
         redirect,
         accessToken,
