@@ -1,4 +1,5 @@
 import { UserEntityType } from "@mandos/core/user";
+import bcrypt from "bcryptjs";
 import { mandosModel } from "@mandos/core/model";
 import { builder } from "../builder";
 
@@ -46,8 +47,8 @@ builder.queryFields((t) => ({
       email: t.arg.string({ required: true }),
       password: t.arg.string({ required: true }),
     },
-    resolve: (_, { email }) => {
-      UserEntity.query.email({ email });
+    resolve: async (_, { email }) => {
+      const { data: found } = await UserEntity.query.email({ email }).go();
       return "a";
     },
   }),
