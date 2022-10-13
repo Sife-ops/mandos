@@ -1,61 +1,53 @@
 export default {
     "scalars": [
         1,
-        2,
-        5
+        2
     ],
     "types": {
-        "Article": {
-            "id": [
-                1
-            ],
-            "title": [
-                2
-            ],
-            "url": [
-                2
-            ],
-            "__typename": [
-                2
-            ]
-        },
-        "ID": {},
-        "String": {},
         "Mutation": {
-            "createArticle": [
-                0,
+            "signIn": [
+                1,
                 {
-                    "title": [
-                        2,
+                    "email": [
+                        1,
                         "String!"
                     ],
-                    "url": [
-                        2,
+                    "password": [
+                        1,
+                        "String!"
+                    ],
+                    "serviceId": [
+                        1,
                         "String!"
                     ]
                 }
             ],
-            "__typename": [
-                2
-            ]
-        },
-        "Query": {
-            "article": [
-                0,
+            "signUp": [
+                2,
                 {
-                    "articleID": [
-                        2,
+                    "email": [
+                        1,
+                        "String!"
+                    ],
+                    "password": [
+                        1,
                         "String!"
                     ]
                 }
             ],
-            "articles": [
-                0
-            ],
             "__typename": [
-                2
+                1
             ]
         },
-        "Boolean": {}
+        "String": {},
+        "Boolean": {},
+        "Query": {
+            "hello": [
+                1
+            ],
+            "__typename": [
+                1
+            ]
+        }
     }
 }

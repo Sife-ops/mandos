@@ -9,7 +9,7 @@ export const ServiceEntity = new Entity(
       service: "scratch",
     },
     attributes: {
-      url: {
+      serviceId: {
         type: "string",
         required: true,
       },
@@ -18,16 +18,26 @@ export const ServiceEntity = new Entity(
         type: "string",
         required: true,
       },
+
+      accessTokenSecret: {
+        type: "string",
+        required: true,
+      },
+
+      refreshTokenSecret: {
+        type: "string",
+        required: true,
+      },
     },
     indexes: {
-      url: {
+      service: {
         pk: {
           field: "pk",
-          composite: ["url"],
+          composite: ["serviceId"],
         },
         sk: {
           field: "sk",
-          composite: ["redirect"],
+          composite: [],
         },
       },
     },

@@ -1,14 +1,8 @@
-type Article {
-  id: ID!
-  title: String!
-  url: String!
-}
-
 type Mutation {
-  createArticle(title: String!, url: String!): Article!
+  signIn(email: String!, password: String!, serviceId: String!): String!
+  signUp(email: String!, password: String!): Boolean!
 }
 
 type Query {
-  article(articleID: String!): Article!
-  articles: [Article!]!
+  hello: String!
 }
