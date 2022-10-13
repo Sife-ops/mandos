@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
+import { useQueryParam } from "../hook/query-param";
 import { useTypedMutation } from "@mandos/graphql/urql";
 
 export default function SignIn() {
-  const search = window.location.search;
-  const params = new URLSearchParams(search);
-  const serviceId = params.get("serviceId");
-
+  const [serviceId] = useQueryParam(["serviceId"]);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
