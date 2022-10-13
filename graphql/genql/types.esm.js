@@ -1,7 +1,8 @@
 export default {
     "scalars": [
         1,
-        2
+        2,
+        5
     ],
     "types": {
         "Mutation": {
@@ -42,12 +43,36 @@ export default {
         "String": {},
         "Boolean": {},
         "Query": {
-            "hello": [
+            "service": [
+                4,
+                {
+                    "serviceId": [
+                        1,
+                        "String!"
+                    ]
+                }
+            ],
+            "__typename": [
+                1
+            ]
+        },
+        "Service": {
+            "logo": [
+                1
+            ],
+            "redirect": [
+                1
+            ],
+            "serviceId": [
+                5
+            ],
+            "title": [
                 1
             ],
             "__typename": [
                 1
             ]
-        }
+        },
+        "ID": {}
     }
 }

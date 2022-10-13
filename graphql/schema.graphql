@@ -4,5 +4,12 @@ type Mutation {
 }
 
 type Query {
-  hello: String!
+  service(serviceId: String!): Service!
+}
+
+type Service {
+  logo: String!
+  redirect: String!
+  serviceId: ID!
+  title: String!
 }

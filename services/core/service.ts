@@ -21,7 +21,8 @@ export const ServiceEntity = new Entity(
 
       logo: {
         type: "string",
-        required: false,
+        required: true,
+        default: () => "",
       },
 
       redirect: {

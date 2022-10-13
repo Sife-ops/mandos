@@ -3,6 +3,7 @@ import {FieldsSelection,Observable} from '@genql/runtime'
 export type Scalars = {
     String: string,
     Boolean: boolean,
+    ID: string,
 }
 
 export interface Mutation {
@@ -12,8 +13,16 @@ export interface Mutation {
 }
 
 export interface Query {
-    hello: Scalars['String']
+    service: Service
     __typename: 'Query'
+}
+
+export interface Service {
+    logo: Scalars['String']
+    redirect: Scalars['String']
+    serviceId: Scalars['ID']
+    title: Scalars['String']
+    __typename: 'Service'
 }
 
 export interface MutationRequest{
@@ -24,7 +33,16 @@ export interface MutationRequest{
 }
 
 export interface QueryRequest{
-    hello?: boolean | number
+    service?: [{serviceId: Scalars['String']},ServiceRequest]
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface ServiceRequest{
+    logo?: boolean | number
+    redirect?: boolean | number
+    serviceId?: boolean | number
+    title?: boolean | number
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -45,6 +63,14 @@ export const isQuery = (obj?: { __typename?: any } | null): obj is Query => {
 }
 
 
+
+const Service_possibleTypes: string[] = ['Service']
+export const isService = (obj?: { __typename?: any } | null): obj is Service => {
+  if (!obj?.__typename) throw new Error('__typename is missing in "isService"')
+  return Service_possibleTypes.includes(obj.__typename)
+}
+
+
 export interface MutationPromiseChain{
     signIn: ((args: {email: Scalars['String'],password: Scalars['String'],serviceId: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['String']) => Promise<Scalars['String']>}),
     signUp: ((args: {email: Scalars['String'],password: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Promise<Scalars['Boolean']>})
@@ -56,9 +82,23 @@ export interface MutationObservableChain{
 }
 
 export interface QueryPromiseChain{
-    hello: ({get: (request?: boolean|number, defaultValue?: Scalars['String']) => Promise<Scalars['String']>})
+    service: ((args: {serviceId: Scalars['String']}) => ServicePromiseChain & {get: <R extends ServiceRequest>(request: R, defaultValue?: FieldsSelection<Service, R>) => Promise<FieldsSelection<Service, R>>})
 }
 
 export interface QueryObservableChain{
-    hello: ({get: (request?: boolean|number, defaultValue?: Scalars['String']) => Observable<Scalars['String']>})
+    service: ((args: {serviceId: Scalars['String']}) => ServiceObservableChain & {get: <R extends ServiceRequest>(request: R, defaultValue?: FieldsSelection<Service, R>) => Observable<FieldsSelection<Service, R>>})
+}
+
+export interface ServicePromiseChain{
+    logo: ({get: (request?: boolean|number, defaultValue?: Scalars['String']) => Promise<Scalars['String']>}),
+    redirect: ({get: (request?: boolean|number, defaultValue?: Scalars['String']) => Promise<Scalars['String']>}),
+    serviceId: ({get: (request?: boolean|number, defaultValue?: Scalars['ID']) => Promise<Scalars['ID']>}),
+    title: ({get: (request?: boolean|number, defaultValue?: Scalars['String']) => Promise<Scalars['String']>})
+}
+
+export interface ServiceObservableChain{
+    logo: ({get: (request?: boolean|number, defaultValue?: Scalars['String']) => Observable<Scalars['String']>}),
+    redirect: ({get: (request?: boolean|number, defaultValue?: Scalars['String']) => Observable<Scalars['String']>}),
+    serviceId: ({get: (request?: boolean|number, defaultValue?: Scalars['ID']) => Observable<Scalars['ID']>}),
+    title: ({get: (request?: boolean|number, defaultValue?: Scalars['String']) => Observable<Scalars['String']>})
 }
