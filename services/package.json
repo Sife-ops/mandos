@@ -12,7 +12,8 @@
     "electrodb": "^2.1.1",
     "graphql": "^16.6.0",
     "jsonwebtoken": "^8.5.1",
-    "ulid": "^2.3.0"
+    "ulid": "^2.3.0",
+    "zod": "^3.19.1"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.106",
