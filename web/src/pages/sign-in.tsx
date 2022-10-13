@@ -3,7 +3,7 @@ import { useQueryParam } from "../hook/query-param";
 import { useState, useEffect } from "react";
 import { useTypedMutation, useTypedQuery } from "@mandos/graphql/urql";
 
-export default function SignIn() {
+export const SignIn = () => {
   const nav = useNavigate();
 
   let serviceId: string;
@@ -56,9 +56,11 @@ export default function SignIn() {
   useEffect(() => {
     const { fetching, data, error } = signInState;
     if (error) {
-      console.log(error.message);
+      console.error(error.message);
+      // console.log(error.message.split("[GraphQL] ")[1]);
     } else if (!fetching && data) {
-      window.location.href = data.signIn;
+      console.log(data.signIn);
+      // window.location.href = data.signIn;
     }
   }, [signInState.data]);
 
@@ -97,4 +99,4 @@ export default function SignIn() {
       </form>
     </div>
   );
-}
+};
