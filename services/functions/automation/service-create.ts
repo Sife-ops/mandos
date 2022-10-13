@@ -10,17 +10,20 @@ export const handler = async ({
   refreshTokenSecret,
   serviceId,
   redirect,
+  title,
 }: {
   accessTokenSecret: string;
   refreshTokenSecret: string;
   serviceId: string;
   redirect: string;
+  title: string;
 }) => {
   const res = await mandosModel.entities.ServiceEntity.create({
     accessTokenSecret,
     redirect,
     refreshTokenSecret,
     serviceId,
+    title,
   }).go();
   console.log(res);
 };

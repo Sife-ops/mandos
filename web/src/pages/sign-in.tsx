@@ -28,7 +28,7 @@ export default function SignIn() {
         onSubmit={async (e) => {
           e.preventDefault();
           signIn({
-            serviceId: serviceId || "",
+            serviceId,
             email,
             password,
           });

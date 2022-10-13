@@ -14,6 +14,16 @@ export const ServiceEntity = new Entity(
         required: true,
       },
 
+      title: {
+        type: "string",
+        required: true,
+      },
+
+      logo: {
+        type: "string",
+        required: false,
+      },
+
       redirect: {
         type: "string",
         required: true,
