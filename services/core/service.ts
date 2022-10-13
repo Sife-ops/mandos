@@ -6,7 +6,7 @@ export const ServiceEntity = new Entity(
     model: {
       version: "1",
       entity: "Service",
-      service: "scratch",
+      service: "mandos",
     },
     attributes: {
       serviceId: {

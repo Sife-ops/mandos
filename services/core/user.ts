@@ -7,7 +7,7 @@ export const UserEntity = new Entity(
     model: {
       version: "1",
       entity: "User",
-      service: "scratch",
+      service: "mandos",
     },
     attributes: {
       userId: {
