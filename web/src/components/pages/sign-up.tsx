@@ -1,13 +1,14 @@
-import { useNavigate } from "react-router-dom";
-import { useQueryParam } from "../../hook/query-param";
+import { useNavigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useTypedMutation, useTypedQuery } from "@mandos/graphql/urql";
+import { useTypedMutation } from "@mandos/graphql/urql";
 
 export const SignUp = () => {
   const nav = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const serviceId = localStorage.getItem("serviceId");
 
   const [signUpState, signUp] = useTypedMutation(
     (vars: { email: string; password: string }) => {
@@ -39,8 +40,6 @@ export const SignUp = () => {
           });
         }}
       >
-        {/* <img src={serviceLogoUrl} alt="logo" />
-        {serviceTitle && <h3>{serviceTitle} Sign-In</h3>} */}
         <h3>Sign Up</h3>
 
         <input
@@ -61,6 +60,13 @@ export const SignUp = () => {
 
         <button type={"submit"}>submit</button>
       </form>
+
+      {serviceId && (
+        <p>
+          Already have an account?{" "}
+          <Link to={`/sign-in?serviceId=${serviceId}`}>Sign in</Link>.
+        </p>
+      )}
     </div>
   );
 };

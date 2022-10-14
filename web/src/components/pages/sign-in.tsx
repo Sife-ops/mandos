@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useQueryParam } from "../../hook/query-param";
 import { useState, useEffect } from "react";
 import { useTypedMutation, useTypedQuery } from "@mandos/graphql/urql";
@@ -13,6 +13,10 @@ export const SignIn = () => {
   } catch {
     nav("/error/404");
   }
+
+  useEffect(() => {
+    localStorage.setItem("serviceId", serviceId);
+  }, []);
 
   const [serviceTitle, setServiceTitle] = useState("");
   const [serviceLogoUrl, setServiceLogoUrl] = useState("");
@@ -96,6 +100,12 @@ export const SignIn = () => {
         <br />
 
         <button type={"submit"}>submit</button>
+
+        {/* todo: randomized text */}
+        <p>
+          What's wrong with you?{" "}
+          <Link to={"/sign-up"}>Create and account</Link>.
+        </p>
       </form>
     </div>
   );
