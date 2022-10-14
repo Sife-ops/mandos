@@ -2,8 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider as UrqlProvider, createClient } from "urql";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { SignIn } from "./pages/sign-in";
-import { Error } from "./pages/error";
+import { SignIn } from "./components/pages/sign-in";
+import { Error } from "./components/pages/error";
 // import "./index.css";
 
 const urql = createClient({

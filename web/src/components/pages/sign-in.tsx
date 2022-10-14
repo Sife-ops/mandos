@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useQueryParam } from "../hook/query-param";
+import { useQueryParam } from "../../hook/query-param";
 import { useState, useEffect } from "react";
 import { useTypedMutation, useTypedQuery } from "@mandos/graphql/urql";
 
