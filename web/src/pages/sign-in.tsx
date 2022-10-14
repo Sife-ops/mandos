@@ -15,7 +15,7 @@ export const SignIn = () => {
   }
 
   const [serviceTitle, setServiceTitle] = useState("");
-  const [serviceLogo, setServiceLogo] = useState("");
+  const [serviceLogoUrl, setServiceLogoUrl] = useState("");
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -29,7 +29,7 @@ export const SignIn = () => {
         },
         {
           title: true,
-          logo: true,
+          logoUrl: true,
         },
       ],
     },
@@ -41,7 +41,7 @@ export const SignIn = () => {
       nav("/error/404");
     } else if (!fetching && data) {
       setServiceTitle(data.service.title);
-      setServiceLogo(data.service.logo);
+      setServiceLogoUrl(data.service.logoUrl);
     }
   }, [serviceQuery.data]);
 
@@ -76,7 +76,7 @@ export const SignIn = () => {
           });
         }}
       >
-        <img src={serviceLogo} alt="logo" />
+        <img src={serviceLogoUrl} alt="logo" />
         {serviceTitle && <h3>{serviceTitle} Sign-In</h3>}
 
         <input

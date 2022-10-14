@@ -7,7 +7,6 @@ const eventSchema = z.object({
   serviceId: z.string(),
   redirect: z.string(),
   title: z.string(),
-  logo: z.string().optional(),
 });
 
 export const handler = async (event: any) => {

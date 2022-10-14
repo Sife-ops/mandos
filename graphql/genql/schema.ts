@@ -18,7 +18,7 @@ export interface Query {
 }
 
 export interface Service {
-    logo: Scalars['String']
+    logoUrl: Scalars['String']
     redirect: Scalars['String']
     serviceId: Scalars['ID']
     title: Scalars['String']
@@ -39,7 +39,7 @@ export interface QueryRequest{
 }
 
 export interface ServiceRequest{
-    logo?: boolean | number
+    logoUrl?: boolean | number
     redirect?: boolean | number
     serviceId?: boolean | number
     title?: boolean | number
@@ -90,14 +90,14 @@ export interface QueryObservableChain{
 }
 
 export interface ServicePromiseChain{
-    logo: ({get: (request?: boolean|number, defaultValue?: Scalars['String']) => Promise<Scalars['String']>}),
+    logoUrl: ({get: (request?: boolean|number, defaultValue?: Scalars['String']) => Promise<Scalars['String']>}),
     redirect: ({get: (request?: boolean|number, defaultValue?: Scalars['String']) => Promise<Scalars['String']>}),
     serviceId: ({get: (request?: boolean|number, defaultValue?: Scalars['ID']) => Promise<Scalars['ID']>}),
     title: ({get: (request?: boolean|number, defaultValue?: Scalars['String']) => Promise<Scalars['String']>})
 }
 
 export interface ServiceObservableChain{
-    logo: ({get: (request?: boolean|number, defaultValue?: Scalars['String']) => Observable<Scalars['String']>}),
+    logoUrl: ({get: (request?: boolean|number, defaultValue?: Scalars['String']) => Observable<Scalars['String']>}),
     redirect: ({get: (request?: boolean|number, defaultValue?: Scalars['String']) => Observable<Scalars['String']>}),
     serviceId: ({get: (request?: boolean|number, defaultValue?: Scalars['ID']) => Observable<Scalars['ID']>}),
     title: ({get: (request?: boolean|number, defaultValue?: Scalars['String']) => Observable<Scalars['String']>})

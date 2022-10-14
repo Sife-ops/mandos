@@ -57,7 +57,7 @@ export default {
             ]
         },
         "Service": {
-            "logo": [
+            "logoUrl": [
                 1
             ],
             "redirect": [
