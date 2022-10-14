@@ -4,6 +4,7 @@ import { Provider as UrqlProvider, createClient } from "urql";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { SignIn } from "./components/pages/sign-in";
 import { SignUp } from "./components/pages/sign-up";
+import { Unconfirmed } from "./components/pages/unconfirmed";
 import { Error } from "./components/pages/error";
 // import "./index.css";
 
@@ -25,8 +26,9 @@ function App() {
       <Routes>
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/unconfirmed" element={<Unconfirmed />} />
         <Route path="/error/:error" element={<Error />} />
-        <Route path="*" element={<Navigate to="/sign-in" />} />
+        <Route path="*" element={<Navigate to="/sign-up" />} />
       </Routes>
     </BrowserRouter>
   );

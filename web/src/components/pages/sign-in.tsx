@@ -8,8 +8,8 @@ export const SignIn = () => {
 
   let serviceId: string;
   try {
-    const [serviceId_] = useQueryParam(["serviceId"]);
-    serviceId = serviceId_;
+    const [_] = useQueryParam(["serviceId"]);
+    serviceId = _;
   } catch {
     nav("/error/404");
   }
@@ -103,8 +103,8 @@ export const SignIn = () => {
 
         {/* todo: randomized text */}
         <p>
-          What's wrong with you?{" "}
-          <Link to={"/sign-up"}>Create and account</Link>.
+          What's wrong with you? <Link to={"/sign-up"}>Create and account</Link>
+          .
         </p>
       </form>
     </div>

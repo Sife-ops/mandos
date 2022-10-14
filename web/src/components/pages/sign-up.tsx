@@ -25,7 +25,7 @@ export const SignUp = () => {
       // console.log(error.message.split("[GraphQL] ")[1]);
     } else if (!fetching && data) {
       console.log(data.signUp);
-      // window.location.href = data.signIn;
+      nav(`/unconfirmed?email=${email}`);
     }
   }, [signUpState.data]);
 
