@@ -2,6 +2,7 @@
 import { useTypedMutation } from "@mandos/graphql/urql";
 import { useState, useEffect } from "react";
 
+// todo: email validation
 // const emailSchema = yup
 //   .string()
 //   .email()
@@ -45,6 +46,7 @@ export const ForgotPassword = () => {
         onSubmit={(e) => {
           e.preventDefault();
           sendResetEmail({ email });
+          // todo: disable after submit
         }}
       >
         <label>

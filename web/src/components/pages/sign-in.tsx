@@ -95,7 +95,7 @@ export const SignIn = () => {
 
         <label>
           Password
-          <Link to={"/reset-password"}>Forgot password?</Link>
+          <Link to={"/forgot-password"}>Forgot password?</Link>
           <input
             onChange={(e) => setPassword(e.target.value)}
             type={"password"}
