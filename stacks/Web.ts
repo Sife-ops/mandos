@@ -29,6 +29,7 @@ export function Web({ stack, app }: StackContext) {
         handler: "functions/external/emailjs.handler",
         config: [
           db.TABLE_NAME,
+          new Config.Secret(stack, "SIGNUP_TOKEN_SECRET"),
           new Config.Secret(stack, "EMAILJS_USER_ID"),
           new Config.Secret(stack, "EMAILJS_SERVICE_ID"),
           // new Config.Secret(stack, "EMAILJS_ACCESSTOKEN"),
@@ -40,6 +41,9 @@ export function Web({ stack, app }: StackContext) {
           // new Config.Parameter(stack, "STAGE", { value: app.stage }),
         ],
         permissions: [db.table],
+        environment: {
+          STAGE: app.stage,
+        },
       },
     },
     cdk: {
@@ -57,10 +61,7 @@ export function Web({ stack, app }: StackContext) {
       type: "pothos",
       function: {
         handler: "functions/graphql/graphql.handler",
-        permissions: [db.table, logoBucket],
-        environment: {
-          STAGE: app.stage,
-        },
+        permissions: [db.table, logoBucket, emailjsSqs],
         config: [
           db.TABLE_NAME,
           new Config.Parameter(stack, "LOGO_BUCKET", {

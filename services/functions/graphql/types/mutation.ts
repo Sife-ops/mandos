@@ -1,7 +1,11 @@
+import AWS from "aws-sdk";
 import bcrypt from "bcryptjs";
 import { builder } from "../builder";
 import { mandosModel } from "@mandos/core/model";
+import { Config } from "@serverless-stack/node/config";
 import { sign } from "jsonwebtoken";
+
+const sqs = new AWS.SQS();
 
 const {
   entities: { UserEntity, ServiceEntity },
@@ -24,10 +28,20 @@ builder.mutationFields((t) => ({
       }
 
       const hashed = bcrypt.hashSync(password, 8);
-
       await UserEntity.create({ email, password: hashed }).go();
 
       // await sendEmailjsSqs(email, "sign-up");
+      await sqs
+        .sendMessage({
+          QueueUrl: Config.EMAILJS_SQS,
+          MessageBody: JSON.stringify({
+            email,
+            action: "sign-up",
+          }),
+          MessageGroupId: "emailjs",
+        })
+        .promise()
+        .then((e) => console.log(e));
 
       return true;
     },
