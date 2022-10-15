@@ -12,6 +12,36 @@ const {
 } = mandosModel;
 
 builder.mutationFields((t) => ({
+  resendEmail: t.boolean({
+    args: {
+      email: t.arg.string({ required: true }),
+    },
+    resolve: async (_, { email }) => {
+      const {
+        data: found,
+      } = await mandosModel.entities.UserEntity.query.email({ email }).go();
+      if (found.length < 1) throw new Error("account does not yet exist");
+
+      const [user] = found;
+      if (user.confirmed) throw new Error("account already confirmed");
+
+      // toso: await sendEmailjsSqs(email, "sign-up");
+      await sqs
+        .sendMessage({
+          QueueUrl: Config.EMAILJS_SQS,
+          MessageBody: JSON.stringify({
+            email,
+            action: "sign-up",
+          }),
+          MessageGroupId: "emailjs",
+        })
+        .promise()
+        .then((e) => console.log(e));
+
+      return true;
+    },
+  }),
+
   // todo: move to queries?
   confirm: t.boolean({
     args: {
@@ -53,14 +83,12 @@ builder.mutationFields((t) => ({
       if (userQuery.length > 0) {
         const [user] = userQuery;
         if (user.confirmed) throw new Error("email registered");
-        // throw new Error("An account with that e-mail address already exists.");
         await UserEntity.delete(user).go();
       }
 
       const hashed = bcrypt.hashSync(password, 8);
       await UserEntity.create({ email, password: hashed }).go();
 
-      // await sendEmailjsSqs(email, "sign-up");
       await sqs
         .sendMessage({
           QueueUrl: Config.EMAILJS_SQS,

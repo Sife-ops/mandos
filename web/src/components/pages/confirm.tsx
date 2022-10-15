@@ -40,7 +40,6 @@ export const Confirm = () => {
   }, [confirmState.data]);
 
   if (loading) {
-    //@ts-ignore
     return <div>loading...</div>;
   }
 

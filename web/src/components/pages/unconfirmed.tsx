@@ -1,4 +1,6 @@
 // import { Button } from "@chakra-ui/react";
+import { useEffect } from "react";
+import { useTypedMutation } from "@mandos/graphql/urql";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useQueryParam } from "../../hook/query-param";
@@ -16,33 +18,31 @@ export const Unconfirmed = () => {
 
   const [resent, setResent] = useState(false);
 
+  const [resendEmailState, resendEmail] = useTypedMutation(
+    (vars: { email: string }) => {
+      return {
+        resendEmail: [vars],
+      };
+    }
+  );
+
+  useEffect(() => {
+    const { fetching, data, error } = resendEmailState;
+    if (error) {
+      console.error(error.message);
+    } else if (!fetching && data) {
+      console.log(data);
+      setResent(true);
+    }
+  }, [resendEmailState]);
+
   return (
     <div>
       <div>An access link has been sent to your e-mail.</div>
       <div>
         If you didn't receive an email, click the button to send it again.
       </div>
-      {/* <div>If you still didn't receive an email, try again later.</div> */}
-      <button
-      // onClick={() => {
-      //   fetch(import.meta.env.VITE_API_URL + "/resend-email", {
-      //     method: "POST",
-      //     body: JSON.stringify({
-      //       email,
-      //     }),
-      //   })
-      //     .then((e) => e.json())
-      //     .then((e) => {
-      //       if (e.success) {
-      //         setResent(true);
-      //       } else {
-      //         console.error(e);
-      //       }
-      //     });
-      // }}
-      >
-        Send E-mail
-      </button>
+      <button onClick={() => resendEmail({ email })}>Send E-mail</button>
       {resent && <div>E-mail sent!</div>}
     </div>
   );

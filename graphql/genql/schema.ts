@@ -8,6 +8,7 @@ export type Scalars = {
 
 export interface Mutation {
     confirm: Scalars['Boolean']
+    resendEmail: Scalars['Boolean']
     signIn: Scalars['String']
     signUp: Scalars['Boolean']
     __typename: 'Mutation'
@@ -28,6 +29,7 @@ export interface Service {
 
 export interface MutationRequest{
     confirm?: [{signupToken: Scalars['String']}]
+    resendEmail?: [{email: Scalars['String']}]
     signIn?: [{email: Scalars['String'],password: Scalars['String'],serviceId: Scalars['String']}]
     signUp?: [{email: Scalars['String'],password: Scalars['String']}]
     __typename?: boolean | number
@@ -75,12 +77,14 @@ export const isService = (obj?: { __typename?: any } | null): obj is Service => 
 
 export interface MutationPromiseChain{
     confirm: ((args: {signupToken: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Promise<Scalars['Boolean']>}),
+    resendEmail: ((args: {email: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Promise<Scalars['Boolean']>}),
     signIn: ((args: {email: Scalars['String'],password: Scalars['String'],serviceId: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['String']) => Promise<Scalars['String']>}),
     signUp: ((args: {email: Scalars['String'],password: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Promise<Scalars['Boolean']>})
 }
 
 export interface MutationObservableChain{
     confirm: ((args: {signupToken: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Observable<Scalars['Boolean']>}),
+    resendEmail: ((args: {email: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Observable<Scalars['Boolean']>}),
     signIn: ((args: {email: Scalars['String'],password: Scalars['String'],serviceId: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['String']) => Observable<Scalars['String']>}),
     signUp: ((args: {email: Scalars['String'],password: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Observable<Scalars['Boolean']>})
 }

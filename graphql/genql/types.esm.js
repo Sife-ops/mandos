@@ -15,6 +15,15 @@ export default {
                     ]
                 }
             ],
+            "resendEmail": [
+                1,
+                {
+                    "email": [
+                        2,
+                        "String!"
+                    ]
+                }
+            ],
             "signIn": [
                 2,
                 {
