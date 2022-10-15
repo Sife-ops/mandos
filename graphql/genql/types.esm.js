@@ -24,6 +24,28 @@ export default {
                     ]
                 }
             ],
+            "resetPassword": [
+                1,
+                {
+                    "password": [
+                        2,
+                        "String!"
+                    ],
+                    "signupToken": [
+                        2,
+                        "String!"
+                    ]
+                }
+            ],
+            "sendResetEmail": [
+                1,
+                {
+                    "email": [
+                        2,
+                        "String!"
+                    ]
+                }
+            ],
             "signIn": [
                 2,
                 {

@@ -26,7 +26,7 @@ export const handler = async (event: any) => {
         break;
 
       case "reset":
-        actionLink = `/reset?signupToken=${signupToken}`;
+        actionLink = `/reset-password?signupToken=${signupToken}`;
         break;
     }
 

@@ -70,6 +70,9 @@ export const SignIn = () => {
 
   return (
     <div>
+      <img src={serviceLogoUrl} alt="logo" />
+      {serviceTitle && <h3>{serviceTitle} Sign-In</h3>}
+
       <form
         onSubmit={async (e) => {
           e.preventDefault();
@@ -80,33 +83,33 @@ export const SignIn = () => {
           });
         }}
       >
-        <img src={serviceLogoUrl} alt="logo" />
-        {serviceTitle && <h3>{serviceTitle} Sign-In</h3>}
+        <label>
+          E-mail
+          <input
+            onChange={(e) => setEmail(e.target.value)}
+            type={"email"}
+            value={email}
+          />
+        </label>
+        {/* <br /> */}
 
-        <input
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-          type={"email"}
-          value={email}
-        />
-        <br />
-
-        <input
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-          type={"password"}
-          value={password}
-        />
-        <br />
+        <label>
+          Password
+          <Link to={"/reset-password"}>Forgot password?</Link>
+          <input
+            onChange={(e) => setPassword(e.target.value)}
+            type={"password"}
+            value={password}
+          />
+        </label>
+        {/* <br /> */}
 
         <button type={"submit"}>submit</button>
-
-        {/* todo: randomized text */}
-        <p>
-          What's wrong with you? <Link to={"/sign-up"}>Create an account</Link>
-          .
-        </p>
       </form>
+      {/* todo: randomized text */}
+      <p>
+        What's wrong with you? <Link to={"/sign-up"}>Create an account</Link>.
+      </p>
     </div>
   );
 };

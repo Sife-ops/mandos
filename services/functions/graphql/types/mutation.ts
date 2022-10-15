@@ -19,21 +19,62 @@ const sendEmailjsSqs = async (email: string, action: "reset" | "sign-up") => {
         email,
         action,
       }),
-      MessageGroupId: "emailjs",
+      MessageGroupId: action,
     })
     .promise()
     .then((e) => console.log("emailjsSqs response:", e));
 };
 
 builder.mutationFields((t) => ({
+  resetPassword: t.boolean({
+    args: {
+      signupToken: t.arg.string({ required: true }),
+      password: t.arg.string({ required: true }),
+    },
+    resolve: async (_, { signupToken, password }) => {
+      const { email } = verify(signupToken, Config.SIGNUP_TOKEN_SECRET) as {
+        email: string;
+      };
+
+      const { data: userQuery } = await UserEntity.query.email({ email }).go();
+      if (userQuery.length < 1) throw new Error("user not found");
+      const [user] = userQuery;
+
+      const hashed = bcrypt.hashSync(password, 8);
+      await UserEntity.update({
+        userId: user.userId,
+        email: user.email,
+      })
+        .set({ password: hashed })
+        .go();
+
+      return true;
+    },
+  }),
+
+  sendResetEmail: t.boolean({
+    args: {
+      email: t.arg.string({ required: true }),
+    },
+    resolve: async (_, { email }) => {
+      const { data: found } = await UserEntity.query.email({ email }).go();
+      if (found.length < 1) throw new Error("account does not yet exist");
+
+      const [user] = found;
+      if (!user.confirmed) throw new Error("account not confirmed");
+
+      await sendEmailjsSqs(email, "reset");
+
+      return true;
+    },
+  }),
+
   resendEmail: t.boolean({
     args: {
       email: t.arg.string({ required: true }),
     },
     resolve: async (_, { email }) => {
-      const {
-        data: found,
-      } = await mandosModel.entities.UserEntity.query.email({ email }).go();
+      const { data: found } = await UserEntity.query.email({ email }).go();
       if (found.length < 1) throw new Error("account does not yet exist");
 
       const [user] = found;
@@ -55,15 +96,12 @@ builder.mutationFields((t) => ({
         email: string;
       };
 
-      const {
-        data: userQuery,
-      } = await mandosModel.entities.UserEntity.query.email({ email }).go();
-
+      const { data: userQuery } = await UserEntity.query.email({ email }).go();
       if (userQuery.length < 1) throw new Error("user not found");
       const [user] = userQuery;
 
       if (!user.confirmed) {
-        await mandosModel.entities.UserEntity.update({
+        await UserEntity.update({
           userId: user.userId,
           email: user.email,
         })
@@ -119,7 +157,7 @@ builder.mutationFields((t) => ({
 
       const compared = bcrypt.compareSync(password, user.password);
       if (!compared) throw new Error("incorrect password");
-      if (!user.confirmed) throw new Error("user not confirmed");
+      if (!user.confirmed) throw new Error("account not confirmed");
 
       const payload = { email, userId: user.userId, serviceId };
       const accessToken = sign(payload, accessTokenSecret, { expiresIn: "1m" });
