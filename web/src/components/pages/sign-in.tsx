@@ -100,7 +100,7 @@ export const SignIn = () => {
         )}
 
         {/* todo: use label tag */}
-        <div>E-mail</div>
+        <span>E-mail</span>
         <input
           className={s.formContainer__form__input}
           onChange={(e) => setEmail(e.target.value)}
