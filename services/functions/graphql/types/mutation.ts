@@ -123,7 +123,7 @@ builder.mutationFields((t) => ({
 
       if (userQuery.length > 0) {
         const [user] = userQuery;
-        if (user.confirmed) throw new Error("email registered");
+        if (user.confirmed) throw new Error("e-mail already in use");
         await UserEntity.delete(user).go();
       }
 

@@ -1,3 +1,4 @@
+import * as s from "../../index.css";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useQueryParam } from "../../hook/query-param";
@@ -52,22 +53,24 @@ export const ResetPassword = () => {
   }, [resetPasswordState.data]);
 
   return (
-    <div>
-      <h3>Reset Password</h3>
+    <div className={s.formContainer}>
       <form
+        className={s.formContainer__form}
         onSubmit={(e) => {
           e.preventDefault();
           resetPassword({ password, signupToken });
         }}
       >
-        <label>
-          Password
-          <input
-            value={password}
-            type={"password"}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </label>
+        <h3 className={s.formContainer__form__header}>Reset Password</h3>
+
+        <span>Password</span>
+        <input
+          className={s.formContainer__form__input}
+          value={password}
+          type={"password"}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+
         <button disabled={!passwordIsValid} type={"submit"}>
           Submit
         </button>

@@ -29,7 +29,7 @@ export const formContainer__form__error = style({
   padding: "1rem",
   marginBottom: "1rem",
   border: "1px solid red",
-  background: "darkred",
+  background: "LightPink",
   borderRadius: "10px",
 });
 

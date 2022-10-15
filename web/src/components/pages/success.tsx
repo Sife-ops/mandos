@@ -25,6 +25,7 @@ export const Success = () => {
 
   switch (effect) {
     case "email-resent":
+      // todo: success styles
       return (
         <div>
           <div>E-mail resent!</div>

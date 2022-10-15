@@ -1,3 +1,4 @@
+import * as s from "../../index.css";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useTypedMutation } from "@mandos/graphql/urql";
@@ -41,18 +42,23 @@ export const ForgotPassword = () => {
   }, [sendResetEmailState.data]);
 
   return (
-    <div>
-      <h3>Send Reset E-mail</h3>
+    <div className={s.formContainer}>
       <form
+        className={s.formContainer__form}
         onSubmit={(e) => {
           e.preventDefault();
           sendResetEmail({ email });
         }}
       >
-        <label>
-          E-mail
-          <input value={email} onChange={(e) => setEmail(e.target.value)} />
-        </label>
+        <h3 className={s.formContainer__form__header}>Send Reset E-mail</h3>
+
+        <span>E-mail</span>
+        <input
+          className={s.formContainer__form__input}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+
         <button disabled={!emailIsValid} type={"submit"}>
           Send E-mail
         </button>

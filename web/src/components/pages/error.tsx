@@ -4,6 +4,7 @@ export const Error = () => {
   const { error } = useParams();
 
   switch (error) {
+    // todo: error styles
     case "404":
       return (
         <div>
