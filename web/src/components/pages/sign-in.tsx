@@ -1,3 +1,4 @@
+import * as s from "../../index.css";
 import { useNavigate, Link } from "react-router-dom";
 import { useQueryParam } from "../../hook/query-param";
 import { useState, useEffect } from "react";
@@ -71,21 +72,9 @@ export const SignIn = () => {
   }, [signInState.data]);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        height: "100vh",
-      }}
-    >
+    <div className={s.formContainer}>
       <form
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          // todo: responsivity
-          // todo: percentage
-          width: "300px",
-        }}
+        className={s.formContainer__form}
         onSubmit={async (e) => {
           e.preventDefault();
           signIn({
@@ -96,74 +85,42 @@ export const SignIn = () => {
         }}
       >
         <img
-          style={{
-            borderRadius: "50%",
-            width: "64px",
-            height: "auto",
-            alignSelf: "center",
-          }}
+          className={s.formContainer__form__img}
           src={serviceLogoUrl}
           alt="logo"
         />
         {serviceTitle && (
-          <h3
-            style={{
-              alignSelf: "center",
-            }}
-          >
+          <h3 className={s.formContainer__form__header}>
             Sign in to {serviceTitle}
           </h3>
         )}
 
         {error && (
-          <div
-            style={{
-              padding: "1rem",
-              marginBottom: "1rem",
-              border: "1px solid red",
-              background: "darkred",
-              borderRadius: "10px"
-            }}
-          >
-            Error: {error}.
-          </div>
+          <div className={s.formContainer__form__error}>Error: {error}.</div>
         )}
 
         {/* todo: use label tag */}
         <div>E-mail</div>
         <input
-          style={{
-            marginBottom: "1rem",
-          }}
+          className={s.formContainer__form__input}
           onChange={(e) => setEmail(e.target.value)}
           type={"email"}
           value={email}
         />
 
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-          }}
-        >
+        <div className={s.formContainer__form__passwordLabel}>
           <span>Password</span>
           <Link to={"/forgot-password"}>Forgot password?</Link>
         </div>
         <input
-          style={{
-            marginBottom: "1rem",
-          }}
+          className={s.formContainer__form__input}
           onChange={(e) => setPassword(e.target.value)}
           type={"password"}
           value={password}
         />
         <button type={"submit"}>submit</button>
         {/* todo: randomized text */}
-        <p
-          style={{
-            textAlign: "center",
-          }}
-        >
+        <p className={s.formContainer__form__p}>
           What's wrong with you? <Link to={"/sign-up"}>Create an account</Link>.
         </p>
       </form>
