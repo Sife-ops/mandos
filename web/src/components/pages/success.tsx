@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
@@ -5,7 +6,22 @@ export const Success = () => {
   const nav = useNavigate();
   const { effect } = useParams();
 
-  // todo: redirect after timeout
+  const serviceId = localStorage.getItem("serviceId");
+
+  useEffect(() => {
+    switch (effect) {
+      case "email-resent":
+        break;
+
+      default:
+        if (serviceId) {
+          setTimeout(() => {
+            nav(`/sign-in?serviceId=${serviceId}`);
+          }, 5000);
+        }
+        break;
+    }
+  }, []);
 
   switch (effect) {
     case "email-resent":
@@ -19,6 +35,7 @@ export const Success = () => {
       return (
         <div>
           <div>Password reset!</div>
+          {serviceId && <div>Redirecting...</div>}
         </div>
       );
 
@@ -26,6 +43,7 @@ export const Success = () => {
       return (
         <div>
           <div>Account confirmed!</div>
+          {serviceId && <div>Redirecting...</div>}
         </div>
       );
 
