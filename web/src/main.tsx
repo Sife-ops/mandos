@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import { Confirm } from "./components/pages/confirm";
 import { Error } from "./components/pages/error";
+import { Footer } from "./components/footer";
 import { ForgotPassword } from "./components/pages/forgot-password";
 import { ResetPassword } from "./components/pages/reset-password";
 import { SignIn } from "./components/pages/sign-in";
@@ -40,7 +41,7 @@ function App() {
 
         <Route path="*" element={<Navigate to="/sign-up" />} />
       </Routes>
-      {/* todo: footer */}
+      <Footer />
     </BrowserRouter>
   );
 }

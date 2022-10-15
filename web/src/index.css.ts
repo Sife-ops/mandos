@@ -3,7 +3,7 @@ import { style } from "@vanilla-extract/css";
 export const formContainer = style({
   display: "flex",
   justifyContent: "center",
-  height: "100vh",
+  // height: "100vh",
 });
 
 export const formContainer__form = style({
