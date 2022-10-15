@@ -40,6 +40,7 @@ function App() {
 
         <Route path="*" element={<Navigate to="/sign-up" />} />
       </Routes>
+      {/* todo: footer */}
     </BrowserRouter>
   );
 }

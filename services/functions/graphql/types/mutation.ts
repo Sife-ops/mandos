@@ -5,11 +5,11 @@ import { mandosModel } from "@mandos/core/model";
 import { Config } from "@serverless-stack/node/config";
 import { sign, verify } from "jsonwebtoken";
 
-const sqs = new AWS.SQS();
-
 const {
   entities: { UserEntity, ServiceEntity },
 } = mandosModel;
+
+const sqs = new AWS.SQS();
 
 const sendEmailjsSqs = async (email: string, action: "reset" | "sign-up") => {
   await sqs

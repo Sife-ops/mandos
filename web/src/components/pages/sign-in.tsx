@@ -69,11 +69,21 @@ export const SignIn = () => {
   }, [signInState.data]);
 
   return (
-    <div>
-      <img src={serviceLogoUrl} alt="logo" />
-      {serviceTitle && <h3>Sign in to {serviceTitle}</h3>}
-
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        height: "100vh",
+      }}
+    >
       <form
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          // todo: responsivity
+          // todo: percentage
+          width: "300px",
+        }}
         onSubmit={async (e) => {
           e.preventDefault();
           signIn({
@@ -83,33 +93,64 @@ export const SignIn = () => {
           });
         }}
       >
-        <label>
-          E-mail
-          <input
-            onChange={(e) => setEmail(e.target.value)}
-            type={"email"}
-            value={email}
-          />
-        </label>
-        {/* <br /> */}
+        <img
+          style={{
+            borderRadius: "50%",
+            width: "64px",
+            height: "auto",
+            alignSelf: "center",
+          }}
+          src={serviceLogoUrl}
+          alt="logo"
+        />
+        {serviceTitle && (
+          <h3
+            style={{
+              alignSelf: "center",
+            }}
+          >
+            Sign in to {serviceTitle}
+          </h3>
+        )}
 
-        <label>
-          Password
+        {/* todo: use label tag */}
+        <div>E-mail</div>
+        <input
+          style={{
+            marginBottom: "1rem",
+          }}
+          onChange={(e) => setEmail(e.target.value)}
+          type={"email"}
+          value={email}
+        />
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          <span>Password</span>
           <Link to={"/forgot-password"}>Forgot password?</Link>
-          <input
-            onChange={(e) => setPassword(e.target.value)}
-            type={"password"}
-            value={password}
-          />
-        </label>
-        {/* <br /> */}
-
+        </div>
+        <input
+          style={{
+            marginBottom: "1rem",
+          }}
+          onChange={(e) => setPassword(e.target.value)}
+          type={"password"}
+          value={password}
+        />
         <button type={"submit"}>submit</button>
+        {/* todo: randomized text */}
+        <p
+          style={{
+            textAlign: "center",
+          }}
+        >
+          What's wrong with you? <Link to={"/sign-up"}>Create an account</Link>.
+        </p>
       </form>
-      {/* todo: randomized text */}
-      <p>
-        What's wrong with you? <Link to={"/sign-up"}>Create an account</Link>.
-      </p>
     </div>
   );
 };
