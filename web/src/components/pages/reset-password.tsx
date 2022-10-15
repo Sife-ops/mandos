@@ -22,7 +22,7 @@ export const ResetPassword = () => {
   }
 
   const [password, setPassword] = useState("");
-  const [reset, setReset] = useState(false);
+  //   const [reset, setReset] = useState(false);
   //   const [emailIsValid, setEmailIsValid] = useState(false);
 
   //   useEffect(() => {
@@ -47,7 +47,7 @@ export const ResetPassword = () => {
       console.error(error.message);
     } else if (!fetching && data) {
       console.log(data);
-      setReset(true);
+      nav("/success/password-reset");
     }
   }, [resetPasswordState.data]);
 
@@ -58,7 +58,6 @@ export const ResetPassword = () => {
         onSubmit={(e) => {
           e.preventDefault();
           resetPassword({ password, signupToken });
-          // todo: disable after submit
         }}
       >
         <label>
@@ -76,7 +75,6 @@ export const ResetPassword = () => {
           Submit
         </button>
       </form>
-      {reset && <div>Your password has been reset.</div>}
     </div>
   );
 };

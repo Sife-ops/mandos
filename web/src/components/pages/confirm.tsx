@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useQueryParam } from "../../hook/query-param";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useTypedMutation } from "@mandos/graphql/urql";
 
 export const Confirm = () => {
@@ -13,8 +13,6 @@ export const Confirm = () => {
   } catch {
     nav("/error/404");
   }
-
-  const [loading, setLoading] = useState(true);
 
   const [confirmState, confirm] = useTypedMutation(
     (vars: { signupToken: string }) => {
@@ -35,13 +33,9 @@ export const Confirm = () => {
     if (error) {
       console.error(error.message);
     } else if (!fetching && data) {
-      setLoading(false);
+      nav("/success/confirmed");
     }
   }, [confirmState.data]);
 
-  if (loading) {
-    return <div>loading...</div>;
-  }
-
-  return <div>congratulations!</div>;
+  return <div>loading...</div>;
 };

@@ -1,4 +1,5 @@
 // import * as yup from "yup";
+import { useNavigate } from "react-router-dom";
 import { useTypedMutation } from "@mandos/graphql/urql";
 import { useState, useEffect } from "react";
 
@@ -9,8 +10,10 @@ import { useState, useEffect } from "react";
 //   .required();
 
 export const ForgotPassword = () => {
+  const nav = useNavigate();
+
   const [email, setEmail] = useState("");
-  const [resent, setResent] = useState(false);
+  // const [resent, setResent] = useState(false);
   //   const [emailIsValid, setEmailIsValid] = useState(false);
 
   //   useEffect(() => {
@@ -35,7 +38,7 @@ export const ForgotPassword = () => {
       console.error(error.message);
     } else if (!fetching && data) {
       console.log(data);
-      setResent(true);
+      nav("/success/email-resent");
     }
   }, [sendResetEmailState.data]);
 
@@ -46,7 +49,6 @@ export const ForgotPassword = () => {
         onSubmit={(e) => {
           e.preventDefault();
           sendResetEmail({ email });
-          // todo: disable after submit
         }}
       >
         <label>
@@ -60,7 +62,6 @@ export const ForgotPassword = () => {
           Send E-mail
         </button>
       </form>
-      {resent && <div>E-mail sent!</div>}
     </div>
   );
 };

@@ -10,6 +10,7 @@ import { ForgotPassword } from "./components/pages/forgot-password";
 import { ResetPassword } from "./components/pages/reset-password";
 import { SignIn } from "./components/pages/sign-in";
 import { SignUp } from "./components/pages/sign-up";
+import { Success } from "./components/pages/success";
 import { Unconfirmed } from "./components/pages/unconfirmed";
 
 const urql = createClient({
@@ -34,6 +35,7 @@ function App() {
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/success/:effect" element={<Success />} />
         <Route path="/unconfirmed" element={<Unconfirmed />} />
 
         <Route path="*" element={<Navigate to="/sign-up" />} />
