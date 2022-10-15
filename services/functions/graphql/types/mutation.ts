@@ -11,6 +11,20 @@ const {
   entities: { UserEntity, ServiceEntity },
 } = mandosModel;
 
+const sendEmailjsSqs = async (email: string, action: "reset" | "sign-up") => {
+  await sqs
+    .sendMessage({
+      QueueUrl: Config.EMAILJS_SQS,
+      MessageBody: JSON.stringify({
+        email,
+        action,
+      }),
+      MessageGroupId: "emailjs",
+    })
+    .promise()
+    .then((e) => console.log("emailjsSqs response:", e));
+};
+
 builder.mutationFields((t) => ({
   resendEmail: t.boolean({
     args: {
@@ -25,18 +39,7 @@ builder.mutationFields((t) => ({
       const [user] = found;
       if (user.confirmed) throw new Error("account already confirmed");
 
-      // toso: await sendEmailjsSqs(email, "sign-up");
-      await sqs
-        .sendMessage({
-          QueueUrl: Config.EMAILJS_SQS,
-          MessageBody: JSON.stringify({
-            email,
-            action: "sign-up",
-          }),
-          MessageGroupId: "emailjs",
-        })
-        .promise()
-        .then((e) => console.log(e));
+      await sendEmailjsSqs(email, "sign-up");
 
       return true;
     },
@@ -89,17 +92,7 @@ builder.mutationFields((t) => ({
       const hashed = bcrypt.hashSync(password, 8);
       await UserEntity.create({ email, password: hashed }).go();
 
-      await sqs
-        .sendMessage({
-          QueueUrl: Config.EMAILJS_SQS,
-          MessageBody: JSON.stringify({
-            email,
-            action: "sign-up",
-          }),
-          MessageGroupId: "emailjs",
-        })
-        .promise()
-        .then((e) => console.log(e));
+      await sendEmailjsSqs(email, "sign-up");
 
       return true;
     },
