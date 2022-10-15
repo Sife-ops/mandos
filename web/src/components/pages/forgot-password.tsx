@@ -1,28 +1,26 @@
-// import * as yup from "yup";
+import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useTypedMutation } from "@mandos/graphql/urql";
 import { useState, useEffect } from "react";
 
-// todo: email validation
-// const emailSchema = yup
-//   .string()
-//   .email()
-//   .required();
+const emailSchema = yup
+  .string()
+  .email()
+  .required();
 
 export const ForgotPassword = () => {
   const nav = useNavigate();
 
   const [email, setEmail] = useState("");
-  // const [resent, setResent] = useState(false);
-  //   const [emailIsValid, setEmailIsValid] = useState(false);
+  const [emailIsValid, setEmailIsValid] = useState(false);
 
-  //   useEffect(() => {
-  //     if (emailSchema.isValidSync(email)) {
-  //       setEmailIsValid(true);
-  //     } else {
-  //       setEmailIsValid(false);
-  //     }
-  //   }, [email]);
+  useEffect(() => {
+    if (emailSchema.isValidSync(email)) {
+      setEmailIsValid(true);
+    } else {
+      setEmailIsValid(false);
+    }
+  }, [email]);
 
   const [sendResetEmailState, sendResetEmail] = useTypedMutation(
     (vars: { email: string }) => {
@@ -55,10 +53,7 @@ export const ForgotPassword = () => {
           E-mail
           <input value={email} onChange={(e) => setEmail(e.target.value)} />
         </label>
-        <button
-          // disabled={!emailIsValid}
-          type={"submit"}
-        >
+        <button disabled={!emailIsValid} type={"submit"}>
           Send E-mail
         </button>
       </form>

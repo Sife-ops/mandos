@@ -1,14 +1,15 @@
-// import * as yup from "yup";
+import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useQueryParam } from "../../hook/query-param";
 import { useTypedMutation } from "@mandos/graphql/urql";
 import { useState, useEffect } from "react";
 
-// todo: password validation
-// const emailSchema = yup
-//   .string()
-//   .email()
-//   .required();
+const passwordSchema = yup
+  .string()
+  .min(8)
+  .matches(/[0-9]/)
+  .matches(/[!@#\$%\^\&*\)\(+=._-]/)
+  .required();
 
 export const ResetPassword = () => {
   const nav = useNavigate();
@@ -22,16 +23,15 @@ export const ResetPassword = () => {
   }
 
   const [password, setPassword] = useState("");
-  //   const [reset, setReset] = useState(false);
-  //   const [emailIsValid, setEmailIsValid] = useState(false);
+  const [passwordIsValid, setPasswordIsValid] = useState(false);
 
-  //   useEffect(() => {
-  //     if (emailSchema.isValidSync(email)) {
-  //       setEmailIsValid(true);
-  //     } else {
-  //       setEmailIsValid(false);
-  //     }
-  //   }, [email]);
+  useEffect(() => {
+    if (passwordSchema.isValidSync(password)) {
+      setPasswordIsValid(true);
+    } else {
+      setPasswordIsValid(false);
+    }
+  }, [password]);
 
   const [resetPasswordState, resetPassword] = useTypedMutation(
     (vars: { password: string; signupToken: string }) => {
@@ -68,10 +68,7 @@ export const ResetPassword = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </label>
-        <button
-          // disabled={!emailIsValid}
-          type={"submit"}
-        >
+        <button disabled={!passwordIsValid} type={"submit"}>
           Submit
         </button>
       </form>

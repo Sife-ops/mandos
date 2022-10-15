@@ -71,7 +71,7 @@ export const SignIn = () => {
   return (
     <div>
       <img src={serviceLogoUrl} alt="logo" />
-      {serviceTitle && <h3>{serviceTitle} Sign-In</h3>}
+      {serviceTitle && <h3>Sign in to {serviceTitle}</h3>}
 
       <form
         onSubmit={async (e) => {
