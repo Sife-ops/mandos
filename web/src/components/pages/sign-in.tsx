@@ -24,6 +24,8 @@ export const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [error, setError] = useState<string | null>(null);
+
   const [serviceQuery] = useTypedQuery({
     query: {
       service: [
@@ -61,7 +63,7 @@ export const SignIn = () => {
     const { fetching, data, error } = signInState;
     if (error) {
       console.error(error.message);
-      // console.log(error.message.split("[GraphQL] ")[1]);
+      setError(error.message.split("[GraphQL] ")[1]);
     } else if (!fetching && data) {
       console.log(data.signIn);
       // window.location.href = data.signIn;
@@ -111,6 +113,20 @@ export const SignIn = () => {
           >
             Sign in to {serviceTitle}
           </h3>
+        )}
+
+        {error && (
+          <div
+            style={{
+              padding: "1rem",
+              marginBottom: "1rem",
+              border: "1px solid red",
+              background: "darkred",
+              borderRadius: "10px"
+            }}
+          >
+            Error: {error}.
+          </div>
         )}
 
         {/* todo: use label tag */}

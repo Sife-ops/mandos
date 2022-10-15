@@ -54,14 +54,6 @@ export const useSignUpForm = () => {
   const [formIsValid, setFormIsValid] = useState(false);
 
   useEffect(() => {
-    console.log("email", email);
-    console.log("valid", emailIsValid);
-    console.log("pass", password);
-    console.log("valid", passwordIsValid);
-    console.log("form", formIsValid);
-  });
-
-  useEffect(() => {
     validationEffect(
       email,
       emailSchema.isValidSync(email),
