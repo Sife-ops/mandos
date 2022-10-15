@@ -6,71 +6,80 @@ export default {
     ],
     "types": {
         "Mutation": {
-            "signIn": [
+            "confirm": [
                 1,
                 {
+                    "signupToken": [
+                        2,
+                        "String!"
+                    ]
+                }
+            ],
+            "signIn": [
+                2,
+                {
                     "email": [
-                        1,
+                        2,
                         "String!"
                     ],
                     "password": [
-                        1,
+                        2,
                         "String!"
                     ],
                     "serviceId": [
-                        1,
+                        2,
                         "String!"
                     ]
                 }
             ],
             "signUp": [
-                2,
+                1,
                 {
                     "email": [
-                        1,
+                        2,
                         "String!"
                     ],
                     "password": [
-                        1,
+                        2,
                         "String!"
                     ]
                 }
             ],
             "__typename": [
-                1
+                2
             ]
         },
-        "String": {},
         "Boolean": {},
+        "String": {},
         "Query": {
             "service": [
                 4,
                 {
                     "serviceId": [
-                        1,
+                        2,
                         "String!"
                     ]
                 }
             ],
             "__typename": [
-                1
+                2
             ]
         },
         "Service": {
             "logoUrl": [
-                1
+                2
             ],
             "redirect": [
-                1
+                2
             ],
             "serviceId": [
                 5
             ],
             "title": [
-                1
+                2
             ],
             "__typename": [
-                1
+                2
             ]
         },
         "ID": {}

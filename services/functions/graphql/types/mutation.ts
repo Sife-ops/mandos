@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import { builder } from "../builder";
 import { mandosModel } from "@mandos/core/model";
 import { Config } from "@serverless-stack/node/config";
-import { sign } from "jsonwebtoken";
+import { sign, verify } from "jsonwebtoken";
 
 const sqs = new AWS.SQS();
 
@@ -12,6 +12,36 @@ const {
 } = mandosModel;
 
 builder.mutationFields((t) => ({
+  // todo: move to queries?
+  confirm: t.boolean({
+    args: {
+      signupToken: t.arg.string({ required: true }),
+    },
+    resolve: async (_, { signupToken }) => {
+      const { email } = verify(signupToken, Config.SIGNUP_TOKEN_SECRET) as {
+        email: string;
+      };
+
+      const {
+        data: userQuery,
+      } = await mandosModel.entities.UserEntity.query.email({ email }).go();
+
+      if (userQuery.length < 1) throw new Error("user not found");
+      const [user] = userQuery;
+
+      if (!user.confirmed) {
+        await mandosModel.entities.UserEntity.update({
+          userId: user.userId,
+          email: user.email,
+        })
+          .set({ confirmed: true })
+          .go();
+      }
+
+      return true;
+    },
+  }),
+
   signUp: t.boolean({
     args: {
       email: t.arg.string({ required: true }),

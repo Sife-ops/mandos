@@ -22,6 +22,8 @@ export function Web({ stack, app }: StackContext) {
     },
   });
 
+  const signupTokenSecret = new Config.Secret(stack, "SIGNUP_TOKEN_SECRET");
+
   // todo: move this or combine all files
   const emailjsSqs = new Queue(stack, "emailjs", {
     consumer: {
@@ -29,7 +31,7 @@ export function Web({ stack, app }: StackContext) {
         handler: "functions/external/emailjs.handler",
         config: [
           db.TABLE_NAME,
-          new Config.Secret(stack, "SIGNUP_TOKEN_SECRET"),
+          signupTokenSecret,
           new Config.Secret(stack, "EMAILJS_USER_ID"),
           new Config.Secret(stack, "EMAILJS_SERVICE_ID"),
           // new Config.Secret(stack, "EMAILJS_ACCESSTOKEN"),
@@ -37,8 +39,6 @@ export function Web({ stack, app }: StackContext) {
             value: "template_pwk79e6",
           }),
           new Config.Parameter(stack, "SITE_URL", { value: site.url }),
-          // todo: move to env or Config stack
-          // new Config.Parameter(stack, "STAGE", { value: app.stage }),
         ],
         permissions: [db.table],
         environment: {
@@ -64,6 +64,7 @@ export function Web({ stack, app }: StackContext) {
         permissions: [db.table, logoBucket, emailjsSqs],
         config: [
           db.TABLE_NAME,
+          signupTokenSecret,
           new Config.Parameter(stack, "LOGO_BUCKET", {
             value: logoBucket.bucketName,
           }),

@@ -1,4 +1,5 @@
 type Mutation {
+  confirm(signupToken: String!): Boolean!
   signIn(email: String!, password: String!, serviceId: String!): String!
   signUp(email: String!, password: String!): Boolean!
 }

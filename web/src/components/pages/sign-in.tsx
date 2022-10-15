@@ -103,7 +103,7 @@ export const SignIn = () => {
 
         {/* todo: randomized text */}
         <p>
-          What's wrong with you? <Link to={"/sign-up"}>Create and account</Link>
+          What's wrong with you? <Link to={"/sign-up"}>Create an account</Link>
           .
         </p>
       </form>
