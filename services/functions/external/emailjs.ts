@@ -17,16 +17,16 @@ export const handler = async (event: any) => {
     );
 
     // todo: expiration
-    const signupToken = sign({ email }, Config.SIGNUP_TOKEN_SECRET);
+    const registrationToken = sign({ email }, Config.REGISTRATION_TOKEN_SECRET);
 
     let actionLink;
     switch (action) {
       case "sign-up":
-        actionLink = `/confirm?signupToken=${signupToken}`;
+        actionLink = `/confirm?registrationToken=${registrationToken}`;
         break;
 
       case "reset":
-        actionLink = `/reset-password?signupToken=${signupToken}`;
+        actionLink = `/reset-password?registrationToken=${registrationToken}`;
         break;
     }
 

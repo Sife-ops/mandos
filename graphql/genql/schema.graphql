@@ -1,7 +1,7 @@
 type Mutation {
-  confirm(signupToken: String!): Boolean!
+  confirm(registrationToken: String!): Boolean!
   resendEmail(email: String!): Boolean!
-  resetPassword(password: String!, signupToken: String!): Boolean!
+  resetPassword(password: String!, registrationToken: String!): Boolean!
   sendResetEmail(email: String!): Boolean!
   signIn(email: String!, password: String!, serviceId: String!): String!
   signUp(email: String!, password: String!): Boolean!

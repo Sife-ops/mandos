@@ -15,10 +15,10 @@ const passwordSchema = yup
 export const ResetPassword = () => {
   const nav = useNavigate();
 
-  let signupToken: string;
+  let registrationToken: string;
   try {
-    const [_] = useQueryParam(["signupToken"]);
-    signupToken = _;
+    const [_] = useQueryParam(["registrationToken"]);
+    registrationToken = _;
   } catch {
     nav("/error/404");
   }
@@ -35,7 +35,7 @@ export const ResetPassword = () => {
   }, [password]);
 
   const [resetPasswordState, resetPassword] = useTypedMutation(
-    (vars: { password: string; signupToken: string }) => {
+    (vars: { password: string; registrationToken: string }) => {
       return {
         resetPassword: [vars],
       };
@@ -58,7 +58,7 @@ export const ResetPassword = () => {
         className={s.formContainer__form}
         onSubmit={(e) => {
           e.preventDefault();
-          resetPassword({ password, signupToken });
+          resetPassword({ password, registrationToken });
         }}
       >
         <h3 className={s.formContainer__form__header}>Reset Password</h3>

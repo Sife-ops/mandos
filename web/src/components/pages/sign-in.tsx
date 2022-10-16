@@ -66,8 +66,7 @@ export const SignIn = () => {
       console.error(error.message);
       setError(error.message.split("[GraphQL] ")[1]);
     } else if (!fetching && data) {
-      console.log(data.signIn);
-      // window.location.href = data.signIn;
+      window.location.href = data.signIn;
     }
   }, [signInState.data]);
 

@@ -28,11 +28,14 @@ const sendEmailjsSqs = async (email: string, action: "reset" | "sign-up") => {
 builder.mutationFields((t) => ({
   resetPassword: t.boolean({
     args: {
-      signupToken: t.arg.string({ required: true }),
+      registrationToken: t.arg.string({ required: true }),
       password: t.arg.string({ required: true }),
     },
-    resolve: async (_, { signupToken, password }) => {
-      const { email } = verify(signupToken, Config.SIGNUP_TOKEN_SECRET) as {
+    resolve: async (_, { registrationToken, password }) => {
+      const { email } = verify(
+        registrationToken,
+        Config.REGISTRATION_TOKEN_SECRET
+      ) as {
         email: string;
       };
 
@@ -89,10 +92,13 @@ builder.mutationFields((t) => ({
   // todo: move to queries?
   confirm: t.boolean({
     args: {
-      signupToken: t.arg.string({ required: true }),
+      registrationToken: t.arg.string({ required: true }),
     },
-    resolve: async (_, { signupToken }) => {
-      const { email } = verify(signupToken, Config.SIGNUP_TOKEN_SECRET) as {
+    resolve: async (_, { registrationToken }) => {
+      const { email } = verify(
+        registrationToken,
+        Config.REGISTRATION_TOKEN_SECRET
+      ) as {
         email: string;
       };
 

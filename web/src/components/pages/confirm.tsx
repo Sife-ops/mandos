@@ -6,16 +6,16 @@ import { useTypedMutation } from "@mandos/graphql/urql";
 export const Confirm = () => {
   const nav = useNavigate();
 
-  let signupToken: string;
+  let registrationToken: string;
   try {
-    const [_] = useQueryParam(["signupToken"]);
-    signupToken = _;
+    const [_] = useQueryParam(["registrationToken"]);
+    registrationToken = _;
   } catch {
     nav("/error/404");
   }
 
   const [confirmState, confirm] = useTypedMutation(
-    (vars: { signupToken: string }) => {
+    (vars: { registrationToken: string }) => {
       return {
         confirm: [vars],
       };
@@ -24,7 +24,7 @@ export const Confirm = () => {
 
   useEffect(() => {
     confirm({
-      signupToken,
+      registrationToken,
     });
   }, []);
 

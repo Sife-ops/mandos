@@ -9,7 +9,7 @@ export default {
             "confirm": [
                 1,
                 {
-                    "signupToken": [
+                    "registrationToken": [
                         2,
                         "String!"
                     ]
@@ -31,7 +31,7 @@ export default {
                         2,
                         "String!"
                     ],
-                    "signupToken": [
+                    "registrationToken": [
                         2,
                         "String!"
                     ]
