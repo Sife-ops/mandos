@@ -18,6 +18,13 @@ export function Api({ stack }: StackContext) {
           permissions: [db.table],
         },
       },
+      "POST /refresh": {
+        function: {
+          handler: "functions/rest/refresh.handler",
+          config: [db.TABLE_NAME],
+          permissions: [db.table],
+        },
+      },
     },
   });
 

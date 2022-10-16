@@ -1,8 +1,9 @@
 import AWS from "aws-sdk";
 import bcrypt from "bcryptjs";
-import { builder } from "../builder";
-import { mandosModel } from "@mandos/core/model";
 import { Config } from "@serverless-stack/node/config";
+import { builder } from "../builder";
+import { tokenOptions } from "../../constant";
+import { mandosModel } from "@mandos/core/model";
 import { sign, verify } from "jsonwebtoken";
 
 const {
@@ -166,10 +167,16 @@ builder.mutationFields((t) => ({
       if (!user.confirmed) throw new Error("account not confirmed");
 
       const payload = { email, userId: user.userId, serviceId };
-      const accessToken = sign(payload, accessTokenSecret, { expiresIn: "10m" });
-      const refreshToken = sign(payload, refreshTokenSecret, {
-        expiresIn: "20m",
-      });
+      const accessToken = sign(
+        payload,
+        accessTokenSecret,
+        tokenOptions.accessToken
+      );
+      const refreshToken = sign(
+        payload,
+        refreshTokenSecret,
+        tokenOptions.refreshToken
+      );
 
       return `${redirect}?accessToken=${accessToken}&refreshToken=${refreshToken}`;
     },
