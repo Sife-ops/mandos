@@ -1,8 +1,8 @@
 export const tokenOptions = {
   accessToken: {
-    expiresIn: "1m",
+    expiresIn: "15m",
   },
   refreshToken: {
-    expiresIn: "20m",
+    expiresIn: "1d",
   },
 };
