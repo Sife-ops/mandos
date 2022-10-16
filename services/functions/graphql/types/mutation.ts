@@ -166,9 +166,9 @@ builder.mutationFields((t) => ({
       if (!user.confirmed) throw new Error("account not confirmed");
 
       const payload = { email, userId: user.userId, serviceId };
-      const accessToken = sign(payload, accessTokenSecret, { expiresIn: "1m" });
+      const accessToken = sign(payload, accessTokenSecret, { expiresIn: "10m" });
       const refreshToken = sign(payload, refreshTokenSecret, {
-        expiresIn: "2m",
+        expiresIn: "20m",
       });
 
       return `${redirect}?accessToken=${accessToken}&refreshToken=${refreshToken}`;
