@@ -1,116 +1,157 @@
 export default {
     "scalars": [
         1,
-        2,
-        5
+        4,
+        7
     ],
     "types": {
+        "CaptchaGet": {
+            "captcha": [
+                1
+            ],
+            "ts": [
+                1
+            ],
+            "uuid": [
+                1
+            ],
+            "__typename": [
+                1
+            ]
+        },
+        "String": {},
+        "CaptchaVerify": {
+            "message": [
+                1
+            ],
+            "ts": [
+                1
+            ],
+            "__typename": [
+                1
+            ]
+        },
         "Mutation": {
+            "captchaGet": [
+                0
+            ],
+            "captchaVerify": [
+                2,
+                {
+                    "captcha": [
+                        1,
+                        "String!"
+                    ],
+                    "uuid": [
+                        1,
+                        "String!"
+                    ]
+                }
+            ],
             "confirm": [
-                1,
+                4,
                 {
                     "registrationToken": [
-                        2,
+                        1,
                         "String!"
                     ]
                 }
             ],
             "resendEmail": [
-                1,
+                4,
                 {
                     "email": [
-                        2,
+                        1,
                         "String!"
                     ]
                 }
             ],
             "resetPassword": [
-                1,
+                4,
                 {
                     "password": [
-                        2,
+                        1,
                         "String!"
                     ],
                     "registrationToken": [
-                        2,
+                        1,
                         "String!"
                     ]
                 }
             ],
             "sendResetEmail": [
-                1,
+                4,
                 {
                     "email": [
-                        2,
+                        1,
                         "String!"
                     ]
                 }
             ],
             "signIn": [
-                2,
+                1,
                 {
                     "email": [
-                        2,
+                        1,
                         "String!"
                     ],
                     "password": [
-                        2,
+                        1,
                         "String!"
                     ],
                     "serviceId": [
-                        2,
+                        1,
                         "String!"
                     ]
                 }
             ],
             "signUp": [
-                1,
+                4,
                 {
                     "email": [
-                        2,
+                        1,
                         "String!"
                     ],
                     "password": [
-                        2,
+                        1,
                         "String!"
                     ]
                 }
             ],
             "__typename": [
-                2
+                1
             ]
         },
         "Boolean": {},
-        "String": {},
         "Query": {
             "service": [
-                4,
+                6,
                 {
                     "serviceId": [
-                        2,
+                        1,
                         "String!"
                     ]
                 }
             ],
             "__typename": [
-                2
+                1
             ]
         },
         "Service": {
             "logoUrl": [
-                2
+                1
             ],
             "redirect": [
-                2
+                1
             ],
             "serviceId": [
-                5
+                7
             ],
             "title": [
-                2
+                1
             ],
             "__typename": [
-                2
+                1
             ]
         },
         "ID": {}

@@ -1,4 +1,5 @@
 import AWS from "aws-sdk";
+import axios from "axios";
 import bcrypt from "bcryptjs";
 import { Config } from "@serverless-stack/node/config";
 import { builder } from "../builder";
@@ -26,7 +27,48 @@ const sendEmailjsSqs = async (email: string, action: "reset" | "sign-up") => {
     .then((e) => console.log("emailjsSqs response:", e));
 };
 
+const CaptchaGetType = builder.objectRef<{
+  captcha: string;
+  uuid: string;
+  ts: string;
+}>("CaptchaGet");
+CaptchaGetType.implement({
+  fields: (t) => ({
+    captcha: t.exposeString("captcha"),
+    uuid: t.exposeString("uuid"),
+    ts: t.exposeString("ts"),
+  }),
+});
+
+const CaptchaVerifyType = builder.objectRef<{
+  message: string;
+  ts: string;
+}>("CaptchaVerify");
+CaptchaVerifyType.implement({
+  fields: (t) => ({
+    message: t.exposeString("message"),
+    ts: t.exposeString("ts"),
+  }),
+});
+
+const captchaApi = "https://captcha-api.akshit.me/v2";
+
 builder.mutationFields((t) => ({
+  captchaGet: t.field({
+    type: CaptchaGetType,
+    resolve: () => axios.get(`${captchaApi}/generate`).then((e) => e.data),
+  }),
+
+  captchaVerify: t.field({
+    type: CaptchaVerifyType,
+    args: {
+      uuid: t.arg.string({ required: true }),
+      captcha: t.arg.string({ required: true }),
+    },
+    resolve: (_, { captcha, uuid }) =>
+      axios.post(`${captchaApi}/verify`, { captcha, uuid }).then((e) => e.data),
+  }),
+
   resetPassword: t.boolean({
     args: {
       registrationToken: t.arg.string({ required: true }),

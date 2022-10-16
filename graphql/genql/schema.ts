@@ -1,12 +1,27 @@
 import {FieldsSelection,Observable} from '@genql/runtime'
 
 export type Scalars = {
-    Boolean: boolean,
     String: string,
+    Boolean: boolean,
     ID: string,
 }
 
+export interface CaptchaGet {
+    captcha: Scalars['String']
+    ts: Scalars['String']
+    uuid: Scalars['String']
+    __typename: 'CaptchaGet'
+}
+
+export interface CaptchaVerify {
+    message: Scalars['String']
+    ts: Scalars['String']
+    __typename: 'CaptchaVerify'
+}
+
 export interface Mutation {
+    captchaGet: CaptchaGet
+    captchaVerify: CaptchaVerify
     confirm: Scalars['Boolean']
     resendEmail: Scalars['Boolean']
     resetPassword: Scalars['Boolean']
@@ -29,7 +44,24 @@ export interface Service {
     __typename: 'Service'
 }
 
+export interface CaptchaGetRequest{
+    captcha?: boolean | number
+    ts?: boolean | number
+    uuid?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface CaptchaVerifyRequest{
+    message?: boolean | number
+    ts?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
 export interface MutationRequest{
+    captchaGet?: CaptchaGetRequest
+    captchaVerify?: [{captcha: Scalars['String'],uuid: Scalars['String']},CaptchaVerifyRequest]
     confirm?: [{registrationToken: Scalars['String']}]
     resendEmail?: [{email: Scalars['String']}]
     resetPassword?: [{password: Scalars['String'],registrationToken: Scalars['String']}]
@@ -56,6 +88,22 @@ export interface ServiceRequest{
 }
 
 
+const CaptchaGet_possibleTypes: string[] = ['CaptchaGet']
+export const isCaptchaGet = (obj?: { __typename?: any } | null): obj is CaptchaGet => {
+  if (!obj?.__typename) throw new Error('__typename is missing in "isCaptchaGet"')
+  return CaptchaGet_possibleTypes.includes(obj.__typename)
+}
+
+
+
+const CaptchaVerify_possibleTypes: string[] = ['CaptchaVerify']
+export const isCaptchaVerify = (obj?: { __typename?: any } | null): obj is CaptchaVerify => {
+  if (!obj?.__typename) throw new Error('__typename is missing in "isCaptchaVerify"')
+  return CaptchaVerify_possibleTypes.includes(obj.__typename)
+}
+
+
+
 const Mutation_possibleTypes: string[] = ['Mutation']
 export const isMutation = (obj?: { __typename?: any } | null): obj is Mutation => {
   if (!obj?.__typename) throw new Error('__typename is missing in "isMutation"')
@@ -79,7 +127,31 @@ export const isService = (obj?: { __typename?: any } | null): obj is Service => 
 }
 
 
+export interface CaptchaGetPromiseChain{
+    captcha: ({get: (request?: boolean|number, defaultValue?: Scalars['String']) => Promise<Scalars['String']>}),
+    ts: ({get: (request?: boolean|number, defaultValue?: Scalars['String']) => Promise<Scalars['String']>}),
+    uuid: ({get: (request?: boolean|number, defaultValue?: Scalars['String']) => Promise<Scalars['String']>})
+}
+
+export interface CaptchaGetObservableChain{
+    captcha: ({get: (request?: boolean|number, defaultValue?: Scalars['String']) => Observable<Scalars['String']>}),
+    ts: ({get: (request?: boolean|number, defaultValue?: Scalars['String']) => Observable<Scalars['String']>}),
+    uuid: ({get: (request?: boolean|number, defaultValue?: Scalars['String']) => Observable<Scalars['String']>})
+}
+
+export interface CaptchaVerifyPromiseChain{
+    message: ({get: (request?: boolean|number, defaultValue?: Scalars['String']) => Promise<Scalars['String']>}),
+    ts: ({get: (request?: boolean|number, defaultValue?: Scalars['String']) => Promise<Scalars['String']>})
+}
+
+export interface CaptchaVerifyObservableChain{
+    message: ({get: (request?: boolean|number, defaultValue?: Scalars['String']) => Observable<Scalars['String']>}),
+    ts: ({get: (request?: boolean|number, defaultValue?: Scalars['String']) => Observable<Scalars['String']>})
+}
+
 export interface MutationPromiseChain{
+    captchaGet: (CaptchaGetPromiseChain & {get: <R extends CaptchaGetRequest>(request: R, defaultValue?: FieldsSelection<CaptchaGet, R>) => Promise<FieldsSelection<CaptchaGet, R>>}),
+    captchaVerify: ((args: {captcha: Scalars['String'],uuid: Scalars['String']}) => CaptchaVerifyPromiseChain & {get: <R extends CaptchaVerifyRequest>(request: R, defaultValue?: FieldsSelection<CaptchaVerify, R>) => Promise<FieldsSelection<CaptchaVerify, R>>}),
     confirm: ((args: {registrationToken: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Promise<Scalars['Boolean']>}),
     resendEmail: ((args: {email: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Promise<Scalars['Boolean']>}),
     resetPassword: ((args: {password: Scalars['String'],registrationToken: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Promise<Scalars['Boolean']>}),
@@ -89,6 +161,8 @@ export interface MutationPromiseChain{
 }
 
 export interface MutationObservableChain{
+    captchaGet: (CaptchaGetObservableChain & {get: <R extends CaptchaGetRequest>(request: R, defaultValue?: FieldsSelection<CaptchaGet, R>) => Observable<FieldsSelection<CaptchaGet, R>>}),
+    captchaVerify: ((args: {captcha: Scalars['String'],uuid: Scalars['String']}) => CaptchaVerifyObservableChain & {get: <R extends CaptchaVerifyRequest>(request: R, defaultValue?: FieldsSelection<CaptchaVerify, R>) => Observable<FieldsSelection<CaptchaVerify, R>>}),
     confirm: ((args: {registrationToken: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Observable<Scalars['Boolean']>}),
     resendEmail: ((args: {email: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Observable<Scalars['Boolean']>}),
     resetPassword: ((args: {password: Scalars['String'],registrationToken: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Observable<Scalars['Boolean']>}),

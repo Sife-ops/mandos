@@ -5,30 +5,9 @@ import { useEffect, useState } from "react";
 import { useTypedMutation } from "@mandos/graphql/urql";
 
 export const SignUp = () => {
-  const nav = useNavigate();
+  // const nav = useNavigate();
   const signUpForm = useSignUpForm();
   const serviceId = localStorage.getItem("serviceId");
-
-  const [error, setError] = useState<string | null>(null);
-
-  const [signUpState, signUp] = useTypedMutation(
-    (vars: { email: string; password: string }) => {
-      return {
-        signUp: [vars],
-      };
-    }
-  );
-
-  useEffect(() => {
-    const { fetching, data, error } = signUpState;
-    if (error) {
-      console.error(error.message);
-      setError(error.message.split("[GraphQL] ")[1]);
-    } else if (!fetching && data) {
-      console.log(data.signUp);
-      nav(`/unconfirmed?email=${signUpForm.email}`);
-    }
-  }, [signUpState.data]);
 
   return (
     <div className={s.formContainer}>
@@ -36,17 +15,20 @@ export const SignUp = () => {
         className={s.formContainer__form}
         onSubmit={async (e) => {
           e.preventDefault();
-          const { email, password } = signUpForm;
-          signUp({
-            email: email || "",
-            password: password || "",
-          });
+          signUpForm.submit();
+          // const { email, password } = signUpForm;
+          // signUpForm.signUp({
+          //   email: email || "",
+          //   password: password || "",
+          // });
         }}
       >
         <h3 className={s.formContainer__form__header}>Sign Up</h3>
 
-        {error && (
-          <div className={s.formContainer__form__error}>Error: {error}.</div>
+        {signUpForm.formError && (
+          <div className={s.formContainer__form__error}>
+            Error: {signUpForm.formError}.
+          </div>
         )}
 
         {/* todo: use label tag */}
@@ -54,7 +36,7 @@ export const SignUp = () => {
         <input
           className={s.formContainer__form__input}
           onChange={(e) => signUpForm.setEmail(e.target.value)}
-          placeholder="Email"
+          // placeholder="Email"
           type={"email"}
           value={signUpForm.email || ""}
         />
@@ -63,9 +45,21 @@ export const SignUp = () => {
         <input
           className={s.formContainer__form__input}
           onChange={(e) => signUpForm.setPassword(e.target.value)}
-          placeholder="Password"
+          // placeholder="Password"
           type={"password"}
           value={signUpForm.password || ""}
+        />
+
+        <img style={{
+          marginBottom: "1rem"
+        }} src={signUpForm.captchaImg} alt="captcha" />
+        <span>Enter the code shown above:</span>
+        <input
+          className={s.formContainer__form__input}
+          onChange={(e) => signUpForm.setCaptcha(e.target.value)}
+          // placeholder="Password"
+          // type={"password"}
+          value={signUpForm.captcha || ""}
         />
 
         <button type={"submit"} disabled={!signUpForm.formIsValid}>

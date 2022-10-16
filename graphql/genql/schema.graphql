@@ -1,4 +1,17 @@
+type CaptchaGet {
+  captcha: String!
+  ts: String!
+  uuid: String!
+}
+
+type CaptchaVerify {
+  message: String!
+  ts: String!
+}
+
 type Mutation {
+  captchaGet: CaptchaGet!
+  captchaVerify(captcha: String!, uuid: String!): CaptchaVerify!
   confirm(registrationToken: String!): Boolean!
   resendEmail(email: String!): Boolean!
   resetPassword(password: String!, registrationToken: String!): Boolean!
