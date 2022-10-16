@@ -1,11 +1,8 @@
 import * as s from "../../index.css";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSignUpForm } from "../../hook/sign-up-form";
-import { useEffect, useState } from "react";
-import { useTypedMutation } from "@mandos/graphql/urql";
 
 export const SignUp = () => {
-  // const nav = useNavigate();
   const signUpForm = useSignUpForm();
   const serviceId = localStorage.getItem("serviceId");
 
@@ -16,11 +13,6 @@ export const SignUp = () => {
         onSubmit={async (e) => {
           e.preventDefault();
           signUpForm.submit();
-          // const { email, password } = signUpForm;
-          // signUpForm.signUp({
-          //   email: email || "",
-          //   password: password || "",
-          // });
         }}
       >
         <h3 className={s.formContainer__form__header}>Sign Up</h3>
@@ -36,7 +28,6 @@ export const SignUp = () => {
         <input
           className={s.formContainer__form__input}
           onChange={(e) => signUpForm.setEmail(e.target.value)}
-          // placeholder="Email"
           type={"email"}
           value={signUpForm.email || ""}
         />
@@ -45,7 +36,6 @@ export const SignUp = () => {
         <input
           className={s.formContainer__form__input}
           onChange={(e) => signUpForm.setPassword(e.target.value)}
-          // placeholder="Password"
           type={"password"}
           value={signUpForm.password || ""}
         />
@@ -57,8 +47,6 @@ export const SignUp = () => {
         <input
           className={s.formContainer__form__input}
           onChange={(e) => signUpForm.setCaptcha(e.target.value)}
-          // placeholder="Password"
-          // type={"password"}
           value={signUpForm.captcha || ""}
         />
 
