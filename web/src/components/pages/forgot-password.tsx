@@ -54,7 +54,7 @@ export const ForgotPassword = () => {
 
         <span>E-mail</span>
         <input
-          className={s.formContainer__form__input}
+          className={s.formContainer__form__field}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />

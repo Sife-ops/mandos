@@ -65,7 +65,7 @@ export const ResetPassword = () => {
 
         <span>Password</span>
         <input
-          className={s.formContainer__form__input}
+          className={s.formContainer__form__field}
           value={password}
           type={"password"}
           onChange={(e) => setPassword(e.target.value)}

@@ -33,8 +33,20 @@ export const formContainer__form__error = style({
   borderRadius: "10px",
 });
 
-export const formContainer__form__input = style({
+export const formContainer__form__errorText = style({
+  color: "red",
+});
+
+export const formContainer__form__field = style({
   marginBottom: "1rem",
+  display: "flex",
+  flexDirection: "column",
+});
+
+export const formContainer__form__field__img = style({
+  marginBottom: "1rem",
+  width: "100px",
+  height: "auto",
 });
 
 export const formContainer__form__passwordLabel = style({

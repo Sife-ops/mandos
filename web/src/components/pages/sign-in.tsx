@@ -105,7 +105,7 @@ export const SignIn = () => {
         {/* todo: use label tag */}
         <span>E-mail</span>
         <input
-          className={s.formContainer__form__input}
+          className={s.formContainer__form__field}
           onChange={(e) => setEmail(e.target.value)}
           type={"email"}
           value={email}
@@ -116,7 +116,7 @@ export const SignIn = () => {
           <Link to={"/forgot-password"}>Forgot password?</Link>
         </div>
         <input
-          className={s.formContainer__form__input}
+          className={s.formContainer__form__field}
           onChange={(e) => setPassword(e.target.value)}
           type={"password"}
           value={password}

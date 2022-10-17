@@ -24,31 +24,46 @@ export const SignUp = () => {
         )}
 
         {/* todo: use label tag */}
-        <span>E-mail</span>
-        <input
-          className={s.formContainer__form__input}
-          onChange={(e) => signUpForm.setEmail(e.target.value)}
-          type={"email"}
-          value={signUpForm.email || ""}
-        />
+        <div className={s.formContainer__form__field}>
+          <span>E-mail</span>
+          <input
+            onChange={(e) => signUpForm.setEmail(e.target.value)}
+            type={"email"}
+            value={signUpForm.email || ""}
+          />
+          {signUpForm.emailError && (
+            <span className={s.formContainer__form__errorText}>
+              Invalid e-mail address.
+            </span>
+          )}
+        </div>
 
-        <span>Password</span>
-        <input
-          className={s.formContainer__form__input}
-          onChange={(e) => signUpForm.setPassword(e.target.value)}
-          type={"password"}
-          value={signUpForm.password || ""}
-        />
+        <div className={s.formContainer__form__field}>
+          <span>Password</span>
+          <input
+            onChange={(e) => signUpForm.setPassword(e.target.value)}
+            type={"password"}
+            value={signUpForm.password || ""}
+          />
+          {signUpForm.passwordError && (
+            <span className={s.formContainer__form__errorText}>
+              Must contain one number and one special character.
+            </span>
+          )}
+        </div>
 
-        <img style={{
-          marginBottom: "1rem"
-        }} src={signUpForm.captchaImg} alt="captcha" />
-        <span>Enter the code shown above:</span>
-        <input
-          className={s.formContainer__form__input}
-          onChange={(e) => signUpForm.setCaptcha(e.target.value)}
-          value={signUpForm.captcha || ""}
-        />
+        <div className={s.formContainer__form__field}>
+          <img
+            className={s.formContainer__form__field__img}
+            src={signUpForm.captchaImg}
+            alt="captcha"
+          />
+          <span>Enter the code shown above:</span>
+          <input
+            onChange={(e) => signUpForm.setCaptcha(e.target.value)}
+            value={signUpForm.captcha || ""}
+          />
+        </div>
 
         <button type={"submit"} disabled={!signUpForm.formIsValid}>
           submit
