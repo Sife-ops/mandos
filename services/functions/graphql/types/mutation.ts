@@ -183,7 +183,9 @@ builder.mutationFields((t) => ({
         .go();
 
       let discriminator = "0000";
-      if (usernameQuery.length > 0) {
+      if (usernameQuery.length >= 10000) {
+        throw new Error("username unavailable");
+      } else if (usernameQuery.length > 0) {
         while (true) {
           discriminator = faker.datatype
             .number({ min: 10001, max: 19999 })

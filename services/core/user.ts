@@ -41,6 +41,12 @@ export const UserEntity = new Entity(
         required: true,
         default: () => false,
       },
+
+      role: {
+        type: ["administrator", "user", "moderator"],
+        required: true,
+        default: () => "user",
+      },
     },
     indexes: {
       user: {
@@ -75,7 +81,7 @@ export const UserEntity = new Entity(
         },
         sk: {
           field: "gsi2sk",
-          composite: ["userId"],
+          composite: ["discriminator"],
         },
       },
     },

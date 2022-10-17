@@ -10,6 +10,8 @@ import {
 import { Api } from "./Api";
 import { Database } from "./Database";
 
+const { DOMAIN, SUBDOMAIN } = process.env;
+
 export function Web({ stack, app }: StackContext) {
   const api = use(Api);
   const db = use(Database);
@@ -20,10 +22,18 @@ export function Web({ stack, app }: StackContext) {
     environment: {
       VITE_GRAPHQL_URL: api.url + "/graphql",
     },
+    customDomain: {
+      domainName: `${SUBDOMAIN}.${DOMAIN}`,
+      domainAlias: `www.${SUBDOMAIN}.${DOMAIN}`,
+      hostedZone: `${DOMAIN}`,
+    },
   });
 
   // todo: rename to 'registration token'
-  const registrationTokenSecret = new Config.Secret(stack, "REGISTRATION_TOKEN_SECRET");
+  const registrationTokenSecret = new Config.Secret(
+    stack,
+    "REGISTRATION_TOKEN_SECRET"
+  );
 
   // todo: move this or combine all files
   const emailjsSqs = new Queue(stack, "emailjs", {
