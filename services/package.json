@@ -5,6 +5,7 @@
   "scripts": {},
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.186.0",
+    "@faker-js/faker": "^7.6.0",
     "@pothos/core": "^3.22.5",
     "@serverless-stack/node": "^1.15.11",
     "aws-sdk": "^2.1231.0",

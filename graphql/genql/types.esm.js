@@ -115,6 +115,10 @@ export default {
                     "password": [
                         1,
                         "String!"
+                    ],
+                    "username": [
+                        1,
+                        "String!"
                     ]
                 }
             ],

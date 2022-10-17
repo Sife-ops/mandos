@@ -67,7 +67,7 @@ export interface MutationRequest{
     resetPassword?: [{password: Scalars['String'],registrationToken: Scalars['String']}]
     sendResetEmail?: [{email: Scalars['String']}]
     signIn?: [{email: Scalars['String'],password: Scalars['String'],serviceId: Scalars['String']}]
-    signUp?: [{email: Scalars['String'],password: Scalars['String']}]
+    signUp?: [{email: Scalars['String'],password: Scalars['String'],username: Scalars['String']}]
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -157,7 +157,7 @@ export interface MutationPromiseChain{
     resetPassword: ((args: {password: Scalars['String'],registrationToken: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Promise<Scalars['Boolean']>}),
     sendResetEmail: ((args: {email: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Promise<Scalars['Boolean']>}),
     signIn: ((args: {email: Scalars['String'],password: Scalars['String'],serviceId: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['String']) => Promise<Scalars['String']>}),
-    signUp: ((args: {email: Scalars['String'],password: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Promise<Scalars['Boolean']>})
+    signUp: ((args: {email: Scalars['String'],password: Scalars['String'],username: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Promise<Scalars['Boolean']>})
 }
 
 export interface MutationObservableChain{
@@ -168,7 +168,7 @@ export interface MutationObservableChain{
     resetPassword: ((args: {password: Scalars['String'],registrationToken: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Observable<Scalars['Boolean']>}),
     sendResetEmail: ((args: {email: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Observable<Scalars['Boolean']>}),
     signIn: ((args: {email: Scalars['String'],password: Scalars['String'],serviceId: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['String']) => Observable<Scalars['String']>}),
-    signUp: ((args: {email: Scalars['String'],password: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Observable<Scalars['Boolean']>})
+    signUp: ((args: {email: Scalars['String'],password: Scalars['String'],username: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Observable<Scalars['Boolean']>})
 }
 
 export interface QueryPromiseChain{

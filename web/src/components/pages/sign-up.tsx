@@ -39,6 +39,15 @@ export const SignUp = () => {
         </div>
 
         <div className={s.formContainer__form__field}>
+          <span>Username</span>
+          <input
+            onChange={(e) => signUpForm.setUsername(e.target.value)}
+            type={"username"}
+            value={signUpForm.username || ""}
+          />
+        </div>
+
+        <div className={s.formContainer__form__field}>
           <span>Password</span>
           <input
             onChange={(e) => signUpForm.setPassword(e.target.value)}

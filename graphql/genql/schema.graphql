@@ -17,7 +17,7 @@ type Mutation {
   resetPassword(password: String!, registrationToken: String!): Boolean!
   sendResetEmail(email: String!): Boolean!
   signIn(email: String!, password: String!, serviceId: String!): String!
-  signUp(email: String!, password: String!): Boolean!
+  signUp(email: String!, password: String!, username: String!): Boolean!
 }
 
 type Query {

@@ -21,6 +21,16 @@ export const UserEntity = new Entity(
         required: true,
       },
 
+      username: {
+        type: "string",
+        required: true,
+      },
+
+      discriminator: {
+        type: "string",
+        required: true,
+      },
+
       password: {
         type: "string",
         required: true,
@@ -53,6 +63,18 @@ export const UserEntity = new Entity(
         },
         sk: {
           field: "gsi1sk",
+          composite: ["userId"],
+        },
+      },
+
+      username: {
+        index: "gsi2",
+        pk: {
+          field: "gsi2pk",
+          composite: ["username"],
+        },
+        sk: {
+          field: "gsi2sk",
           composite: ["userId"],
         },
       },

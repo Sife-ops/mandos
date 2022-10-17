@@ -3,48 +3,6 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTypedMutation } from "@mandos/graphql/urql";
 
-const emailSchema = yup
-  .string()
-  .email()
-  .required();
-const passwordSchema = yup
-  .string()
-  .min(8)
-  .matches(/[0-9]/)
-  .matches(/[!@#\$%\^\&*\)\(+=._-]/)
-  .required();
-const captchaSchema = yup
-  .string()
-  .min(6)
-  .max(6)
-  .required();
-
-const isInitialized = (o: any) => o !== null;
-
-const validationEffect = (
-  stateVar: string | null,
-  condition: boolean,
-  setIsValidFn: React.Dispatch<React.SetStateAction<boolean>>,
-  setErrorFn: React.Dispatch<React.SetStateAction<boolean>>
-) => {
-  // todo: refactor logic for '.required()' schema?
-  // if (!stateVar && isInitialized(stateVar)) {
-  if (!stateVar) {
-    setIsValidFn(false);
-    if (isInitialized(stateVar)) {
-      setErrorFn(true);
-    } else {
-      setErrorFn(false);
-    }
-  } else if (condition) {
-    setIsValidFn(true);
-    setErrorFn(false);
-  } else {
-    setIsValidFn(false);
-    setErrorFn(true);
-  }
-};
-
 export const useSignUpForm = () => {
   const nav = useNavigate();
 
@@ -54,6 +12,10 @@ export const useSignUpForm = () => {
   const [email, setEmail] = useState<string | null>(null);
   const [emailIsValid, setEmailIsValid] = useState(false);
   const [emailError, setEmailError] = useState(false);
+
+  const [username, setUsername] = useState<string | null>(null);
+  const [usernameIsValid, setUsernameIsValid] = useState(false);
+  const [usernameError, setUsernameError] = useState(false);
 
   const [password, setPassword] = useState<string | null>(null);
   const [passwordIsValid, setPasswordIsValid] = useState(false);
@@ -94,7 +56,7 @@ export const useSignUpForm = () => {
   );
 
   const [signUpState, signUp] = useTypedMutation(
-    (vars: { email: string; password: string }) => {
+    (vars: { email: string; username: string; password: string }) => {
       return {
         signUp: [vars],
       };
@@ -116,7 +78,11 @@ export const useSignUpForm = () => {
         captchaGet({});
       }
     } else if (!fetching && data) {
-      signUp({ email: email || "", password: password || "" });
+      signUp({
+        email: email || "",
+        username: username || "",
+        password: password || "",
+      });
     }
   }, [captchaVerifyState.data]);
 
@@ -148,7 +114,12 @@ export const useSignUpForm = () => {
   useEffect(() => {
     validationEffect(
       email,
-      emailSchema.isValidSync(email),
+      () =>
+        yup
+          .string()
+          .email()
+          .required()
+          .isValidSync(email),
       setEmailIsValid,
       setEmailError
     );
@@ -156,8 +127,24 @@ export const useSignUpForm = () => {
 
   useEffect(() => {
     validationEffect(
+      username,
+      () => username !== null && username.length > 0,
+      setUsernameIsValid,
+      setUsernameError
+    );
+  }, [email]);
+
+  useEffect(() => {
+    validationEffect(
       password,
-      passwordSchema.isValidSync(password),
+      () =>
+        yup
+          .string()
+          .min(8)
+          .matches(/[0-9]/)
+          .matches(/[!@#\$%\^\&*\)\(+=._-]/)
+          .required()
+          .isValidSync(password),
       setPasswordIsValid,
       setPasswordError
     );
@@ -166,7 +153,7 @@ export const useSignUpForm = () => {
   useEffect(() => {
     validationEffect(
       confirmPassword,
-      confirmPassword === password,
+      () => confirmPassword === password,
       setConfirmPasswordIsValid,
       setConfirmPasswordError
     );
@@ -175,7 +162,13 @@ export const useSignUpForm = () => {
   useEffect(() => {
     validationEffect(
       captcha,
-      captchaSchema.isValidSync(captcha),
+      () =>
+        yup
+          .string()
+          .min(6)
+          .max(6)
+          .required()
+          .isValidSync(captcha),
       setCaptchaIsValid,
       setCaptchaError
     );
@@ -183,19 +176,16 @@ export const useSignUpForm = () => {
 
   useEffect(() => {
     // todo: determine if confirm password is needed
-    if (emailIsValid && passwordIsValid && captchaIsValid) {
+    if (emailIsValid && passwordIsValid && captchaIsValid && usernameIsValid) {
       setFormIsValid(true);
     } else {
       setFormIsValid(false);
     }
-  }, [emailIsValid, passwordIsValid, captchaIsValid]);
+  }, [emailIsValid, passwordIsValid, captchaIsValid, usernameIsValid]);
 
   return {
-    signUp,
     captcha,
-    setCaptcha,
-    submit,
-    formError,
+    captchaError,
     captchaImg,
     confirmPassword,
     confirmPasswordError,
@@ -203,14 +193,47 @@ export const useSignUpForm = () => {
     email,
     emailError,
     emailIsValid,
+    formError,
     formIsValid,
     password,
     passwordError,
     passwordIsValid,
+    setCaptcha,
     setConfirmPassword,
     setEmail,
     setPassword,
     setPasswordError,
     setPasswordIsValid,
+    setUsername,
+    signUp,
+    submit,
+    username,
+    usernameError,
   };
+};
+
+const isInitialized = (o: any) => o !== null;
+
+const validationEffect = (
+  stateVar: string | null,
+  condition: () => boolean,
+  setIsValidFn: React.Dispatch<React.SetStateAction<boolean>>,
+  setErrorFn: React.Dispatch<React.SetStateAction<boolean>>
+) => {
+  // todo: refactor logic for '.required()' schema?
+  // if (!stateVar && isInitialized(stateVar)) {
+  if (!stateVar) {
+    setIsValidFn(false);
+    if (isInitialized(stateVar)) {
+      setErrorFn(true);
+    } else {
+      setErrorFn(false);
+    }
+  } else if (condition()) {
+    setIsValidFn(true);
+    setErrorFn(false);
+  } else {
+    setIsValidFn(false);
+    setErrorFn(true);
+  }
 };

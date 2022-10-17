@@ -1,6 +1,7 @@
 import AWS from "aws-sdk";
 import axios from "axios";
 import bcrypt from "bcryptjs";
+import { faker } from "@faker-js/faker";
 import { Config } from "@serverless-stack/node/config";
 import { builder } from "../builder";
 import { tokenOptions } from "../../constant";
@@ -165,19 +166,43 @@ builder.mutationFields((t) => ({
   signUp: t.boolean({
     args: {
       email: t.arg.string({ required: true }),
+      username: t.arg.string({ required: true }),
       password: t.arg.string({ required: true }),
     },
-    resolve: async (_, { email, password }) => {
-      const { data: userQuery } = await UserEntity.query.email({ email }).go();
+    resolve: async (_, { email, username, password }) => {
+      const { data: emailQuery } = await UserEntity.query.email({ email }).go();
 
-      if (userQuery.length > 0) {
-        const [user] = userQuery;
+      if (emailQuery.length > 0) {
+        const [user] = emailQuery;
         if (user.confirmed) throw new Error("e-mail already in use");
         await UserEntity.delete(user).go();
       }
 
+      const { data: usernameQuery } = await UserEntity.query
+        .username({ username })
+        .go();
+
+      let discriminator = "0000";
+      if (usernameQuery.length > 0) {
+        while (true) {
+          discriminator = faker.datatype
+            .number({ min: 10001, max: 19999 })
+            .toString()
+            .slice(1);
+
+          if (!usernameQuery.find((e) => e.discriminator === discriminator)) {
+            break;
+          }
+        }
+      }
+
       const hashed = bcrypt.hashSync(password, 8);
-      await UserEntity.create({ email, password: hashed }).go();
+      await UserEntity.create({
+        email,
+        username,
+        discriminator,
+        password: hashed,
+      }).go();
 
       await sendEmailjsSqs(email, "sign-up");
 
