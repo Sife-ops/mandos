@@ -64,7 +64,11 @@ export const SignIn = () => {
     const { fetching, data, error } = signInState;
     if (error) {
       console.error(error.message);
-      setError(error.message.split("[GraphQL] ")[1]);
+      if (error.message.includes("not confirmed")) {
+        nav(`/unconfirmed?email=${email}`);
+      } else {
+        setError(error.message.split("[GraphQL] ")[1]);
+      }
     } else if (!fetching && data) {
       window.location.href = data.signIn;
     }

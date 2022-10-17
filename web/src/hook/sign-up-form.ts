@@ -63,7 +63,6 @@ export const useSignUpForm = () => {
   const [confirmPasswordIsValid, setConfirmPasswordIsValid] = useState(false);
   const [confirmPasswordError, setConfirmPasswordError] = useState(false);
 
-  //
   const [captchaImg, setCaptchaImg] = useState<string>("");
   const [captchaUuid, setCaptchaUuid] = useState<string>("");
 
@@ -101,13 +100,11 @@ export const useSignUpForm = () => {
       };
     }
   );
-  //
 
   const submit = () => {
     captchaVerify({ captcha, uuid: captchaUuid });
   };
 
-  //
   useEffect(() => {
     const { fetching, data, error } = captchaVerifyState;
     if (error) {
@@ -147,7 +144,6 @@ export const useSignUpForm = () => {
       setCaptchaUuid(data.captchaGet.uuid);
     }
   }, [captchaGetState.data]);
-  //
 
   useEffect(() => {
     validationEffect(
