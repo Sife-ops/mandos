@@ -132,7 +132,7 @@ export const useSignUpForm = () => {
       setUsernameIsValid,
       setUsernameError
     );
-  }, [email]);
+  }, [username]);
 
   useEffect(() => {
     validationEffect(
