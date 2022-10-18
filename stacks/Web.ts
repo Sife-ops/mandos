@@ -51,7 +51,9 @@ export function Web({ stack, app }: StackContext) {
           new Config.Parameter(stack, "EMAILJS_TEMPLATE_ID", {
             value: "template_pwk79e6",
           }),
-          new Config.Parameter(stack, "SITE_URL", { value: site.url }),
+          new Config.Parameter(stack, "SITE_URL", {
+            value: site.customDomainUrl!,
+          }),
         ],
         permissions: [db.table],
         environment: {
