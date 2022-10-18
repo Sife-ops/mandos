@@ -6,16 +6,14 @@ import {
 
 import { Database } from "./Database";
 
+const { DOMAIN, REGISTRAR_SUBDOMAIN } = process.env;
+
 export function Api({ stack }: StackContext) {
   const db = use(Database);
 
-  const { DOMAIN, SUBDOMAIN } = process.env;
-  if (!DOMAIN) throw new Error("DOMAIN undefined");
-  if (!SUBDOMAIN) throw new Error("SUBDOMAIN undefined");
-
   const api = new ApiGateway(stack, "api", {
     customDomain: {
-      domainName: `${SUBDOMAIN}-api.${DOMAIN}`,
+      domainName: `${REGISTRAR_SUBDOMAIN}-api.${DOMAIN}`,
       hostedZone: `${DOMAIN}`,
     },
     routes: {
