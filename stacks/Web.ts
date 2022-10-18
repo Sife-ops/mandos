@@ -10,11 +10,14 @@ import {
 import { Api } from "./Api";
 import { Database } from "./Database";
 
-const { DOMAIN, SUBDOMAIN } = process.env;
-
 export function Web({ stack, app }: StackContext) {
   const api = use(Api);
   const db = use(Database);
+
+  // todo: repeated in Api.ts, move to own file
+  const { DOMAIN, SUBDOMAIN } = process.env;
+  if (!DOMAIN) throw new Error("DOMAIN undefined");
+  if (!SUBDOMAIN) throw new Error("SUBDOMAIN undefined");
 
   const site = new ViteStaticSite(stack, "site", {
     path: "web",
@@ -29,7 +32,6 @@ export function Web({ stack, app }: StackContext) {
     },
   });
 
-  // todo: rename to 'registration token'
   const registrationTokenSecret = new Config.Secret(
     stack,
     "REGISTRATION_TOKEN_SECRET"
