@@ -1,29 +1,28 @@
 import { mandosModel } from "@mandos/core/model";
 import { tokenOptions } from "../constant";
-import { verify, sign } from "jsonwebtoken";
+import { verify, sign, decode } from "jsonwebtoken";
 import { z } from "zod";
 
 const eventSchema = z.object({
-  serviceId: z.string(),
   refreshToken: z.string(),
 });
 
 export const handler = async (event: any) => {
   try {
-    const validated = eventSchema.parse(JSON.parse(event.body));
+    const { refreshToken } = eventSchema.parse(JSON.parse(event.body));
 
+    const { serviceId, email, userId } = decode(refreshToken) as {
+      serviceId: string;
+      email: string;
+      userId: string;
+    };
     const {
       data: [service],
     } = await mandosModel.entities.ServiceEntity.query
-      .service({
-        serviceId: validated.serviceId,
-      })
+      .service({ serviceId })
       .go();
 
-    const { email, userId, serviceId } = verify(
-      validated.refreshToken,
-      service.refreshTokenSecret
-    ) as { email: string; userId: string; serviceId: string };
+    verify(refreshToken, service.refreshTokenSecret);
     const accessToken = sign(
       { email, userId, serviceId },
       service.accessTokenSecret,
