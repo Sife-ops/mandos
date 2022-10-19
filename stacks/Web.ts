@@ -10,7 +10,7 @@ import {
 import { Api } from "./Api";
 import { Database } from "./Database";
 
-const { DOMAIN, REGISTRAR_SUBDOMAIN } = process.env;
+const { DOMAIN, REGISTRAR_SUBDOMAIN, ACCOUNT_SUBDOMAIN } = process.env;
 
 export function Web({ stack, app }: StackContext) {
   const api = use(Api);
@@ -53,9 +53,7 @@ export function Web({ stack, app }: StackContext) {
             value: "template_pwk79e6",
           }),
           new Config.Parameter(stack, "SITE_URL", {
-            // value: 'REEEEEE'
             value: registrarSite.customDomainUrl!,
-            // value: registrarSite.url,
           }),
         ],
         permissions: [db.table],
@@ -100,12 +98,25 @@ export function Web({ stack, app }: StackContext) {
   });
 
   //////////////////////////////////////////////////////////////////////////////
-  // Settings Site /////////////////////////////////////////////////////////////
+  // Account Site //////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////////
+
+  const accountSite = new ViteStaticSite(stack, "account-site", {
+    path: "web/account-site",
+    buildCommand: "npm run build",
+    environment: {
+      VITE_GRAPHQL_URL: api.url + "/graphql",
+    },
+    customDomain: {
+      domainName: `${ACCOUNT_SUBDOMAIN}.${DOMAIN}`,
+      domainAlias: `www.${ACCOUNT_SUBDOMAIN}.${DOMAIN}`,
+      hostedZone: `${DOMAIN}`,
+    },
+  });
 
   stack.addOutputs({
     REGISTRAR_SITE: registrarSite.url,
-    // SITE: 'reeeeee'
+    ACCOUNT_SITE: accountSite.url
   });
 
   return api;

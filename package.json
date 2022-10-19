@@ -22,7 +22,8 @@
   "workspaces": [
     "services",
     "graphql",
-    "web/registrar-site"
+    "web/registrar-site",
+    "web/account-site"
   ],
   "overrides": {
     "graphql": "16.5.0"
