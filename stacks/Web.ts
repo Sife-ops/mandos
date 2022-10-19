@@ -10,7 +10,7 @@ import {
 import { Api } from "./Api";
 import { Database } from "./Database";
 
-const { DOMAIN, SUBDOMAIN } = process.env;
+const { DOMAIN, REGISTRAR_SUBDOMAIN } = process.env;
 
 export function Web({ stack, app }: StackContext) {
   const api = use(Api);
@@ -23,8 +23,8 @@ export function Web({ stack, app }: StackContext) {
       VITE_GRAPHQL_URL: api.url + "/graphql",
     },
     customDomain: {
-      domainName: `${SUBDOMAIN}.${DOMAIN}`,
-      domainAlias: `www.${SUBDOMAIN}.${DOMAIN}`,
+      domainName: `${REGISTRAR_SUBDOMAIN}.${DOMAIN}`,
+      domainAlias: `www.${REGISTRAR_SUBDOMAIN}.${DOMAIN}`,
       hostedZone: `${DOMAIN}`,
     },
   });
