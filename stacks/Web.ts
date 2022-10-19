@@ -16,8 +16,12 @@ export function Web({ stack, app }: StackContext) {
   const api = use(Api);
   const db = use(Database);
 
-  const site = new ViteStaticSite(stack, "site", {
-    path: "web",
+  //////////////////////////////////////////////////////////////////////////////
+  // Registrar Site ////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////
+
+  const registrarSite = new ViteStaticSite(stack, "registrar-site", {
+    path: "web/registrar-site",
     buildCommand: "npm run build",
     environment: {
       VITE_GRAPHQL_URL: api.url + "/graphql",
@@ -49,8 +53,9 @@ export function Web({ stack, app }: StackContext) {
             value: "template_pwk79e6",
           }),
           new Config.Parameter(stack, "SITE_URL", {
-            value: site.customDomainUrl!,
-            // value: site.url,
+            // value: 'REEEEEE'
+            value: registrarSite.customDomainUrl!,
+            // value: registrarSite.url,
           }),
         ],
         permissions: [db.table],
@@ -94,8 +99,13 @@ export function Web({ stack, app }: StackContext) {
     },
   });
 
+  //////////////////////////////////////////////////////////////////////////////
+  // Settings Site /////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////
+
   stack.addOutputs({
-    SITE: site.url,
+    REGISTRAR_SITE: registrarSite.url,
+    // SITE: 'reeeeee'
   });
 
   return api;
