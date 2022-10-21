@@ -6,6 +6,7 @@ const {
 } = mandosModel;
 
 builder.mutationFields((t) => ({
+  // todo: return user type
   changeUsername: t.boolean({
     args: {
       username: t.arg.string({ required: true }),
