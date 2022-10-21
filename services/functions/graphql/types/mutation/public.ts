@@ -3,8 +3,8 @@ import axios from "axios";
 import bcrypt from "bcryptjs";
 import { faker } from "@faker-js/faker";
 import { Config } from "@serverless-stack/node/config";
-import { builder } from "../builder";
-import { tokenOptions } from "../../constant";
+import { builder } from "../../builder";
+import { tokenOptions } from "../../../constant";
 import { mandosModel } from "@mandos/core/model";
 import { sign, verify } from "jsonwebtoken";
 

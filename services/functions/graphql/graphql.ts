@@ -27,8 +27,9 @@ export const handler = async (
     const firstFieldName = firstFieldValueNameFromOperation(
       firstOperationDefinition(parsedQuery)
     );
+    console.log(firstFieldName);
 
-    const isPrivate = ["user"].includes(firstFieldName);
+    const isPrivate = ["user", "changeUsername"].includes(firstFieldName);
     const accessToken = event.headers.authorization;
 
     if (isPrivate) {

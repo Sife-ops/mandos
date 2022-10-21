@@ -48,6 +48,15 @@ export default {
                     ]
                 }
             ],
+            "changeUsername": [
+                4,
+                {
+                    "username": [
+                        1,
+                        "String!"
+                    ]
+                }
+            ],
             "confirm": [
                 4,
                 {

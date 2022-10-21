@@ -22,6 +22,7 @@ export interface CaptchaVerify {
 export interface Mutation {
     captchaGet: CaptchaGet
     captchaVerify: CaptchaVerify
+    changeUsername: Scalars['Boolean']
     confirm: Scalars['Boolean']
     resendEmail: Scalars['Boolean']
     resetPassword: Scalars['Boolean']
@@ -72,6 +73,7 @@ export interface CaptchaVerifyRequest{
 export interface MutationRequest{
     captchaGet?: CaptchaGetRequest
     captchaVerify?: [{captcha: Scalars['String'],uuid: Scalars['String']},CaptchaVerifyRequest]
+    changeUsername?: [{username: Scalars['String']}]
     confirm?: [{registrationToken: Scalars['String']}]
     resendEmail?: [{email: Scalars['String']}]
     resetPassword?: [{password: Scalars['String'],registrationToken: Scalars['String']}]
@@ -181,6 +183,7 @@ export interface CaptchaVerifyObservableChain{
 export interface MutationPromiseChain{
     captchaGet: (CaptchaGetPromiseChain & {get: <R extends CaptchaGetRequest>(request: R, defaultValue?: FieldsSelection<CaptchaGet, R>) => Promise<FieldsSelection<CaptchaGet, R>>}),
     captchaVerify: ((args: {captcha: Scalars['String'],uuid: Scalars['String']}) => CaptchaVerifyPromiseChain & {get: <R extends CaptchaVerifyRequest>(request: R, defaultValue?: FieldsSelection<CaptchaVerify, R>) => Promise<FieldsSelection<CaptchaVerify, R>>}),
+    changeUsername: ((args: {username: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Promise<Scalars['Boolean']>}),
     confirm: ((args: {registrationToken: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Promise<Scalars['Boolean']>}),
     resendEmail: ((args: {email: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Promise<Scalars['Boolean']>}),
     resetPassword: ((args: {password: Scalars['String'],registrationToken: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Promise<Scalars['Boolean']>}),
@@ -192,6 +195,7 @@ export interface MutationPromiseChain{
 export interface MutationObservableChain{
     captchaGet: (CaptchaGetObservableChain & {get: <R extends CaptchaGetRequest>(request: R, defaultValue?: FieldsSelection<CaptchaGet, R>) => Observable<FieldsSelection<CaptchaGet, R>>}),
     captchaVerify: ((args: {captcha: Scalars['String'],uuid: Scalars['String']}) => CaptchaVerifyObservableChain & {get: <R extends CaptchaVerifyRequest>(request: R, defaultValue?: FieldsSelection<CaptchaVerify, R>) => Observable<FieldsSelection<CaptchaVerify, R>>}),
+    changeUsername: ((args: {username: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Observable<Scalars['Boolean']>}),
     confirm: ((args: {registrationToken: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Observable<Scalars['Boolean']>}),
     resendEmail: ((args: {email: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Observable<Scalars['Boolean']>}),
     resetPassword: ((args: {password: Scalars['String'],registrationToken: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Observable<Scalars['Boolean']>}),
