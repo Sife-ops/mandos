@@ -84,7 +84,7 @@ export interface MutationRequest{
 
 export interface QueryRequest{
     service?: [{serviceId: Scalars['String']},ServiceRequest]
-    user?: [{userId: Scalars['String']},UserRequest]
+    user?: UserRequest
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -202,12 +202,12 @@ export interface MutationObservableChain{
 
 export interface QueryPromiseChain{
     service: ((args: {serviceId: Scalars['String']}) => ServicePromiseChain & {get: <R extends ServiceRequest>(request: R, defaultValue?: FieldsSelection<Service, R>) => Promise<FieldsSelection<Service, R>>}),
-    user: ((args: {userId: Scalars['String']}) => UserPromiseChain & {get: <R extends UserRequest>(request: R, defaultValue?: FieldsSelection<User, R>) => Promise<FieldsSelection<User, R>>})
+    user: (UserPromiseChain & {get: <R extends UserRequest>(request: R, defaultValue?: FieldsSelection<User, R>) => Promise<FieldsSelection<User, R>>})
 }
 
 export interface QueryObservableChain{
     service: ((args: {serviceId: Scalars['String']}) => ServiceObservableChain & {get: <R extends ServiceRequest>(request: R, defaultValue?: FieldsSelection<Service, R>) => Observable<FieldsSelection<Service, R>>}),
-    user: ((args: {userId: Scalars['String']}) => UserObservableChain & {get: <R extends UserRequest>(request: R, defaultValue?: FieldsSelection<User, R>) => Observable<FieldsSelection<User, R>>})
+    user: (UserObservableChain & {get: <R extends UserRequest>(request: R, defaultValue?: FieldsSelection<User, R>) => Observable<FieldsSelection<User, R>>})
 }
 
 export interface ServicePromiseChain{

@@ -2,7 +2,7 @@ import { GraphQLHandler } from "@serverless-stack/node/graphql";
 import { mandosModel } from "@mandos/core/model";
 import { parse } from "graphql";
 import { schema } from "./schema";
-import { verify } from "jsonwebtoken";
+import { verify, decode } from "jsonwebtoken";
 
 export const handler = async (
   event: any,
@@ -27,13 +27,12 @@ export const handler = async (
     const firstFieldName = firstFieldValueNameFromOperation(
       firstOperationDefinition(parsedQuery)
     );
+
     const isPrivate = ["user"].includes(firstFieldName);
     const accessToken = event.headers.authorization;
 
     if (isPrivate) {
-      if (!accessToken) {
-        throw new Error("no access token");
-      }
+      if (!accessToken) throw new Error("no access token");
 
       const {
         data: [service],
@@ -44,7 +43,22 @@ export const handler = async (
       verify(accessToken, service.accessTokenSecret);
     }
 
-    return GraphQLHandler({ schema })(event, context);
+    let userId: string = "";
+    try {
+      ({ userId } = decode(accessToken) as { userId: string });
+    } catch {}
+
+    return GraphQLHandler({
+      schema,
+      context: async (request) => {
+        return {
+          ...request,
+          user: {
+            userId,
+          },
+        };
+      },
+    })(event, context);
   } catch (e) {
     console.log(e);
 

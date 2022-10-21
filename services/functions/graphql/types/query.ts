@@ -37,17 +37,12 @@ builder.queryFields((t) => ({
 
   user: t.field({
     type: UserType,
-    args: {
-      userId: t.arg.string({ required: true }),
-    },
-    resolve: () => {
-      return {
-        userId: "a",
-        email: "a",
-        username: "a",
-        discriminator: "a",
-        confirmed: true,
-      };
+    resolve: async (_, __, { user: { userId } }) => {
+      const {
+        data: [user],
+      } = await mandosModel.entities.UserEntity.query.user({ userId }).go();
+
+      return user;
     },
   }),
 }));

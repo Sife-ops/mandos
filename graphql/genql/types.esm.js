@@ -138,13 +138,7 @@ export default {
                 }
             ],
             "user": [
-                8,
-                {
-                    "userId": [
-                        1,
-                        "String!"
-                    ]
-                }
+                8
             ],
             "__typename": [
                 1

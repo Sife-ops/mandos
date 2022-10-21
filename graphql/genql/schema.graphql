@@ -22,7 +22,7 @@ type Mutation {
 
 type Query {
   service(serviceId: String!): Service!
-  user(userId: String!): User!
+  user: User!
 }
 
 type Service {

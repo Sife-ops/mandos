@@ -105,7 +105,7 @@ export function Web({ stack, app }: StackContext) {
     path: "web/account-site", // todo: remove 'site' from path name
     buildCommand: "npm run build",
     environment: {
-      VITE_GRAPHQL_URL: api.url + "/graphql",
+      VITE_API_URL: api.url,
     },
     customDomain: {
       domainName: `${ACCOUNT_SUBDOMAIN}.${DOMAIN}`,
@@ -116,7 +116,7 @@ export function Web({ stack, app }: StackContext) {
 
   stack.addOutputs({
     REGISTRAR_SITE: registrarSite.url,
-    ACCOUNT_SITE: accountSite.url
+    ACCOUNT_SITE: accountSite.url,
   });
 
   return api;

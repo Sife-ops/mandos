@@ -19,5 +19,5 @@ export const Auth: React.FC<{ to: string }> = (p) => {
     nav(p.to);
   }, []);
 
-  return <div></div>;
+  return <div>{accessToken}</div>;
 };
