@@ -42,11 +42,12 @@ export const UserEntity = new Entity(
         default: () => false,
       },
 
-      role: {
-        type: ["administrator", "user", "moderator"],
-        required: true,
-        default: () => "user",
-      },
+      // todo: roles entity
+      // role: {
+      //   type: ["administrator", "user", "moderator"],
+      //   required: true,
+      //   default: () => "user",
+      // },
     },
     indexes: {
       user: {

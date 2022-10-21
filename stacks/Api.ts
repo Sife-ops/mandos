@@ -6,7 +6,7 @@ import {
 
 import { Database } from "./Database";
 
-  const { DOMAIN, REGISTRAR_SUBDOMAIN } = process.env;
+const { DOMAIN, REGISTRAR_SUBDOMAIN } = process.env;
 
 export function Api({ stack }: StackContext) {
   const db = use(Database);

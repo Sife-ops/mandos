@@ -137,6 +137,15 @@ export default {
                     ]
                 }
             ],
+            "user": [
+                8,
+                {
+                    "userId": [
+                        1,
+                        "String!"
+                    ]
+                }
+            ],
             "__typename": [
                 1
             ]
@@ -158,6 +167,26 @@ export default {
                 1
             ]
         },
-        "ID": {}
+        "ID": {},
+        "User": {
+            "confirmed": [
+                4
+            ],
+            "discriminator": [
+                1
+            ],
+            "email": [
+                1
+            ],
+            "userId": [
+                7
+            ],
+            "username": [
+                1
+            ],
+            "__typename": [
+                1
+            ]
+        }
     }
 }

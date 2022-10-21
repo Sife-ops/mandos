@@ -1,6 +1,7 @@
 import AWS from "aws-sdk";
 import { Config } from "@serverless-stack/node/config";
 import { ServiceType } from "./service";
+import { UserType } from "./user";
 import { builder } from "../builder";
 import { mandosModel } from "@mandos/core/model";
 
@@ -30,6 +31,22 @@ builder.queryFields((t) => ({
       return {
         ...service,
         logoUrl,
+      };
+    },
+  }),
+
+  user: t.field({
+    type: UserType,
+    args: {
+      userId: t.arg.string({ required: true }),
+    },
+    resolve: () => {
+      return {
+        userId: "a",
+        email: "a",
+        username: "a",
+        discriminator: "a",
+        confirmed: true,
       };
     },
   }),

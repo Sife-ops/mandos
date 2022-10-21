@@ -21,7 +21,7 @@ export function Web({ stack, app }: StackContext) {
   //////////////////////////////////////////////////////////////////////////////
 
   const registrarSite = new ViteStaticSite(stack, "registrar-site", {
-    path: "web/registrar-site",
+    path: "web/registrar-site", // todo: remove 'site' from path name
     buildCommand: "npm run build",
     environment: {
       VITE_GRAPHQL_URL: api.url + "/graphql",
@@ -102,7 +102,7 @@ export function Web({ stack, app }: StackContext) {
   //////////////////////////////////////////////////////////////////////////////
 
   const accountSite = new ViteStaticSite(stack, "account-site", {
-    path: "web/account-site",
+    path: "web/account-site", // todo: remove 'site' from path name
     buildCommand: "npm run build",
     environment: {
       VITE_GRAPHQL_URL: api.url + "/graphql",

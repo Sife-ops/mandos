@@ -33,6 +33,7 @@ export interface Mutation {
 
 export interface Query {
     service: Service
+    user: User
     __typename: 'Query'
 }
 
@@ -42,6 +43,15 @@ export interface Service {
     serviceId: Scalars['ID']
     title: Scalars['String']
     __typename: 'Service'
+}
+
+export interface User {
+    confirmed: Scalars['Boolean']
+    discriminator: Scalars['String']
+    email: Scalars['String']
+    userId: Scalars['ID']
+    username: Scalars['String']
+    __typename: 'User'
 }
 
 export interface CaptchaGetRequest{
@@ -74,6 +84,7 @@ export interface MutationRequest{
 
 export interface QueryRequest{
     service?: [{serviceId: Scalars['String']},ServiceRequest]
+    user?: [{userId: Scalars['String']},UserRequest]
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -83,6 +94,16 @@ export interface ServiceRequest{
     redirect?: boolean | number
     serviceId?: boolean | number
     title?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface UserRequest{
+    confirmed?: boolean | number
+    discriminator?: boolean | number
+    email?: boolean | number
+    userId?: boolean | number
+    username?: boolean | number
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -124,6 +145,14 @@ const Service_possibleTypes: string[] = ['Service']
 export const isService = (obj?: { __typename?: any } | null): obj is Service => {
   if (!obj?.__typename) throw new Error('__typename is missing in "isService"')
   return Service_possibleTypes.includes(obj.__typename)
+}
+
+
+
+const User_possibleTypes: string[] = ['User']
+export const isUser = (obj?: { __typename?: any } | null): obj is User => {
+  if (!obj?.__typename) throw new Error('__typename is missing in "isUser"')
+  return User_possibleTypes.includes(obj.__typename)
 }
 
 
@@ -172,11 +201,13 @@ export interface MutationObservableChain{
 }
 
 export interface QueryPromiseChain{
-    service: ((args: {serviceId: Scalars['String']}) => ServicePromiseChain & {get: <R extends ServiceRequest>(request: R, defaultValue?: FieldsSelection<Service, R>) => Promise<FieldsSelection<Service, R>>})
+    service: ((args: {serviceId: Scalars['String']}) => ServicePromiseChain & {get: <R extends ServiceRequest>(request: R, defaultValue?: FieldsSelection<Service, R>) => Promise<FieldsSelection<Service, R>>}),
+    user: ((args: {userId: Scalars['String']}) => UserPromiseChain & {get: <R extends UserRequest>(request: R, defaultValue?: FieldsSelection<User, R>) => Promise<FieldsSelection<User, R>>})
 }
 
 export interface QueryObservableChain{
-    service: ((args: {serviceId: Scalars['String']}) => ServiceObservableChain & {get: <R extends ServiceRequest>(request: R, defaultValue?: FieldsSelection<Service, R>) => Observable<FieldsSelection<Service, R>>})
+    service: ((args: {serviceId: Scalars['String']}) => ServiceObservableChain & {get: <R extends ServiceRequest>(request: R, defaultValue?: FieldsSelection<Service, R>) => Observable<FieldsSelection<Service, R>>}),
+    user: ((args: {userId: Scalars['String']}) => UserObservableChain & {get: <R extends UserRequest>(request: R, defaultValue?: FieldsSelection<User, R>) => Observable<FieldsSelection<User, R>>})
 }
 
 export interface ServicePromiseChain{
@@ -191,4 +222,20 @@ export interface ServiceObservableChain{
     redirect: ({get: (request?: boolean|number, defaultValue?: Scalars['String']) => Observable<Scalars['String']>}),
     serviceId: ({get: (request?: boolean|number, defaultValue?: Scalars['ID']) => Observable<Scalars['ID']>}),
     title: ({get: (request?: boolean|number, defaultValue?: Scalars['String']) => Observable<Scalars['String']>})
+}
+
+export interface UserPromiseChain{
+    confirmed: ({get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Promise<Scalars['Boolean']>}),
+    discriminator: ({get: (request?: boolean|number, defaultValue?: Scalars['String']) => Promise<Scalars['String']>}),
+    email: ({get: (request?: boolean|number, defaultValue?: Scalars['String']) => Promise<Scalars['String']>}),
+    userId: ({get: (request?: boolean|number, defaultValue?: Scalars['ID']) => Promise<Scalars['ID']>}),
+    username: ({get: (request?: boolean|number, defaultValue?: Scalars['String']) => Promise<Scalars['String']>})
+}
+
+export interface UserObservableChain{
+    confirmed: ({get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Observable<Scalars['Boolean']>}),
+    discriminator: ({get: (request?: boolean|number, defaultValue?: Scalars['String']) => Observable<Scalars['String']>}),
+    email: ({get: (request?: boolean|number, defaultValue?: Scalars['String']) => Observable<Scalars['String']>}),
+    userId: ({get: (request?: boolean|number, defaultValue?: Scalars['ID']) => Observable<Scalars['ID']>}),
+    username: ({get: (request?: boolean|number, defaultValue?: Scalars['String']) => Observable<Scalars['String']>})
 }

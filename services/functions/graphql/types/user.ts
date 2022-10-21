@@ -1,12 +1,15 @@
 import { UserEntityType } from "@mandos/core/user";
 import { builder } from "../builder";
 
-const UserType = builder.objectRef<UserEntityType>("User");
+export const UserType = builder.objectRef<Omit<UserEntityType, "password">>(
+  "User"
+);
 UserType.implement({
   fields: (t) => ({
-    id: t.exposeID("userId"),
+    userId: t.exposeID("userId"),
     email: t.exposeString("email"),
-    password: t.exposeString("password"),
+    username: t.exposeString("username"),
+    discriminator: t.exposeString("discriminator"),
     confirmed: t.exposeBoolean("confirmed"),
   }),
 });
