@@ -29,9 +29,16 @@ export const handler = async (
     );
     console.log(firstFieldName);
 
-    const isPrivate = ["user", "changeUsername"].includes(firstFieldName);
+    const isPrivate = [
+      "user",
+      "changeUsername",
+      "changePassword",
+      "changeAvatar",
+    ].includes(firstFieldName);
     const accessToken = event.headers.authorization;
 
+    let userId: string = "";
+    let email: string = "";
     if (isPrivate) {
       if (!accessToken) throw new Error("no access token");
 
@@ -42,12 +49,12 @@ export const handler = async (
         .go();
 
       verify(accessToken, service.accessTokenSecret);
-    }
 
-    let userId: string = "";
-    try {
-      ({ userId } = decode(accessToken) as { userId: string });
-    } catch {}
+      ({ userId, email } = decode(accessToken) as {
+        userId: string;
+        email: string;
+      });
+    }
 
     return GraphQLHandler({
       schema,
@@ -56,6 +63,7 @@ export const handler = async (
           ...request,
           user: {
             userId,
+            email,
           },
         };
       },

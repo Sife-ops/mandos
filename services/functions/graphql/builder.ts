@@ -4,7 +4,7 @@ export const builder = new SchemaBuilder<{
   Context: {
     user: {
       userId: string;
-      //   email: string;
+      email: string;
     };
   };
 }>({});

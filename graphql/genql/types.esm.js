@@ -48,8 +48,26 @@ export default {
                     ]
                 }
             ],
+            "changeAvatar": [
+                8,
+                {
+                    "avatar": [
+                        1,
+                        "String!"
+                    ]
+                }
+            ],
+            "changePassword": [
+                8,
+                {
+                    "password": [
+                        1,
+                        "String!"
+                    ]
+                }
+            ],
             "changeUsername": [
-                4,
+                8,
                 {
                     "username": [
                         1,
@@ -172,6 +190,9 @@ export default {
         },
         "ID": {},
         "User": {
+            "avatar": [
+                1
+            ],
             "confirmed": [
                 4
             ],

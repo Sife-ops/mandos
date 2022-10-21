@@ -30,7 +30,10 @@ export const handler = async (event: any) => {
         break;
     }
 
-    const link = `${Config.SITE_URL}${actionLink}`;
+    const link =
+      STAGE === "dev"
+        ? "http://localhost:3000" + actionLink
+        : `${Config.SITE_URL}${actionLink}`;
     console.log("link:", link);
 
     if (STAGE === "prod") {

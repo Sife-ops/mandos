@@ -36,18 +36,17 @@ export const UserEntity = new Entity(
         required: true,
       },
 
+      avatar: {
+        type: "string",
+        required: true,
+        default: () => "",
+      },
+
       confirmed: {
         type: "boolean",
         required: true,
         default: () => false,
       },
-
-      // todo: roles entity
-      // role: {
-      //   type: ["administrator", "user", "moderator"],
-      //   required: true,
-      //   default: () => "user",
-      // },
     },
     indexes: {
       user: {
@@ -58,6 +57,7 @@ export const UserEntity = new Entity(
         },
         sk: {
           field: "sk",
+          // todo: remove email rangekey
           composite: ["email"],
         },
       },

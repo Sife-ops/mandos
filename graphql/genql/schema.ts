@@ -22,7 +22,9 @@ export interface CaptchaVerify {
 export interface Mutation {
     captchaGet: CaptchaGet
     captchaVerify: CaptchaVerify
-    changeUsername: Scalars['Boolean']
+    changeAvatar: User
+    changePassword: User
+    changeUsername: User
     confirm: Scalars['Boolean']
     resendEmail: Scalars['Boolean']
     resetPassword: Scalars['Boolean']
@@ -47,6 +49,7 @@ export interface Service {
 }
 
 export interface User {
+    avatar: Scalars['String']
     confirmed: Scalars['Boolean']
     discriminator: Scalars['String']
     email: Scalars['String']
@@ -73,7 +76,9 @@ export interface CaptchaVerifyRequest{
 export interface MutationRequest{
     captchaGet?: CaptchaGetRequest
     captchaVerify?: [{captcha: Scalars['String'],uuid: Scalars['String']},CaptchaVerifyRequest]
-    changeUsername?: [{username: Scalars['String']}]
+    changeAvatar?: [{avatar: Scalars['String']},UserRequest]
+    changePassword?: [{password: Scalars['String']},UserRequest]
+    changeUsername?: [{username: Scalars['String']},UserRequest]
     confirm?: [{registrationToken: Scalars['String']}]
     resendEmail?: [{email: Scalars['String']}]
     resetPassword?: [{password: Scalars['String'],registrationToken: Scalars['String']}]
@@ -101,6 +106,7 @@ export interface ServiceRequest{
 }
 
 export interface UserRequest{
+    avatar?: boolean | number
     confirmed?: boolean | number
     discriminator?: boolean | number
     email?: boolean | number
@@ -183,7 +189,9 @@ export interface CaptchaVerifyObservableChain{
 export interface MutationPromiseChain{
     captchaGet: (CaptchaGetPromiseChain & {get: <R extends CaptchaGetRequest>(request: R, defaultValue?: FieldsSelection<CaptchaGet, R>) => Promise<FieldsSelection<CaptchaGet, R>>}),
     captchaVerify: ((args: {captcha: Scalars['String'],uuid: Scalars['String']}) => CaptchaVerifyPromiseChain & {get: <R extends CaptchaVerifyRequest>(request: R, defaultValue?: FieldsSelection<CaptchaVerify, R>) => Promise<FieldsSelection<CaptchaVerify, R>>}),
-    changeUsername: ((args: {username: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Promise<Scalars['Boolean']>}),
+    changeAvatar: ((args: {avatar: Scalars['String']}) => UserPromiseChain & {get: <R extends UserRequest>(request: R, defaultValue?: FieldsSelection<User, R>) => Promise<FieldsSelection<User, R>>}),
+    changePassword: ((args: {password: Scalars['String']}) => UserPromiseChain & {get: <R extends UserRequest>(request: R, defaultValue?: FieldsSelection<User, R>) => Promise<FieldsSelection<User, R>>}),
+    changeUsername: ((args: {username: Scalars['String']}) => UserPromiseChain & {get: <R extends UserRequest>(request: R, defaultValue?: FieldsSelection<User, R>) => Promise<FieldsSelection<User, R>>}),
     confirm: ((args: {registrationToken: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Promise<Scalars['Boolean']>}),
     resendEmail: ((args: {email: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Promise<Scalars['Boolean']>}),
     resetPassword: ((args: {password: Scalars['String'],registrationToken: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Promise<Scalars['Boolean']>}),
@@ -195,7 +203,9 @@ export interface MutationPromiseChain{
 export interface MutationObservableChain{
     captchaGet: (CaptchaGetObservableChain & {get: <R extends CaptchaGetRequest>(request: R, defaultValue?: FieldsSelection<CaptchaGet, R>) => Observable<FieldsSelection<CaptchaGet, R>>}),
     captchaVerify: ((args: {captcha: Scalars['String'],uuid: Scalars['String']}) => CaptchaVerifyObservableChain & {get: <R extends CaptchaVerifyRequest>(request: R, defaultValue?: FieldsSelection<CaptchaVerify, R>) => Observable<FieldsSelection<CaptchaVerify, R>>}),
-    changeUsername: ((args: {username: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Observable<Scalars['Boolean']>}),
+    changeAvatar: ((args: {avatar: Scalars['String']}) => UserObservableChain & {get: <R extends UserRequest>(request: R, defaultValue?: FieldsSelection<User, R>) => Observable<FieldsSelection<User, R>>}),
+    changePassword: ((args: {password: Scalars['String']}) => UserObservableChain & {get: <R extends UserRequest>(request: R, defaultValue?: FieldsSelection<User, R>) => Observable<FieldsSelection<User, R>>}),
+    changeUsername: ((args: {username: Scalars['String']}) => UserObservableChain & {get: <R extends UserRequest>(request: R, defaultValue?: FieldsSelection<User, R>) => Observable<FieldsSelection<User, R>>}),
     confirm: ((args: {registrationToken: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Observable<Scalars['Boolean']>}),
     resendEmail: ((args: {email: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Observable<Scalars['Boolean']>}),
     resetPassword: ((args: {password: Scalars['String'],registrationToken: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Observable<Scalars['Boolean']>}),
@@ -229,6 +239,7 @@ export interface ServiceObservableChain{
 }
 
 export interface UserPromiseChain{
+    avatar: ({get: (request?: boolean|number, defaultValue?: Scalars['String']) => Promise<Scalars['String']>}),
     confirmed: ({get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Promise<Scalars['Boolean']>}),
     discriminator: ({get: (request?: boolean|number, defaultValue?: Scalars['String']) => Promise<Scalars['String']>}),
     email: ({get: (request?: boolean|number, defaultValue?: Scalars['String']) => Promise<Scalars['String']>}),
@@ -237,6 +248,7 @@ export interface UserPromiseChain{
 }
 
 export interface UserObservableChain{
+    avatar: ({get: (request?: boolean|number, defaultValue?: Scalars['String']) => Observable<Scalars['String']>}),
     confirmed: ({get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Observable<Scalars['Boolean']>}),
     discriminator: ({get: (request?: boolean|number, defaultValue?: Scalars['String']) => Observable<Scalars['String']>}),
     email: ({get: (request?: boolean|number, defaultValue?: Scalars['String']) => Observable<Scalars['String']>}),

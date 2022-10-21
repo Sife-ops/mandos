@@ -11,5 +11,6 @@ UserType.implement({
     username: t.exposeString("username"),
     discriminator: t.exposeString("discriminator"),
     confirmed: t.exposeBoolean("confirmed"),
+    avatar: t.exposeString("avatar"),
   }),
 });
