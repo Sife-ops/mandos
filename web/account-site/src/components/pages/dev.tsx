@@ -82,6 +82,7 @@ export const Dev = () => {
     <div>
       <h3>avatar</h3>
       <img src={avatarUrl} alt="logo" />
+      <br />
 
       <input
         type="file"

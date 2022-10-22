@@ -38,11 +38,19 @@ builder.queryFields((t) => ({
   user: t.field({
     type: UserType,
     resolve: async (_, __, { user: { userId } }) => {
-      const avatarUrl = s3.getSignedUrl("getObject", {
-        Key: userId,
-        Bucket: Config.AVATAR_BUCKET,
-        Expires: 900,
-      });
+      let avatarUrl: string = "";
+
+      try {
+        const params = {
+          Key: userId,
+          Bucket: Config.AVATAR_BUCKET,
+        };
+
+        await s3.headObject(params).promise();
+        avatarUrl = s3.getSignedUrl("getObject", { ...params, Expires: 900 });
+      } catch {
+        console.log("avatar unavailable");
+      }
 
       const {
         data: [user],
