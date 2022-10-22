@@ -14,7 +14,7 @@ type Mutation {
   captchaVerify(captcha: String!, uuid: String!): CaptchaVerify!
   changeAvatar(avatar: String!): Boolean!
   changePassword(password: String!): Boolean!
-  changeUsername(username: String!): User!
+  changeUsername(username: String!): Boolean!
   confirm(registrationToken: String!): Boolean!
   resendEmail(email: String!): Boolean!
   resetPassword(password: String!, registrationToken: String!): Boolean!

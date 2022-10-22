@@ -1,6 +1,7 @@
+import defaultAvi from "../../assets/default.png";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useTypedQuery, useTypedMutation } from "@mandos/graphql/urql";
+import { useTypedQuery } from "@mandos/graphql/urql";
 
 export const Dev = () => {
   const nav = useNavigate();
@@ -38,7 +39,7 @@ export const Dev = () => {
   return (
     <div>
       <h3>avatar</h3>
-      <img src={avatarUrl} alt="logo" />
+      <img src={avatarUrl ? avatarUrl : defaultAvi} alt="logo" />
       <br />
       <button
         onClick={() => {

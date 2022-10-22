@@ -1,3 +1,4 @@
+import defaultAvi from "../../assets/default.png";
 import { useEffect, useState } from "react";
 import { useTypedMutation } from "@mandos/graphql/urql";
 import { useNavigate } from "react-router-dom";
@@ -24,7 +25,7 @@ export const ChangeAvatar = () => {
 
   return (
     <div>
-      <img src={avatar} alt="logo" />
+      <img src={avatar ? avatar : defaultAvi} alt="logo" />
       <br />
 
       <input

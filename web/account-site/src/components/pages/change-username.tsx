@@ -10,7 +10,7 @@ export const ChangeUsername = () => {
   const [changeUsernameState, changeUsername] = useTypedMutation(
     (vars: { username: string }) => {
       return {
-        changeUsername: [vars, { username: true }],
+        changeUsername: [vars],
       };
     }
   );

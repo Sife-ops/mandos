@@ -67,7 +67,7 @@ export default {
                 }
             ],
             "changeUsername": [
-                8,
+                4,
                 {
                     "username": [
                         1,

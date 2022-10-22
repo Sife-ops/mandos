@@ -1,10 +1,8 @@
-import { builder } from "../../builder";
-import bcrypt from "bcryptjs";
-import { mandosModel } from "@mandos/core/model";
-import { UserType } from "../user";
-import { Config } from "@serverless-stack/node/config";
-import { UserEntityType } from "@mandos/core/user";
 import AWS from "aws-sdk";
+import bcrypt from "bcryptjs";
+import { Config } from "@serverless-stack/node/config";
+import { builder } from "../../builder";
+import { mandosModel } from "@mandos/core/model";
 
 const S3 = new AWS.S3();
 
@@ -13,12 +11,17 @@ const {
 } = mandosModel;
 
 builder.mutationFields((t) => ({
-  changeUsername: t.field({
-    type: UserType,
+  changeUsername: t.boolean({
     args: {
       username: t.arg.string({ required: true }),
     },
-    resolve: (_, args, { user }) => updateAttrs(user, args),
+    resolve: async (_, args, { user }) => {
+      await UserEntity.update(user)
+        .set(args)
+        .go();
+
+      return true;
+    },
   }),
 
   changePassword: t.boolean({
@@ -37,11 +40,9 @@ builder.mutationFields((t) => ({
   }),
 
   changeAvatar: t.boolean({
-    // type: UserType,
     args: {
       avatar: t.arg.string({ required: true }),
     },
-    // resolve: (_, args, { user }) => updateAttrs(user, args),
     resolve: async (_, args, { user }) => {
       const type = args.avatar.split(";")[0].split("/")[1];
       const buffer = Buffer.from(
@@ -61,22 +62,3 @@ builder.mutationFields((t) => ({
     },
   }),
 }));
-
-const updateAttrs = async (
-  user: { userId: string; email: string },
-  attrs: Partial<UserEntityType>
-) => {
-  const res = await UserEntity.update(user)
-    .set(attrs)
-    .go();
-  console.log("update result", res);
-
-  const {
-    data: [updated],
-  } = await UserEntity.query.user(user).go();
-
-  return {
-    ...updated,
-    avatarUrl: "",
-  };
-};

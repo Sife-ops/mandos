@@ -188,14 +188,13 @@ builder.mutationFields((t) => ({
         throw new Error("username unavailable");
       } else if (usernameQuery.length > 0) {
         while (true) {
+          if (!usernameQuery.find((e) => e.discriminator === discriminator)) {
+            break;
+          }
           discriminator = faker.datatype
             .number({ min: 10001, max: 19999 })
             .toString()
             .slice(1);
-
-          if (!usernameQuery.find((e) => e.discriminator === discriminator)) {
-            break;
-          }
         }
       }
 
