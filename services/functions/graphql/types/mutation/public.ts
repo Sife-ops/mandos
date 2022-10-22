@@ -1,12 +1,12 @@
 import AWS from "aws-sdk";
 import axios from "axios";
 import bcrypt from "bcryptjs";
-import { faker } from "@faker-js/faker";
 import { Config } from "@serverless-stack/node/config";
 import { builder } from "../../builder";
 import { tokenOptions } from "../../../constant";
 import { mandosModel } from "@mandos/core/model";
 import { sign, verify } from "jsonwebtoken";
+import { getDiscriminator } from "./helper";
 
 const {
   entities: { UserEntity, ServiceEntity },
@@ -178,25 +178,11 @@ builder.mutationFields((t) => ({
         await UserEntity.delete(user).go();
       }
 
-      const { data: usernameQuery } = await UserEntity.query
+      const { data: usersWithSameUsername } = await UserEntity.query
         .username({ username })
         .go();
 
-      // todo: duplicated in private
-      let discriminator = "0000";
-      if (usernameQuery.length >= 10000) {
-        throw new Error("username unavailable");
-      } else if (usernameQuery.length > 0) {
-        while (true) {
-          if (!usernameQuery.find((e) => e.discriminator === discriminator)) {
-            break;
-          }
-          discriminator = faker.datatype
-            .number({ min: 10001, max: 19999 })
-            .toString()
-            .slice(1);
-        }
-      }
+      const discriminator = getDiscriminator(usersWithSameUsername);
 
       const hashed = bcrypt.hashSync(password, 8);
       await UserEntity.create({
