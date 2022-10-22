@@ -114,6 +114,8 @@ export function Web({ stack, app }: StackContext) {
     buildCommand: "npm run build",
     environment: {
       VITE_API_URL: api.url,
+      VITE_STAGE: app.stage,
+      VITE_REGISTRAR_URL: registrarSite.customDomainUrl,
     },
     customDomain: {
       domainName: `${ACCOUNT_SUBDOMAIN}.${DOMAIN}`,

@@ -27,7 +27,6 @@ export const handler = async (
     const firstFieldName = firstFieldValueNameFromOperation(
       firstOperationDefinition(parsedQuery)
     );
-    console.log(firstFieldName);
 
     const isPrivate = [
       "user",

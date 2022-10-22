@@ -1,17 +1,18 @@
 // import "./index.css";
 
 import ReactDOM from "react-dom/client";
+import { Account } from "./components/pages/account";
 import { Auth } from "./components/pages/auth";
 import { AuthContextProvider } from "./hook/auth-context";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ChangeAvatar } from "./components/pages/change-avatar";
 import { ChangePassword } from "./components/pages/change-password";
 import { ChangeUsername } from "./components/pages/change-username";
-import { Account } from "./components/pages/account";
 import { Footer } from "./components/footer";
 import { PrivateRoutes } from "./components/private-routes";
 import { authConfig } from "./urql";
 import { authExchange } from "@urql/exchange-auth";
+import { useAuthContext } from "./hook/auth-context";
 
 import {
   Provider as UrqlProvider,
@@ -42,10 +43,20 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 );
 
 function App() {
+  const auth = useAuthContext();
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<PrivateRoutes errorTo="/error" />}>
+        <Route
+          path="/"
+          element={
+            <div>
+              <button onClick={() => auth.signOut()}>sign out</button>
+              <PrivateRoutes errorTo="/error" />
+            </div>
+          }
+        >
           <Route path="/account" element={<Account />} />
           <Route path="/change-avatar" element={<ChangeAvatar />} />
           <Route path="/change-username" element={<ChangeUsername />} />

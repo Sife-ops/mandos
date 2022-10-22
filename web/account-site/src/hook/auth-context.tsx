@@ -21,7 +21,14 @@ const useContext = (): Context => {
 
   const signOut = () => {
     localStorage.clear();
-    window.location.reload();
+    const stage = import.meta.env.VITE_STAGE;
+    const site = import.meta.env.VITE_REGISTRAR_URL;
+    const path = "/sign-in?serviceId=account";
+    if (stage === "dev") {
+      window.location.href = "http://localhost:3000" + path;
+    } else {
+      window.location.href = site + path;
+    }
   };
 
   return {
