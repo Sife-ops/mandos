@@ -58,7 +58,7 @@ export default {
                 }
             ],
             "changePassword": [
-                8,
+                4,
                 {
                     "password": [
                         1,

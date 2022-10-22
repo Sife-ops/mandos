@@ -1,4 +1,5 @@
 import { builder } from "../../builder";
+import bcrypt from "bcryptjs";
 import { mandosModel } from "@mandos/core/model";
 import { UserType } from "../user";
 import { Config } from "@serverless-stack/node/config";
@@ -20,12 +21,19 @@ builder.mutationFields((t) => ({
     resolve: (_, args, { user }) => updateAttrs(user, args),
   }),
 
-  changePassword: t.field({
-    type: UserType,
+  changePassword: t.boolean({
     args: {
       password: t.arg.string({ required: true }),
     },
-    resolve: (_, args, { user }) => updateAttrs(user, args),
+    resolve: async (_, { password }, { user }) => {
+      const hashed = bcrypt.hashSync(password, 8);
+
+      await UserEntity.update(user)
+        .set({ password: hashed })
+        .go();
+
+      return true;
+    },
   }),
 
   changeAvatar: t.boolean({

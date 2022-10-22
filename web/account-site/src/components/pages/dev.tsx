@@ -56,6 +56,9 @@ export const Dev = () => {
       <button onClick={() => nav("/change-username")}>edit</button>
       <h3>email</h3>
       <span>{email}</span>
+      <br />
+      <br />
+      <button onClick={() => nav("/change-password")}>change password</button>
     </div>
   );
 };

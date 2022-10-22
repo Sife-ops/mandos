@@ -23,7 +23,7 @@ export interface Mutation {
     captchaGet: CaptchaGet
     captchaVerify: CaptchaVerify
     changeAvatar: Scalars['Boolean']
-    changePassword: User
+    changePassword: Scalars['Boolean']
     changeUsername: User
     confirm: Scalars['Boolean']
     resendEmail: Scalars['Boolean']
@@ -77,7 +77,7 @@ export interface MutationRequest{
     captchaGet?: CaptchaGetRequest
     captchaVerify?: [{captcha: Scalars['String'],uuid: Scalars['String']},CaptchaVerifyRequest]
     changeAvatar?: [{avatar: Scalars['String']}]
-    changePassword?: [{password: Scalars['String']},UserRequest]
+    changePassword?: [{password: Scalars['String']}]
     changeUsername?: [{username: Scalars['String']},UserRequest]
     confirm?: [{registrationToken: Scalars['String']}]
     resendEmail?: [{email: Scalars['String']}]
@@ -190,7 +190,7 @@ export interface MutationPromiseChain{
     captchaGet: (CaptchaGetPromiseChain & {get: <R extends CaptchaGetRequest>(request: R, defaultValue?: FieldsSelection<CaptchaGet, R>) => Promise<FieldsSelection<CaptchaGet, R>>}),
     captchaVerify: ((args: {captcha: Scalars['String'],uuid: Scalars['String']}) => CaptchaVerifyPromiseChain & {get: <R extends CaptchaVerifyRequest>(request: R, defaultValue?: FieldsSelection<CaptchaVerify, R>) => Promise<FieldsSelection<CaptchaVerify, R>>}),
     changeAvatar: ((args: {avatar: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Promise<Scalars['Boolean']>}),
-    changePassword: ((args: {password: Scalars['String']}) => UserPromiseChain & {get: <R extends UserRequest>(request: R, defaultValue?: FieldsSelection<User, R>) => Promise<FieldsSelection<User, R>>}),
+    changePassword: ((args: {password: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Promise<Scalars['Boolean']>}),
     changeUsername: ((args: {username: Scalars['String']}) => UserPromiseChain & {get: <R extends UserRequest>(request: R, defaultValue?: FieldsSelection<User, R>) => Promise<FieldsSelection<User, R>>}),
     confirm: ((args: {registrationToken: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Promise<Scalars['Boolean']>}),
     resendEmail: ((args: {email: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Promise<Scalars['Boolean']>}),
@@ -204,7 +204,7 @@ export interface MutationObservableChain{
     captchaGet: (CaptchaGetObservableChain & {get: <R extends CaptchaGetRequest>(request: R, defaultValue?: FieldsSelection<CaptchaGet, R>) => Observable<FieldsSelection<CaptchaGet, R>>}),
     captchaVerify: ((args: {captcha: Scalars['String'],uuid: Scalars['String']}) => CaptchaVerifyObservableChain & {get: <R extends CaptchaVerifyRequest>(request: R, defaultValue?: FieldsSelection<CaptchaVerify, R>) => Observable<FieldsSelection<CaptchaVerify, R>>}),
     changeAvatar: ((args: {avatar: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Observable<Scalars['Boolean']>}),
-    changePassword: ((args: {password: Scalars['String']}) => UserObservableChain & {get: <R extends UserRequest>(request: R, defaultValue?: FieldsSelection<User, R>) => Observable<FieldsSelection<User, R>>}),
+    changePassword: ((args: {password: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Observable<Scalars['Boolean']>}),
     changeUsername: ((args: {username: Scalars['String']}) => UserObservableChain & {get: <R extends UserRequest>(request: R, defaultValue?: FieldsSelection<User, R>) => Observable<FieldsSelection<User, R>>}),
     confirm: ((args: {registrationToken: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Observable<Scalars['Boolean']>}),
     resendEmail: ((args: {email: Scalars['String']}) => {get: (request?: boolean|number, defaultValue?: Scalars['Boolean']) => Observable<Scalars['Boolean']>}),

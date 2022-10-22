@@ -13,7 +13,7 @@ type Mutation {
   captchaGet: CaptchaGet!
   captchaVerify(captcha: String!, uuid: String!): CaptchaVerify!
   changeAvatar(avatar: String!): Boolean!
-  changePassword(password: String!): User!
+  changePassword(password: String!): Boolean!
   changeUsername(username: String!): User!
   confirm(registrationToken: String!): Boolean!
   resendEmail(email: String!): Boolean!
