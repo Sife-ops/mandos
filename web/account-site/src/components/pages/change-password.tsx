@@ -47,9 +47,6 @@ export const ChangePassword = () => {
         }
         onClick={() => {
           changePassword({ password });
-          //   if (username) {
-          //     changeUsername({ username });
-          //   }
         }}
       >
         Save

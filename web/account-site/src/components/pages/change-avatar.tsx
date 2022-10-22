@@ -7,6 +7,7 @@ export const ChangeAvatar = () => {
   const nav = useNavigate();
 
   const [avatar, setAvatar] = useState("");
+  const [size, setSize] = useState(0);
 
   const [changeAvatarState, changeAvatar] = useTypedMutation(
     (vars: { avatar: string }) => {
@@ -25,7 +26,14 @@ export const ChangeAvatar = () => {
 
   return (
     <div>
-      <img src={avatar ? avatar : defaultAvi} alt="logo" />
+      <img
+        style={{
+          width: "128px",
+          height: "auto",
+        }}
+        src={avatar ? avatar : defaultAvi}
+        alt="logo"
+      />
       <br />
 
       <input
@@ -35,6 +43,7 @@ export const ChangeAvatar = () => {
           const files = e.target.files;
           if (files !== null) {
             const file = files[0];
+            setSize(file.size);
             let reader = new FileReader();
             reader.readAsDataURL(file);
 
@@ -52,9 +61,11 @@ export const ChangeAvatar = () => {
         }}
       />
       <br />
+      <span>Files must be less than 1MB.</span>
+      <br />
 
       <button
-        disabled={!avatar}
+        disabled={!avatar || size > 1000000}
         onClick={() => {
           if (avatar) {
             changeAvatar({ avatar });

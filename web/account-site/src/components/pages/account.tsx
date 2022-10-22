@@ -39,7 +39,15 @@ export const Account = () => {
   return (
     <div>
       <h3>avatar</h3>
-      <img src={avatarUrl ? avatarUrl : defaultAvi} alt="logo" />
+      <img
+        style={{
+          width: "128px",
+          height: "auto",
+          borderRadius: "50%",
+        }}
+        src={avatarUrl ? avatarUrl : defaultAvi}
+        alt="logo"
+      />
       <br />
       <button
         onClick={() => {

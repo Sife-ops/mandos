@@ -1,5 +1,6 @@
 import AWS from "aws-sdk";
 import bcrypt from "bcryptjs";
+import sharp from "sharp";
 import { Config } from "@serverless-stack/node/config";
 import { builder } from "../../builder";
 import { mandosModel } from "@mandos/core/model";
@@ -50,10 +51,14 @@ builder.mutationFields((t) => ({
         "base64"
       );
 
+      const resized = await sharp(buffer)
+        .resize(128, 128)
+        .toBuffer();
+
       await S3.putObject({
         Bucket: Config.AVATAR_BUCKET,
         Key: user.userId,
-        Body: buffer,
+        Body: resized,
         ContentEncoding: "base64",
         ContentType: `image/${type}`,
       }).promise();

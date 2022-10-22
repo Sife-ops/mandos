@@ -16,6 +16,7 @@ export default function main(app: App) {
     srcPath: "services",
     bundle: {
       format: "esm",
+      externalModules: ["sharp"],
     },
   });
   app
