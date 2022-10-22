@@ -1,8 +1,8 @@
 import AWS from "aws-sdk";
 import bcrypt from "bcryptjs";
-import sharp from "sharp";
 import { Config } from "@serverless-stack/node/config";
 import { builder } from "../../builder";
+import { faker } from "@faker-js/faker";
 import { mandosModel } from "@mandos/core/model";
 
 const S3 = new AWS.S3();
@@ -16,9 +16,31 @@ builder.mutationFields((t) => ({
     args: {
       username: t.arg.string({ required: true }),
     },
-    resolve: async (_, args, { user }) => {
+    resolve: async (_, { username }, { user }) => {
+      const { data: usernameQuery } = await UserEntity.query
+        .username({ username })
+        .go();
+
+      let discriminator = "0000";
+      if (usernameQuery.length >= 10000) {
+        throw new Error("username unavailable");
+      } else if (usernameQuery.length > 0) {
+        while (true) {
+          if (!usernameQuery.find((e) => e.discriminator === discriminator)) {
+            break;
+          }
+          discriminator = faker.datatype
+            .number({ min: 10001, max: 19999 })
+            .toString()
+            .slice(1);
+        }
+      }
+
       await UserEntity.update(user)
-        .set(args)
+        .set({
+          username,
+          discriminator,
+        })
         .go();
 
       return true;
@@ -51,14 +73,10 @@ builder.mutationFields((t) => ({
         "base64"
       );
 
-      const resized = await sharp(buffer)
-        .resize(128, 128)
-        .toBuffer();
-
       await S3.putObject({
         Bucket: Config.AVATAR_BUCKET,
         Key: user.userId,
-        Body: resized,
+        Body: buffer,
         ContentEncoding: "base64",
         ContentType: `image/${type}`,
       }).promise();

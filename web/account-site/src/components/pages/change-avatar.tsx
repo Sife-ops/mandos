@@ -29,7 +29,7 @@ export const ChangeAvatar = () => {
       <img
         style={{
           width: "128px",
-          height: "auto",
+          height: "128px",
         }}
         src={avatar ? avatar : defaultAvi}
         alt="logo"

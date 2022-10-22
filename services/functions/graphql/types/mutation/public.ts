@@ -182,7 +182,7 @@ builder.mutationFields((t) => ({
         .username({ username })
         .go();
 
-      // todo: user '0000' if available
+      // todo: duplicated in private
       let discriminator = "0000";
       if (usernameQuery.length >= 10000) {
         throw new Error("username unavailable");

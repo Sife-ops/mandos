@@ -14,12 +14,10 @@
     "electrodb": "^2.1.1",
     "graphql": "^16.6.0",
     "jsonwebtoken": "^8.5.1",
-    "sharp": "^0.31.1",
     "ulid": "^2.3.0",
     "zod": "^3.19.1"
   },
   "devDependencies": {
-    "@types/sharp": "^0.31.0",
     "@types/aws-lambda": "^8.10.106",
     "@types/bcryptjs": "^2.4.2",
     "@types/jsonwebtoken": "^8.5.9"

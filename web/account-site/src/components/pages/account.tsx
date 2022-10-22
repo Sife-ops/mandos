@@ -42,7 +42,7 @@ export const Account = () => {
       <img
         style={{
           width: "128px",
-          height: "auto",
+          height: "128px",
           borderRadius: "50%",
         }}
         src={avatarUrl ? avatarUrl : defaultAvi}
