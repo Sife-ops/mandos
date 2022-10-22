@@ -38,6 +38,10 @@ export function Web({ stack, app }: StackContext) {
     "REGISTRATION_TOKEN_SECRET"
   );
 
+  if (!registrarSite.customDomainUrl) {
+    throw new Error("customDomainUrl not defined");
+  }
+
   // todo: move this or combine all files
   const emailjsSqs = new Queue(stack, "emailjs", {
     consumer: {
@@ -53,7 +57,7 @@ export function Web({ stack, app }: StackContext) {
             value: "template_pwk79e6",
           }),
           new Config.Parameter(stack, "SITE_URL", {
-            value: registrarSite.customDomainUrl!,
+            value: registrarSite.customDomainUrl,
           }),
         ],
         permissions: [db.table],
