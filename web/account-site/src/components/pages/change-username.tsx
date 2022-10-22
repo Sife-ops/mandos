@@ -18,7 +18,7 @@ export const ChangeUsername = () => {
   useEffect(() => {
     const { fetching, data, error } = changeUsernameState;
     if (!fetching && data && !error) {
-      nav("/dev");
+      nav("/account");
     }
   }, [changeUsernameState.data]);
 

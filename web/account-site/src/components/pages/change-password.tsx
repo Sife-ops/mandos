@@ -19,7 +19,7 @@ export const ChangePassword = () => {
   useEffect(() => {
     const { fetching, data, error } = changePasswordState;
     if (!fetching && data && !error) {
-      nav("/dev");
+      nav("/account");
     }
   }, [changePasswordState.data]);
 

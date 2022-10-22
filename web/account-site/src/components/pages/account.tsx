@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTypedQuery } from "@mandos/graphql/urql";
 
-export const Dev = () => {
+export const Account = () => {
   const nav = useNavigate();
 
   const [avatarUrl, setAvatarUrl] = useState("");

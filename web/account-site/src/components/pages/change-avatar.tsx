@@ -19,7 +19,7 @@ export const ChangeAvatar = () => {
   useEffect(() => {
     const { fetching, data, error } = changeAvatarState;
     if (!fetching && data && !error) {
-      nav("/dev");
+      nav("/account");
     }
   }, [changeAvatarState.data]);
 

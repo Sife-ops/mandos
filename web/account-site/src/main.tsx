@@ -7,7 +7,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ChangeAvatar } from "./components/pages/change-avatar";
 import { ChangePassword } from "./components/pages/change-password";
 import { ChangeUsername } from "./components/pages/change-username";
-import { Dev } from "./components/pages/dev";
+import { Account } from "./components/pages/account";
 import { Footer } from "./components/footer";
 import { PrivateRoutes } from "./components/private-routes";
 import { authConfig } from "./urql";
@@ -46,12 +46,12 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<PrivateRoutes errorTo="/error" />}>
-          <Route path="/dev" element={<Dev />} />
+          <Route path="/account" element={<Account />} />
           <Route path="/change-avatar" element={<ChangeAvatar />} />
           <Route path="/change-username" element={<ChangeUsername />} />
           <Route path="/change-password" element={<ChangePassword />} />
         </Route>
-        <Route path="/auth" element={<Auth to="/dev" />} />
+        <Route path="/auth" element={<Auth to="/account" />} />
         <Route path="/error" element={<div>Error! lol</div>} />
         <Route path="*" element={<Navigate to="/error" />} />
       </Routes>
