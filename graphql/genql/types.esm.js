@@ -49,7 +49,7 @@ export default {
                 }
             ],
             "changeAvatar": [
-                8,
+                4,
                 {
                     "avatar": [
                         1,
@@ -190,7 +190,7 @@ export default {
         },
         "ID": {},
         "User": {
-            "avatar": [
+            "avatarUrl": [
                 1
             ],
             "confirmed": [

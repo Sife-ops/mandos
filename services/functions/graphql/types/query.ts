@@ -38,11 +38,20 @@ builder.queryFields((t) => ({
   user: t.field({
     type: UserType,
     resolve: async (_, __, { user: { userId } }) => {
+      const avatarUrl = s3.getSignedUrl("getObject", {
+        Key: userId,
+        Bucket: Config.AVATAR_BUCKET,
+        Expires: 900,
+      });
+
       const {
         data: [user],
       } = await mandosModel.entities.UserEntity.query.user({ userId }).go();
 
-      return user;
+      return {
+        ...user,
+        avatarUrl,
+      };
     },
   }),
 }));

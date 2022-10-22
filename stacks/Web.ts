@@ -71,16 +71,20 @@ export function Web({ stack, app }: StackContext) {
   });
 
   const logoBucket = new Bucket(stack, "logo");
+  const avatarBucket = new Bucket(stack, "avatar");
 
   api.addRoutes(stack, {
     "POST /graphql": {
       type: "pothos",
       function: {
         handler: "functions/graphql/graphql.handler",
-        permissions: [db.table, logoBucket, emailjsSqs],
+        permissions: [db.table, logoBucket, emailjsSqs, avatarBucket],
         config: [
           db.TABLE_NAME,
           registrationTokenSecret,
+          new Config.Parameter(stack, "AVATAR_BUCKET", {
+            value: avatarBucket.bucketName,
+          }),
           new Config.Parameter(stack, "LOGO_BUCKET", {
             value: logoBucket.bucketName,
           }),

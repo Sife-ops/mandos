@@ -12,7 +12,7 @@ type CaptchaVerify {
 type Mutation {
   captchaGet: CaptchaGet!
   captchaVerify(captcha: String!, uuid: String!): CaptchaVerify!
-  changeAvatar(avatar: String!): User!
+  changeAvatar(avatar: String!): Boolean!
   changePassword(password: String!): User!
   changeUsername(username: String!): User!
   confirm(registrationToken: String!): Boolean!
@@ -36,7 +36,7 @@ type Service {
 }
 
 type User {
-  avatar: String!
+  avatarUrl: String!
   confirmed: Boolean!
   discriminator: String!
   email: String!

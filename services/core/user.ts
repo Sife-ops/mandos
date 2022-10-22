@@ -36,12 +36,6 @@ export const UserEntity = new Entity(
         required: true,
       },
 
-      avatar: {
-        type: "string",
-        required: true,
-        default: () => "",
-      },
-
       confirmed: {
         type: "boolean",
         required: true,
