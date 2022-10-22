@@ -7,10 +7,6 @@ export const ChangeAvatar = () => {
 
   const [avatar, setAvatar] = useState("");
 
-  //   const [avatarChanged, setAvatarChanged] = useState(false);
-  //   const [avatarUrl, setAvatarUrl] = useState("");
-  //   const [avatarUrlChanged, setAvatarUrlChanged] = useState(false);
-
   const [changeAvatarState, changeAvatar] = useTypedMutation(
     (vars: { avatar: string }) => {
       return {
@@ -28,7 +24,6 @@ export const ChangeAvatar = () => {
 
   return (
     <div>
-      <h3>avatar</h3>
       <img src={avatar} alt="logo" />
       <br />
 
@@ -58,6 +53,7 @@ export const ChangeAvatar = () => {
       <br />
 
       <button
+        disabled={!avatar}
         onClick={() => {
           if (avatar) {
             changeAvatar({ avatar });

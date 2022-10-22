@@ -5,20 +5,10 @@ import { useTypedQuery, useTypedMutation } from "@mandos/graphql/urql";
 export const Dev = () => {
   const nav = useNavigate();
 
-  const [avatar, setAvatar] = useState("");
-  const [avatarChanged, setAvatarChanged] = useState(false);
-
   const [avatarUrl, setAvatarUrl] = useState("");
-  const [avatarUrlChanged, setAvatarUrlChanged] = useState(false);
-
   const [username, setUsername] = useState("");
-  const [usernameChanged, setUsernameChanged] = useState(false);
-
+  const [discriminator, setDiscriminator] = useState("");
   const [email, setEmail] = useState("");
-  const [emailChanged, setEmailChanged] = useState(false);
-
-  const [password, setPassword] = useState("");
-  const [passwordChanged, setPasswordChanged] = useState(false);
 
   const [userQuery] = useTypedQuery({
     query: {
@@ -31,49 +21,25 @@ export const Dev = () => {
         avatarUrl: true,
       },
     },
+    requestPolicy: "network-only",
   });
 
   useEffect(() => {
     const { fetching, data, error } = userQuery;
     if (!fetching && data) {
-      console.log(data);
       const { user } = data;
-      // setAvatar(user.avatar);
       setUsername(user.username);
+      setDiscriminator(user.discriminator);
       setEmail(user.email);
       setAvatarUrl(user.avatarUrl);
     }
   }, [userQuery.data]);
-
-  const [changeUsernameState, changeUsername] = useTypedMutation(
-    (vars: { username: string }) => {
-      return {
-        changeUsername: [
-          vars,
-          {
-            confirmed: true,
-            discriminator: true,
-            email: true,
-            userId: true,
-            username: true,
-            avatar: true,
-          },
-        ],
-      };
-    }
-  );
-
-  useEffect(() => {
-    const { fetching, data, error } = changeUsernameState;
-    console.log(data);
-  }, [changeUsernameState.data]);
 
   return (
     <div>
       <h3>avatar</h3>
       <img src={avatarUrl} alt="logo" />
       <br />
-
       <button
         onClick={() => {
           nav("/change-avatar");
@@ -81,14 +47,15 @@ export const Dev = () => {
       >
         change avatar
       </button>
-
       <h3>username</h3>
-      {username}
-      <button>edit</button>
-
+      {username && (
+        <span>
+          {username}#{discriminator} {/* todo: discriminator */}
+        </span>
+      )}
+      <button onClick={() => nav("/change-username")}>edit</button>
       <h3>email</h3>
-      {email}
-      <button>edit</button>
+      <span>{email}</span>
     </div>
   );
 };
