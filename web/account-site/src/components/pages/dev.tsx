@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useTypedQuery, useTypedMutation } from "@mandos/graphql/urql";
 
 export const Dev = () => {
+  const nav = useNavigate();
+
   const [avatar, setAvatar] = useState("");
   const [avatarChanged, setAvatarChanged] = useState(false);
 
@@ -65,57 +68,18 @@ export const Dev = () => {
     console.log(data);
   }, [changeUsernameState.data]);
 
-  const [changeAvatarState, changeAvatar] = useTypedMutation(
-    (vars: { avatar: string }) => {
-      return {
-        changeAvatar: [vars],
-      };
-    }
-  );
-
-  useEffect(() => {
-    const { fetching, data, error } = changeAvatarState;
-    console.log(data);
-  }, [changeAvatarState.data]);
-
   return (
     <div>
       <h3>avatar</h3>
       <img src={avatarUrl} alt="logo" />
       <br />
 
-      <input
-        type="file"
-        name="file"
-        onChange={(e) => {
-          const files = e.target.files;
-          if (files !== null) {
-            const file = files[0];
-            let reader = new FileReader();
-            reader.readAsDataURL(file);
-
-            reader.onload = () => {
-              const { result } = reader;
-              if (result && typeof result === "string") {
-                setAvatar(result);
-              }
-            };
-
-            reader.onerror = (error) => {
-              console.log("Error: ", error);
-            };
-          }
-        }}
-      />
-
       <button
         onClick={() => {
-          if (avatar) {
-            changeAvatar({ avatar });
-          }
+          nav("/change-avatar");
         }}
       >
-        go
+        change avatar
       </button>
 
       <h3>username</h3>

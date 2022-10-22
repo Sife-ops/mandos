@@ -14,6 +14,7 @@ builder.queryFields((t) => ({
       serviceId: t.arg.string({ required: true }),
     },
     resolve: async (_, { serviceId }) => {
+      // todo: use below pattern
       const logoUrl = s3.getSignedUrl("getObject", {
         Key: `${serviceId}.png`,
         Bucket: Config.LOGO_BUCKET,

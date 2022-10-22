@@ -17,6 +17,7 @@ import {
   cacheExchange,
   fetchExchange,
 } from "urql";
+import { ChangeAvatar } from "./components/pages/change-avatar";
 
 const urql = createClient({
   url: import.meta.env.VITE_API_URL + "/graphql",
@@ -44,6 +45,7 @@ function App() {
       <Routes>
         <Route path="/" element={<PrivateRoutes errorTo="/error" />}>
           <Route path="/dev" element={<Dev />} />
+          <Route path="/change-avatar" element={<ChangeAvatar />} />
         </Route>
         <Route path="/auth" element={<Auth to="/dev" />} />
         <Route path="/error" element={<div>Error! lol</div>} />
