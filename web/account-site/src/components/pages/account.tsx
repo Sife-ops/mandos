@@ -59,7 +59,7 @@ export const Account = () => {
       <h3>username</h3>
       {username && (
         <span>
-          {username}#{discriminator} {/* todo: discriminator */}
+          {username}#{discriminator}
         </span>
       )}
       <button onClick={() => nav("/change-username")}>edit</button>
