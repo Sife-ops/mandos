@@ -2,9 +2,7 @@ import { UserEntityType } from "@mandos/core/user";
 import { builder } from "../builder";
 
 export const UserType = builder.objectRef<
-  Omit<UserEntityType, "password"> & {
-    avatarUrl: string;
-  }
+  UserEntityType & { avatarUrl: string }
 >("User");
 UserType.implement({
   fields: (t) => ({

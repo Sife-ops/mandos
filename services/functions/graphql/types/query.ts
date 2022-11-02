@@ -39,8 +39,11 @@ builder.queryFields((t) => ({
   user: t.field({
     type: UserType,
     resolve: async (_, __, { user: { userId } }) => {
-      let avatarUrl: string = "";
+      const {
+        data: [user],
+      } = await mandosModel.entities.UserEntity.query.user({ userId }).go();
 
+      let avatarUrl: string = "";
       try {
         const params = {
           Key: userId,
@@ -52,10 +55,6 @@ builder.queryFields((t) => ({
       } catch {
         console.log("avatar unavailable");
       }
-
-      const {
-        data: [user],
-      } = await mandosModel.entities.UserEntity.query.user({ userId }).go();
 
       return {
         ...user,

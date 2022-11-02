@@ -76,6 +76,9 @@ export function Web({ stack, app }: StackContext) {
 
   const logoBucket = new Bucket(stack, "logo");
   const avatarBucket = new Bucket(stack, "avatar");
+  const avatarBucketName = new Config.Parameter(stack, "AVATAR_BUCKET", {
+    value: avatarBucket.bucketName,
+  });
 
   api.addRoutes(stack, {
     "POST /graphql": {
@@ -85,10 +88,8 @@ export function Web({ stack, app }: StackContext) {
         permissions: [db.table, logoBucket, emailjsSqs, avatarBucket],
         config: [
           db.TABLE_NAME,
+          avatarBucketName,
           registrationTokenSecret,
-          new Config.Parameter(stack, "AVATAR_BUCKET", {
-            value: avatarBucket.bucketName,
-          }),
           new Config.Parameter(stack, "LOGO_BUCKET", {
             value: logoBucket.bucketName,
           }),
@@ -102,6 +103,13 @@ export function Web({ stack, app }: StackContext) {
       commands: [
         "npx genql --output ./graphql/genql --schema ./graphql/schema.graphql --esm",
       ],
+    },
+    "POST /user": {
+      function: {
+        handler: "functions/rest/user.handler",
+        permissions: [db.table, avatarBucket],
+        config: [db.TABLE_NAME, avatarBucketName],
+      },
     },
   });
 
