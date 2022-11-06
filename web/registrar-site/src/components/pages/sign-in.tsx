@@ -87,11 +87,19 @@ export const SignIn = () => {
           });
         }}
       >
-        <img
-          className={s.formContainer__form__img}
-          src={serviceLogoUrl}
-          alt="logo"
-        />
+        <div
+          style={{
+            width: "64px",
+            height: "64px",
+            alignSelf: "center",
+          }}
+        >
+          <img
+            className={s.formContainer__form__img}
+            src={serviceLogoUrl}
+            alt="logo"
+          />
+        </div>
         {serviceTitle && (
           <h3 className={s.formContainer__form__header}>
             Sign in to {serviceTitle}

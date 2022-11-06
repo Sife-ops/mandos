@@ -3,6 +3,6 @@ export const tokenOptions = {
     expiresIn: "15m",
   },
   refreshToken: {
-    expiresIn: "1d",
+    expiresIn: "1h",
   },
 };

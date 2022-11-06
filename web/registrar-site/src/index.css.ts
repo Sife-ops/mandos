@@ -15,10 +15,8 @@ export const formContainer__form = style({
 });
 
 export const formContainer__form__img = style({
-  // borderRadius: "50%",
   width: "64px",
-  height: "auto",
-  alignSelf: "center",
+  height: "64px",
 });
 
 export const formContainer__form__header = style({
