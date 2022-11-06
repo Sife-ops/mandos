@@ -1,6 +1,6 @@
 import AWS from "aws-sdk";
 import bcrypt from "bcryptjs";
-import { Config } from "@serverless-stack/node/config";
+import { Bucket } from "@serverless-stack/node/bucket";
 import { builder } from "../../builder";
 import { getDiscriminator } from "./helper";
 import { mandosModel } from "@mandos/core/model";
@@ -61,7 +61,7 @@ builder.mutationFields((t) => ({
       );
 
       await S3.putObject({
-        Bucket: Config.AVATAR_BUCKET,
+        Bucket: Bucket.avatar.bucketName,
         Key: user.userId,
         Body: buffer,
         ContentEncoding: "base64",

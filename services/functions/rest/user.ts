@@ -1,5 +1,5 @@
 import AWS from "aws-sdk";
-import { Config } from "@serverless-stack/node/config";
+import { Bucket } from "@serverless-stack/node/bucket";
 import { mandosModel } from "@mandos/core/model";
 import { z } from "zod";
 
@@ -22,7 +22,7 @@ export const handler = async (event: any) => {
     try {
       const params = {
         Key: userId,
-        Bucket: Config.AVATAR_BUCKET,
+        Bucket: Bucket.avatar.bucketName,
       };
 
       await s3.headObject(params).promise();

@@ -2,6 +2,7 @@ import AWS from "aws-sdk";
 import axios from "axios";
 import bcrypt from "bcryptjs";
 import { Config } from "@serverless-stack/node/config";
+import { Queue } from "@serverless-stack/node/queue";
 import { builder } from "../../builder";
 import { tokenOptions } from "../../../constant";
 import { mandosModel } from "@mandos/core/model";
@@ -17,7 +18,7 @@ const sqs = new AWS.SQS();
 const sendEmailjsSqs = async (email: string, action: "reset" | "sign-up") => {
   await sqs
     .sendMessage({
-      QueueUrl: Config.EMAILJS_SQS,
+      QueueUrl: Queue.emailjs.queueUrl,
       MessageBody: JSON.stringify({
         email,
         action,

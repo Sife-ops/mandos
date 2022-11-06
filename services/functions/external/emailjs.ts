@@ -33,7 +33,7 @@ export const handler = async (event: any) => {
     const link =
       STAGE === "dev"
         ? "http://localhost:3000" + actionLink
-        : `${Config.SITE_URL}${actionLink}`;
+        : `${Config.REGISTRAR_URL}${actionLink}`;
     console.log("link:", link);
 
     if (STAGE === "prod") {

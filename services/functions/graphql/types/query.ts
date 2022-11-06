@@ -1,5 +1,5 @@
 import AWS from "aws-sdk";
-import { Config } from "@serverless-stack/node/config";
+import { Bucket } from "@serverless-stack/node/bucket";
 import { ServiceType } from "./service";
 import { UserType } from "./user";
 import { builder } from "../builder";
@@ -17,7 +17,7 @@ builder.queryFields((t) => ({
       // todo: use below pattern
       const logoUrl = s3.getSignedUrl("getObject", {
         Key: `${serviceId}.png`,
-        Bucket: Config.LOGO_BUCKET,
+        Bucket: Bucket.logo.bucketName,
         Expires: 900,
       });
 
@@ -47,7 +47,7 @@ builder.queryFields((t) => ({
       try {
         const params = {
           Key: userId,
-          Bucket: Config.AVATAR_BUCKET,
+          Bucket: Bucket.avatar.bucketName,
         };
 
         await s3.headObject(params).promise();

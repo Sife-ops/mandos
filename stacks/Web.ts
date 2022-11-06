@@ -8,13 +8,11 @@ import {
 } from "@serverless-stack/resources";
 
 import { Api } from "./Api";
-import { Database } from "./Database";
 
 const { DOMAIN, REGISTRAR_SUBDOMAIN, ACCOUNT_SUBDOMAIN } = process.env;
 
 export function Web({ stack, app }: StackContext) {
   const api = use(Api);
-  const db = use(Database);
 
   //////////////////////////////////////////////////////////////////////////////
   // Registrar Site ////////////////////////////////////////////////////////////
@@ -47,20 +45,18 @@ export function Web({ stack, app }: StackContext) {
     consumer: {
       function: {
         handler: "functions/external/emailjs.handler",
-        config: [
-          db.TABLE_NAME,
+        bind: [
           registrationTokenSecret,
+          new Config.Parameter(stack, "REGISTRAR_URL", {
+            value: registrarSite.customDomainUrl,
+          }),
           new Config.Secret(stack, "EMAILJS_USER_ID"),
           new Config.Secret(stack, "EMAILJS_SERVICE_ID"),
           // new Config.Secret(stack, "EMAILJS_ACCESSTOKEN"),
           new Config.Parameter(stack, "EMAILJS_TEMPLATE_ID", {
             value: "template_pwk79e6",
           }),
-          new Config.Parameter(stack, "SITE_URL", {
-            value: registrarSite.customDomainUrl,
-          }),
         ],
-        permissions: [db.table],
         environment: {
           STAGE: app.stage,
         },
@@ -76,27 +72,13 @@ export function Web({ stack, app }: StackContext) {
 
   const logoBucket = new Bucket(stack, "logo");
   const avatarBucket = new Bucket(stack, "avatar");
-  const avatarBucketName = new Config.Parameter(stack, "AVATAR_BUCKET", {
-    value: avatarBucket.bucketName,
-  });
 
   api.addRoutes(stack, {
     "POST /graphql": {
       type: "pothos",
       function: {
         handler: "functions/graphql/graphql.handler",
-        permissions: [db.table, logoBucket, emailjsSqs, avatarBucket],
-        config: [
-          db.TABLE_NAME,
-          avatarBucketName,
-          registrationTokenSecret,
-          new Config.Parameter(stack, "LOGO_BUCKET", {
-            value: logoBucket.bucketName,
-          }),
-          new Config.Parameter(stack, "EMAILJS_SQS", {
-            value: emailjsSqs.queueUrl,
-          }),
-        ],
+        bind: [logoBucket, avatarBucket, emailjsSqs, registrationTokenSecret],
       },
       schema: "services/functions/graphql/schema.ts",
       output: "graphql/schema.graphql",
@@ -107,8 +89,7 @@ export function Web({ stack, app }: StackContext) {
     "POST /user": {
       function: {
         handler: "functions/rest/user.handler",
-        permissions: [db.table, avatarBucket],
-        config: [db.TABLE_NAME, avatarBucketName],
+        bind: [avatarBucket],
       },
     },
   });

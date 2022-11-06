@@ -12,6 +12,11 @@ export function Api({ stack }: StackContext) {
   const db = use(Database);
 
   const api = new ApiGateway(stack, "api", {
+    defaults: {
+      function: {
+        bind: [db],
+      },
+    },
     customDomain: {
       domainName: `${REGISTRAR_SUBDOMAIN}-api.${DOMAIN}`,
       hostedZone: `${DOMAIN}`,
@@ -20,15 +25,11 @@ export function Api({ stack }: StackContext) {
       "POST /verify": {
         function: {
           handler: "functions/rest/verify.handler",
-          config: [db.TABLE_NAME],
-          permissions: [db.table],
         },
       },
       "POST /refresh": {
         function: {
           handler: "functions/rest/refresh.handler",
-          config: [db.TABLE_NAME],
-          permissions: [db.table],
         },
       },
     },
