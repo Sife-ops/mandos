@@ -56,7 +56,8 @@ export const SignUp = () => {
           />
           {signUpForm.passwordError && (
             <span className={s.formContainer__form__errorText}>
-              Must contain one number and one special character.
+              Minimum 8 characters. Must contain one number and one special
+              character.
             </span>
           )}
         </div>

@@ -32,7 +32,7 @@ export const ChangeUsername = () => {
       <br />
 
       <button
-        disabled={!username}
+        disabled={!username || username.length > 24}
         onClick={() => {
           if (username) {
             changeUsername({ username });

@@ -128,7 +128,7 @@ export const useSignUpForm = () => {
   useEffect(() => {
     validationEffect(
       username,
-      () => username !== null && username.length > 0,
+      () => username !== null && username.length > 0 && username.length < 24,
       setUsernameIsValid,
       setUsernameError
     );
