@@ -9,7 +9,7 @@ const eventSchema = z.object({
   userId: z.string(),
 });
 
-// todo: duplicated - move rest operations to graphql
+// todo: duplicated - move rest operations to graphql or function
 export const handler = async (event: any) => {
   try {
     const { userId } = eventSchema.parse(JSON.parse(event.body));
