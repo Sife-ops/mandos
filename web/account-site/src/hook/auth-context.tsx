@@ -20,7 +20,12 @@ const useContext = (): Context => {
   }, []);
 
   const signOut = () => {
+    const redirect = localStorage.getItem("redirect");
     localStorage.clear();
+    if (redirect) {
+      window.location.href = redirect;
+      return;
+    }
     const stage = import.meta.env.VITE_STAGE;
     const site = import.meta.env.VITE_REGISTRAR_URL;
     const path = "/sign-in?serviceId=account";

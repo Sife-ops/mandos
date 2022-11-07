@@ -1,22 +1,22 @@
 import * as s from "../../index.css";
 import { useNavigate, Link } from "react-router-dom";
-import { useQueryParam } from "../../hook/query-param";
 import { useState, useEffect } from "react";
 import { useTypedMutation, useTypedQuery } from "@mandos/graphql/urql";
 
 export const SignIn = () => {
   const nav = useNavigate();
 
-  let serviceId: string;
-  try {
-    const [_] = useQueryParam(["serviceId"]);
-    serviceId = _;
-  } catch {
-    nav("/error/404");
-  }
+  // todo: move to state
+  const search = window.location.search;
+  const params = new URLSearchParams(search);
+  const serviceId = params.get("serviceId");
+  const redirect = params.get("redirect");
 
   useEffect(() => {
-    localStorage.setItem("serviceId", serviceId);
+    if (!serviceId) {
+      nav("/error/404");
+    }
+    localStorage.setItem("serviceId", serviceId || "");
   }, []);
 
   const [serviceTitle, setServiceTitle] = useState("");
@@ -31,8 +31,7 @@ export const SignIn = () => {
     query: {
       service: [
         {
-          // @ts-ignore
-          serviceId,
+          serviceId: serviceId || "",
         },
         {
           title: true,
@@ -70,7 +69,8 @@ export const SignIn = () => {
         setError(error.message.split("[GraphQL] ")[1]);
       }
     } else if (!fetching && data) {
-      window.location.href = data.signIn;
+      window.location.href =
+        data.signIn + (redirect ? `&redirect=${redirect}` : "");
     }
   }, [signInState.data]);
 
@@ -81,7 +81,7 @@ export const SignIn = () => {
         onSubmit={async (e) => {
           e.preventDefault();
           signIn({
-            serviceId,
+            serviceId: serviceId || "",
             email,
             password,
           });

@@ -1,3 +1,4 @@
+// todo: get rid of this hook
 export const useQueryParam = (p: string[]) => {
   const search = window.location.search;
   const params = new URLSearchParams(search);
