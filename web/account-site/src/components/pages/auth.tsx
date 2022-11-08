@@ -1,24 +1,32 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../hook/auth-context";
+import { useQueryParam } from "../../hook/query-param";
 
-export const Auth: React.FC<{ to: string }> = (p) => {
-  const search = window.location.search;
-  const params = new URLSearchParams(search);
-  const redirect = params.get("redirect");
-  const accessToken = params.get("accessToken");
-  const refreshToken = params.get("refreshToken");
+export const Auth: React.FC<{ to: string; errorTo: string }> = (p) => {
+  const { redirect, accessToken, refreshToken } = useQueryParam(
+    {
+      redirect: { required: false },
+      accessToken: { required: true },
+      refreshToken: { required: true },
+    },
+    p.errorTo
+  );
 
   const authContext = useAuthContext();
   const nav = useNavigate();
 
   useEffect(() => {
-    localStorage.setItem("redirect", redirect || "");
-    localStorage.setItem("accessToken", accessToken || "");
-    localStorage.setItem("refreshToken", refreshToken || "");
-    authContext.setSignedIn(true);
-    nav(p.to);
-  }, []);
+    if (redirect) {
+      localStorage.setItem("redirect", redirect);
+    }
+    if (accessToken && refreshToken) {
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("refreshToken", refreshToken);
+      authContext.setSignedIn(true);
+      nav(p.to);
+    }
+  }, [redirect, accessToken, refreshToken]);
 
   return <div></div>;
 };

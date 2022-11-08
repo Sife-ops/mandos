@@ -62,7 +62,7 @@ function App() {
           <Route path="/change-username" element={<ChangeUsername />} />
           <Route path="/change-password" element={<ChangePassword />} />
         </Route>
-        <Route path="/auth" element={<Auth to="/account" />} />
+        <Route path="/auth" element={<Auth to="/account" errorTo="/error" />} />
         <Route path="/error" element={<div>Error! lol</div>} />
         <Route path="*" element={<Navigate to="/error" />} />
       </Routes>
