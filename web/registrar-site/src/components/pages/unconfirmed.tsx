@@ -1,20 +1,15 @@
-// import { Button } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useTypedMutation } from "@mandos/graphql/urql";
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useQueryParam } from "../../hook/query-param";
+import { useQueryParam } from "@mandos/react/query-param";
 
 export const Unconfirmed = () => {
-  const nav = useNavigate();
-
-  let email: string;
-  try {
-    const [_] = useQueryParam(["email"]);
-    email = _;
-  } catch {
-    nav("/error/404");
-  }
+  const { email } = useQueryParam(
+    {
+      email: { required: true },
+    },
+    "/error/404"
+  );
 
   const [resent, setResent] = useState(false);
 
@@ -42,7 +37,15 @@ export const Unconfirmed = () => {
       <div>
         If you didn't receive an email, click the button to send it again.
       </div>
-      <button onClick={() => resendEmail({ email })}>Send E-mail</button>
+      <button
+        onClick={() => {
+          if (email) {
+            resendEmail({ email });
+          }
+        }}
+      >
+        Send E-mail
+      </button>
       {resent && <div>E-mail sent!</div>}
     </div>
   );

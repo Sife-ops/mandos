@@ -1,18 +1,18 @@
 import { useNavigate } from "react-router-dom";
-import { useQueryParam } from "../../hook/query-param";
+// import { useQueryParam } from "../../hook/query-param";
 import { useEffect } from "react";
 import { useTypedMutation } from "@mandos/graphql/urql";
+import { useQueryParam } from "@mandos/react/query-param";
 
 export const Confirm = () => {
   const nav = useNavigate();
 
-  let registrationToken: string;
-  try {
-    const [_] = useQueryParam(["registrationToken"]);
-    registrationToken = _;
-  } catch {
-    nav("/error/404");
-  }
+  const { registrationToken } = useQueryParam(
+    {
+      registrationToken: { required: true },
+    },
+    "/error/404"
+  );
 
   const [confirmState, confirm] = useTypedMutation(
     (vars: { registrationToken: string }) => {
@@ -23,9 +23,11 @@ export const Confirm = () => {
   );
 
   useEffect(() => {
-    confirm({
-      registrationToken,
-    });
+    if (registrationToken) {
+      confirm({
+        registrationToken,
+      });
+    }
   }, []);
 
   useEffect(() => {

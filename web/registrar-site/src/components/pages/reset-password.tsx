@@ -1,8 +1,8 @@
 import * as s from "../../index.css";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
-import { useQueryParam } from "../../hook/query-param";
 import { useTypedMutation } from "@mandos/graphql/urql";
+import { useQueryParam } from "@mandos/react/query-param";
 import { useState, useEffect } from "react";
 
 const passwordSchema = yup
@@ -15,13 +15,12 @@ const passwordSchema = yup
 export const ResetPassword = () => {
   const nav = useNavigate();
 
-  let registrationToken: string;
-  try {
-    const [_] = useQueryParam(["registrationToken"]);
-    registrationToken = _;
-  } catch {
-    nav("/error/404");
-  }
+  const { registrationToken } = useQueryParam(
+    {
+      registrationToken: { required: true },
+    },
+    "/error/404"
+  );
 
   const [password, setPassword] = useState("");
   const [passwordIsValid, setPasswordIsValid] = useState(false);
@@ -58,7 +57,9 @@ export const ResetPassword = () => {
         className={s.formContainer__form}
         onSubmit={(e) => {
           e.preventDefault();
-          resetPassword({ password, registrationToken });
+          if (registrationToken) {
+            resetPassword({ password, registrationToken });
+          }
         }}
       >
         <h3 className={s.formContainer__form__header}>Reset Password</h3>

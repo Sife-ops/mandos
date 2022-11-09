@@ -1,9 +1,9 @@
 import * as s from "../../index.css";
 import { Link } from "react-router-dom";
-import { useSignUpForm } from "../../hook/sign-up-form";
+import { useSignUp } from "./sign-up-hook";
 
 export const SignUp = () => {
-  const signUpForm = useSignUpForm();
+  const page = useSignUp();
   const serviceId = localStorage.getItem("serviceId");
 
   return (
@@ -12,14 +12,14 @@ export const SignUp = () => {
         className={s.formContainer__form}
         onSubmit={async (e) => {
           e.preventDefault();
-          signUpForm.submit();
+          page.submit();
         }}
       >
         <h3 className={s.formContainer__form__header}>Sign Up</h3>
 
-        {signUpForm.formError && (
+        {page.formError && (
           <div className={s.formContainer__form__error}>
-            Error: {signUpForm.formError}.
+            Error: {page.formError}.
           </div>
         )}
 
@@ -27,11 +27,11 @@ export const SignUp = () => {
         <div className={s.formContainer__form__field}>
           <span>E-mail</span>
           <input
-            onChange={(e) => signUpForm.setEmail(e.target.value)}
+            onChange={(e) => page.setEmail(e.target.value)}
             type={"email"}
-            value={signUpForm.email || ""}
+            value={page.email || ""}
           />
-          {signUpForm.emailError && (
+          {page.emailError && (
             <span className={s.formContainer__form__errorText}>
               Invalid e-mail address.
             </span>
@@ -41,20 +41,20 @@ export const SignUp = () => {
         <div className={s.formContainer__form__field}>
           <span>Username</span>
           <input
-            onChange={(e) => signUpForm.setUsername(e.target.value)}
+            onChange={(e) => page.setUsername(e.target.value)}
             type={"username"}
-            value={signUpForm.username || ""}
+            value={page.username || ""}
           />
         </div>
 
         <div className={s.formContainer__form__field}>
           <span>Password</span>
           <input
-            onChange={(e) => signUpForm.setPassword(e.target.value)}
+            onChange={(e) => page.setPassword(e.target.value)}
             type={"password"}
-            value={signUpForm.password || ""}
+            value={page.password || ""}
           />
-          {signUpForm.passwordError && (
+          {page.passwordError && (
             <span className={s.formContainer__form__errorText}>
               Minimum 8 characters. Must contain one number and one special
               character.
@@ -65,17 +65,17 @@ export const SignUp = () => {
         <div className={s.formContainer__form__field}>
           <img
             className={s.formContainer__form__field__img}
-            src={signUpForm.captchaImg}
+            src={page.captchaImg}
             alt="captcha"
           />
           <span>Enter the code shown above:</span>
           <input
-            onChange={(e) => signUpForm.setCaptcha(e.target.value)}
-            value={signUpForm.captcha || ""}
+            onChange={(e) => page.setCaptcha(e.target.value)}
+            value={page.captcha || ""}
           />
         </div>
 
-        <button type={"submit"} disabled={!signUpForm.formIsValid}>
+        <button type={"submit"} disabled={!page.formIsValid}>
           submit
         </button>
 

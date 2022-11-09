@@ -23,7 +23,8 @@
     "services",
     "graphql",
     "web/registrar-site",
-    "web/account-site"
+    "web/account-site",
+    "web/react"
   ],
   "overrides": {
     "graphql": "16.5.0"

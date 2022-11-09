@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../hook/auth-context";
-import { useQueryParam } from "../../hook/query-param";
+import { useNavigate } from "react-router-dom";
+import { useQueryParam } from "@mandos/react/query-param";
 
 export const Auth: React.FC<{ to: string; errorTo: string }> = (p) => {
   const { redirect, accessToken, refreshToken } = useQueryParam(

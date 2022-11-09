@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTypedMutation } from "@mandos/graphql/urql";
 
-export const useSignUpForm = () => {
+export const useSignUp = () => {
   const nav = useNavigate();
 
   const [formIsValid, setFormIsValid] = useState(false);
