@@ -6,6 +6,12 @@ import { useQueryParam } from "@mandos/react/query-param";
 export const useSignIn = () => {
   const nav = useNavigate();
 
+  const [loading, setLoading] = useState(true);
+  const [serviceTitle, setServiceTitle] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+
   const { serviceId, redirect } = useQueryParam(
     {
       serviceId: { required: true },
@@ -18,14 +24,6 @@ export const useSignIn = () => {
     localStorage.setItem("serviceId", serviceId || "");
   }, []);
 
-  const [serviceTitle, setServiceTitle] = useState("");
-  const [serviceLogoUrl, setServiceLogoUrl] = useState("");
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const [error, setError] = useState<string | null>(null);
-
   const [serviceQuery] = useTypedQuery({
     query: {
       service: [
@@ -34,7 +32,6 @@ export const useSignIn = () => {
         },
         {
           title: true,
-          logoUrl: true,
         },
       ],
     },
@@ -45,8 +42,9 @@ export const useSignIn = () => {
     if (error) {
       nav("/error/404");
     } else if (!fetching && data) {
+      // todo: alternative - get signed logo url from s3
       setServiceTitle(data.service.title);
-      setServiceLogoUrl(data.service.logoUrl);
+      setLoading(false);
     }
   }, [serviceQuery.data]);
 
@@ -83,14 +81,14 @@ export const useSignIn = () => {
   }, [signInState.data]);
 
   return {
+    email,
+    error,
+    loading,
+    password,
     serviceId,
     serviceTitle,
-    serviceLogoUrl,
-    email,
     setEmail,
-    password,
     setPassword,
-    error,
     signIn,
   };
 };

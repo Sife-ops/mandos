@@ -1,9 +1,15 @@
 import * as s from "../../index.css";
 import { Link } from "react-router-dom";
+import { logo } from "../../logo";
 import { useSignIn } from "./sign-in-hook";
 
 export const SignIn = () => {
   const page = useSignIn();
+
+  if (page.loading) {
+    return null;
+  }
+
   return (
     <div className={s.formContainer}>
       <form
@@ -22,15 +28,13 @@ export const SignIn = () => {
         >
           <img
             className={s.formContainer__form__img}
-            src={page.serviceLogoUrl}
+            src={logo[page.serviceId || "default"]}
             alt="logo"
           />
         </div>
-        {page.serviceTitle && (
-          <h3 className={s.formContainer__form__header}>
-            Sign in to {page.serviceTitle}
-          </h3>
-        )}
+        <h3 className={s.formContainer__form__header}>
+          Sign in to {page.serviceTitle}
+        </h3>
 
         {page.error && (
           <div className={s.formContainer__form__error}>
