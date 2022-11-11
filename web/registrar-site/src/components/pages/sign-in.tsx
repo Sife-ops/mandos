@@ -7,7 +7,13 @@ export const SignIn = () => {
   const page = useSignIn();
 
   if (page.loading) {
-    return null;
+    return (
+      <div
+        style={{
+          height: "338px",
+        }}
+      />
+    );
   }
 
   return (
