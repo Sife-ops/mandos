@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-// import { useQueryParam } from "../../hook/query-param";
 import { useEffect } from "react";
 import { useTypedMutation } from "@mandos/graphql/urql";
 import { useQueryParam } from "@mandos/react/query-param";
@@ -28,7 +27,7 @@ export const Confirm = () => {
         registrationToken,
       });
     }
-  }, []);
+  }, [registrationToken]);
 
   useEffect(() => {
     const { fetching, data, error } = confirmState;
